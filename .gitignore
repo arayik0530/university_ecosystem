@@ -1,0 +1,33 @@
+# Ignore node modules for the client directory
+client/node_modules/
+
+# Ignore built files for the client directory
+client/build/
+client/dist/
+
+# Ignore environment variables for the client directory
+client/.env
+client/.env.local
+client/.env.*.local
+
+# Ignore editor directories and files for the client directory
+client/.idea/
+client/*.suo
+client/*.ntvs*
+client/*.njsproj
+client/*.sln
+client/*.sw?
+
+# Ignore WebStorm configuration files
+client/.idea/
+client/*.iml
+client/*.ipr
+client/*.iws
+client/.idea/
+
+# Ignore npm debug logs
+client/npm-debug.log*
+
+# Ignore yarn debug logs and error logs
+client/yarn-debug.log*
+client/yarn-error.log*
