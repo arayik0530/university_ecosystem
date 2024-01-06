@@ -1,14 +1,14 @@
 # Ignore node modules for the client directory
-client/node_modules/
+client/univercity-client/node_modules/
 
 # Ignore built files for the client directory
-client/build/
-client/dist/
+client/univercity-client/build/
+client/univercity-client/dist/
 
 # Ignore environment variables for the client directory
-client/.env
-client/.env.local
-client/.env.*.local
+client/univercity-client/.env
+client/univercity-client/.env.local
+client/univercity-client/.env.*.local
 
 # Ignore editor directories and files for the client directory
 client/.idea/
@@ -26,8 +26,8 @@ client/*.iws
 client/.idea/
 
 # Ignore npm debug logs
-client/npm-debug.log*
+client/univercity-client/npm-debug.log*
 
 # Ignore yarn debug logs and error logs
-client/yarn-debug.log*
-client/yarn-error.log*
+client/univercity-client/yarn-debug.log*
+client/univercity-client/yarn-error.log*
