@@ -1,0 +1,30 @@
+/* Header.css */
+.header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #3F51B5;
+    color: #fff;
+}
+
+.header-icon {
+    font-size: 24px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.header-button {
+    margin-left: 10px;
+    padding: 8px 16px;
+    background-color: #fff;
+    color: #3F51B5;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.header-button:hover {
+    background-color: #bebec0;
+}

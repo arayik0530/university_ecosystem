@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { eventEmitter } from "./API";
-import { LogInContainer } from "./components/LogIn/functional/LogInContainer";
+import React, {useEffect, useState} from 'react';
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {eventEmitter} from "./API";
+import {LogInContainer} from "./components/LogIn/functional/LogInContainer";
 import Dummy from "./components/dummy/Dummy";
-import { Snackbar } from '@material-ui/core'; // Assuming you're using Material UI
-import { Alert } from '@material-ui/lab';
-import {RegisterContainer} from "./components/Register/functional/RegisterContainer"; // Alert component from Material UI
+import {Snackbar} from '@material-ui/core'; // Assuming you're using Material UI
+import {Alert} from '@material-ui/lab';
+import {RegisterContainer} from "./components/Register/functional/RegisterContainer";
+import Header from "./components/Header/Header"; // Alert component from Material UI
 
 const FooterContainer = React.lazy(() => import("./components/Footer/functional/FooterContainer.jsx"));
 
@@ -39,22 +40,27 @@ function App() {
     return (
         <main>
             <Router>
-                <Routes>
-                    <Route path='/register' element={<RegisterContainer />} />
-                    <Route path='/login' element={<LogInContainer />} />
-                    <Route path='/' element={<Dummy />} />
-                </Routes>
-            </Router>
-            <React.Suspense fallback={<div>Loading Footer...</div>}>
-                <FooterContainer />
-            </React.Suspense>
+                <React.Suspense fallback={<div>Loading Header...</div>}>
+                    <Header/>
+                </React.Suspense>
 
-            {/* Display the error message using Material UI Snackbar */}
-            <Snackbar open={!!errorMessage} autoHideDuration={6000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="error">
-                    {errorMessage}
-                </Alert>
-            </Snackbar>
+                <Routes>
+                    <Route path='/register' element={<RegisterContainer/>}/>
+                    <Route path='/login' element={<LogInContainer/>}/>
+                    <Route path='/' element={<Dummy/>}/>
+                </Routes>
+
+                <React.Suspense fallback={<div>Loading Footer...</div>}>
+                    <FooterContainer/>
+                </React.Suspense>
+
+                {/* Display the error message using Material UI Snackbar */}
+                <Snackbar open={!!errorMessage} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="error">
+                        {errorMessage}
+                    </Alert>
+                </Snackbar>
+            </Router>
         </main>
     );
 }

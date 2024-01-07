@@ -3,7 +3,7 @@ import {LogInUi} from '../ui/LogInUi';
 import {makeStyles} from '@material-ui/core/styles';
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {login} from "../../../redux/actions/user/userActions";
+import {login, userLoginSuccess} from "../../../redux/actions/user/userActions";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -89,6 +89,7 @@ export const LogInContainer = () => {
             // Dispatch login action with email and password
             dispatch(login({email, password}))
                 .then(() => navigate('/'))
+                .then(() => dispatch(userLoginSuccess(localStorage.getItem('token'))))
                 .catch((error) => console.log(error));
         }
     };
