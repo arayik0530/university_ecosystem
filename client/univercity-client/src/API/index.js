@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { EventEmitter } from 'events';
 
 export const API = axios.create({
     baseURL: "http://localhost:8090/api/",
@@ -7,16 +8,7 @@ export const API = axios.create({
     }
 });
 
-API.interceptors.request.use(
-    (config) => {
-        return config;
-    },
-    (error) => {
-        // showError(error);
-        alert(error);
-        return Promise.reject(error);
-    }
-);
+export const eventEmitter = new EventEmitter();
 
 API.interceptors.response.use(
     (response) => {
@@ -24,11 +16,10 @@ API.interceptors.response.use(
     },
     (error) => {
         if (error.response) {
-            // showError(error.response.status);
-            alert(error.response.status);
+            const status = error.response.status;
+            eventEmitter.emit('apiError', (status === 401 || status === 403 || status === 404) ? 'Invalid credentials' : error.response.status);
         } else {
-            // showError(error.message);
-            alert(error.message);
+            eventEmitter.emit('apiError', error.message);
         }
         return Promise.reject(error);
     }

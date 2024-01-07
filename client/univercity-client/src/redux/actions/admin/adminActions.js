@@ -4,8 +4,8 @@ const setToken = (token) => ({ type: adminConstants.SET_TOKEN, payload: token })
 export const setAdmin = (admin) => ({ type: adminConstants.SET_ADMIN, payload: admin });
 
 
-export const    login = () => (dispatch) => {
-    return API.post('auth/login', { email: 'admin@admin.com', password: '11111111' })
+export const    login = (credentials) => (dispatch) => {
+    return API.post('auth/login', credentials)
         .then(({ data }) => {
             dispatch(setToken(data));
             localStorage.setItem('token', data);

@@ -1,35 +1,58 @@
-import React from 'react';
-// import NavBarContainer from "./components/Menu/NavBar/functional/NavBarContainer";
-// import {CenterBlockContainer} from './components/CenterBlock/functional/CenterBlockContainer';
-import {LogInContainer} from "./components/LogIn/functional/LogInContainer";
-// import {AdminPageContainer} from './components/AdminPage/functional/AdminPageContainer';
-// import {RegisterContainer} from './components/Register/functional/RegisterContainer';
-// import {MenuFormContainer} from './components/MenuForm/functional/MenuFormContainer';
-import {BrowserRouter as Router, Route, Routes,} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { eventEmitter } from "./API";
+import { LogInContainer } from "./components/LogIn/functional/LogInContainer";
 import Dummy from "./components/dummy/Dummy";
+import { Snackbar } from '@material-ui/core'; // Assuming you're using Material UI
+import { Alert } from '@material-ui/lab'; // Alert component from Material UI
 
-
-const FooterContainer = React.lazy(() => import("./components/Footer/functional/FooterContainer.jsx"))
+const FooterContainer = React.lazy(() => import("./components/Footer/functional/FooterContainer.jsx"));
 
 function App() {
+    const [errorMessage, setErrorMessage] = useState(null);
+
+    useEffect(() => {
+        // Listen to the 'apiError' event
+        const handleApiError = (errorMessage) => {
+            // Set the error message in the state
+            setErrorMessage(errorMessage);
+        };
+
+        // Register the event listener
+        eventEmitter.on('apiError', handleApiError);
+
+        // Clean up the event listener when the component unmounts
+        return () => {
+            eventEmitter.off('apiError', handleApiError);
+        };
+    }, []);
+
+    // Function to close the error message
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setErrorMessage(null);
+    };
 
     return (
         <main>
-                {/* <NavBarContainer /> */}
-                {/* <CenterBlockContainer /> */}
-                <Router>
-                    <Routes>
-                        {/* Define your routes */}
-                        <Route path='/login' element={<LogInContainer/>}/>
-                        <Route path='/' element={<Dummy/>}/>
-                        {/* <Route path="/admin/register" component={RegisterContainer} /> */}
-                        {/* <Route path='/admin/pages' component={AdminPageContainer} /> */}
-                        {/* <Route path='/admin/menu' component={MenuFormContainer} /> */}
-                    </Routes>
-                </Router>
-                <React.Suspense fallback={<div>Loading Footer...</div>}>
-                    <FooterContainer/>
-                </React.Suspense>
+            <Router>
+                <Routes>
+                    <Route path='/login' element={<LogInContainer />} />
+                    <Route path='/' element={<Dummy />} />
+                </Routes>
+            </Router>
+            <React.Suspense fallback={<div>Loading Footer...</div>}>
+                <FooterContainer />
+            </React.Suspense>
+
+            {/* Display the error message using Material UI Snackbar */}
+            <Snackbar open={!!errorMessage} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error">
+                    {errorMessage}
+                </Alert>
+            </Snackbar>
         </main>
     );
 }
