@@ -1,31 +1,12 @@
-import React, { useRef } from 'react';
+import React, {useRef, useState} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { login } from '../../../redux/actions/admin/adminActions';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import {login} from '../../../redux/actions/user/userActions';
+import {useDispatch} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
+import Alert from '@material-ui/lab/Alert';
 
-export const LogInUi = ({ classes }) => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    // Create refs for email and password fields
-    const emailRef = useRef(null);
-    const passwordRef = useRef(null);
-
-    // Function to handle form submission
-    const handleLogin = async (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
-
-        // Get values from refs
-        const email = emailRef.current.value;
-        const password = passwordRef.current.value;
-
-        // Dispatch login action with email and password
-        dispatch(login({ email, password }));
-
-    };
-
+export const LogInUi = ({classes, emailRef, passwordRef, handleLogin, errorMessage}) => {
     return (
         <div>
             <form className={classes.root} noValidate autoComplete="off" onSubmit={handleLogin}>
@@ -45,6 +26,13 @@ export const LogInUi = ({ classes }) => {
                 />
                 <Button type="submit" className={classes.LogInButton}>Log In</Button>
             </form>
+            {errorMessage && (
+                <div style={{marginTop: '10px', display: 'flex', justifyContent: 'center'}}>
+                    <Alert severity="error">
+                        {errorMessage}
+                    </Alert>
+                </div>
+            )}
         </div>
-    );
-};
+    )
+}

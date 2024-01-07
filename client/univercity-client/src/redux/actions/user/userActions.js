@@ -16,19 +16,13 @@ export const    login = (credentials) => (dispatch) => {
             // }).then(({ data }) => {
             //     dispatch(setAdmin(data));
             // })
-        }).catch((error) => {
+        })/*.catch((error) => {
             console.log(error); // Output: Failed to fetch data!
-        });
+        })*/;
 }
 
-export const register = () => {
-    const regData = {
-        firstName: "Vi5asdlen",
-        lastName: "Hak5dasobyan",
-        mail: "vi5lesadn@gmail.com",
-        password: "haasd5kobyan"
-    }
-    return API.post('auth/register', regData);
+export const register = (credentials) => (dispatch) => {
+    return API.post('auth/register', credentials);
 }
 
 export const addMenuItem = () => {

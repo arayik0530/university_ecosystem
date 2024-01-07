@@ -4,7 +4,8 @@ import { eventEmitter } from "./API";
 import { LogInContainer } from "./components/LogIn/functional/LogInContainer";
 import Dummy from "./components/dummy/Dummy";
 import { Snackbar } from '@material-ui/core'; // Assuming you're using Material UI
-import { Alert } from '@material-ui/lab'; // Alert component from Material UI
+import { Alert } from '@material-ui/lab';
+import {RegisterContainer} from "./components/Register/functional/RegisterContainer"; // Alert component from Material UI
 
 const FooterContainer = React.lazy(() => import("./components/Footer/functional/FooterContainer.jsx"));
 
@@ -39,6 +40,7 @@ function App() {
         <main>
             <Router>
                 <Routes>
+                    <Route path='/register' element={<RegisterContainer />} />
                     <Route path='/login' element={<LogInContainer />} />
                     <Route path='/' element={<Dummy />} />
                 </Routes>
