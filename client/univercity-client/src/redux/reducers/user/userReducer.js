@@ -21,11 +21,12 @@
 // userReducer.js
 
 
-import {USER_LOGIN_SUCCESS, USER_LOGOUT_SUCCESS} from "../../actions/actionTypes/userActionTypes";
+import {SET_USER_TYPE, USER_LOGIN_SUCCESS, USER_LOGOUT_SUCCESS} from "../../actions/actionTypes/userActionTypes";
 
 const initialState = {
     isLoggedIn: !!localStorage.getItem('token'), // Set initial state based on localStorage
     token: localStorage.getItem('token') || null,
+    userType: null
 };
 
 const userReducer = (state = initialState, action) => {
@@ -35,7 +36,7 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggedIn: true,
-                token: action.payload.token,
+                token: action.payload.token, //TODO check token or payload
             };
         case USER_LOGOUT_SUCCESS:
             localStorage.removeItem('token'); // Remove token from localStorage
@@ -43,6 +44,11 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 isLoggedIn: false,
                 token: null,
+            };
+            case SET_USER_TYPE:
+            return {
+                ...state,
+                userType: action.payload
             };
         default:
             return state;

@@ -86,6 +86,7 @@ export const LogInContainer = () => {
         }
 
         if(valid) {
+            console.log("valid")
             // Dispatch login action with email and password
             dispatch(login({email, password}))
                 .then(() => navigate('/'))

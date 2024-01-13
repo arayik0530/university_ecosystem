@@ -5,7 +5,7 @@ import { makeStyles, useMediaQuery } from '@material-ui/core';
 const useStyles = makeStyles(() => ({
     footer: {
         width:'100%',
-        marginTop:'50px',
+        // marginTop:'50px',
         height:'max-content',
         background:'#3F51B5',
     },
