@@ -1,9 +1,6 @@
-import React, {useRef, useState} from 'react';
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import {login} from '../../../redux/actions/user/userActions';
-import {useDispatch} from 'react-redux';
-import {useNavigate} from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
 
 export const LogInUi = ({classes, emailRef, passwordRef, handleLogin, errorMessage}) => {

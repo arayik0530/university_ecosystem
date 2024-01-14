@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="76b53554-8e9d-4f33-b5af-0d573e168aff" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/Bootstrap.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/api/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/api/QuestionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/api/QuizController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/api/TopicController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/api/UserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/api/impl/AuthControllerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/api/impl/ExceptionHandlerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/api/impl/QuestionControllerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/api/impl/QuizControllerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/api/impl/SwaggerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/api/impl/TopicControllerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/api/impl/UserControllerImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/config/DataLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/config/ExceptionHandlerControllerConfig/ExceptionHandlerControllerProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/config/SwaggerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/config/WebConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/answer/AnswerDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/answer/AnswerForPastQuizDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/answer/CreateAnswerDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/question/CreateQuestionDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/question/QuestionDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/question/QuestionForPastQuizDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/quiz/PastQuizInfoDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/quiz/QuizDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/quiz/QuizDtoForLocalStorage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/quiz/QuizDtoShortInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/quiz/QuizQuestionDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/quiz/UpcomingQuizCreationDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/quiz/UpcomingQuizDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/topic/TopicDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/topic/TopicOnlyTitleDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/user/LoginRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/user/PasswordChangingDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/user/UserInfoDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/dto/user/UserRegistrationDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/entity/AnswerEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/entity/ConfirmationTokenEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/entity/ImageEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/entity/QuestionEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/entity/QuizEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/entity/QuizQuestionEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/entity/SmallImageEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/entity/TopicEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/entity/UpcomingQuizEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/entity/UserEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/entity/enums/UserRole.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/repository/AnswerRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/repository/ConfirmationTokenRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/repository/ImageRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/repository/QuestionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/repository/QuizQuestionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/repository/QuizRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/repository/SmallImageRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/repository/TopicRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/repository/UpComingQuizRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/security/JwtUserDetailsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/security/jwt/JwtAuthenticationException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/security/jwt/JwtConfigurer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/security/jwt/JwtTokenFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/security/jwt/JwtTokenProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/security/jwt/JwtUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/ImageService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/QuestionService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/QuizService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/TopicService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/impl/ImageServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/impl/QuestionServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/impl/QuizServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/impl/TopicServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/scheduler/DeadlineCheckerScheduler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/scheduler/QuizDurationChecker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/ActionForbiddenException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/AnswerNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/InactiveUserException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/InvalidAnswerCountException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/InvalidTokenException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/QuestionAlreadyExistException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/QuestionAreNotAvailableException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/QuestionIsAlreadyAnsweredException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/QuestionNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/QuizFinishedException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/QuizNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/QuizQuestionNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/TopicAlreadyExistException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/TopicNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/UpcomingQuizNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/UserAlreadyExistsException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/UserNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/polytech/quiz/service/util/exception/WrongPasswordException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/DDL.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/DDL_after_mail_confirmation.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/no_image.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/polytech/quiz/service/QuestionServiceImplUT.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/polytech/quiz/service/QuizServiceImplUT.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/polytech/quiz/service/TopicServiceImplUT.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/polytech/quiz/service/UserServiceImplUT.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/DDL.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/DDL_after_mail_confirmation.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/Bootstrap.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/api/AuthController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/api/QuestionController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/api/QuizController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/api/TopicController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/api/UserController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/api/impl/AuthControllerImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/api/impl/ExceptionHandlerController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/api/impl/QuestionControllerImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/api/impl/QuizControllerImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/api/impl/SwaggerController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/api/impl/TopicControllerImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/api/impl/UserControllerImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/config/DataLoader.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/config/ExceptionHandlerControllerConfig/ExceptionHandlerControllerProvider.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/config/SecurityConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/config/SwaggerConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/config/WebConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/answer/AnswerDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/answer/AnswerForPastQuizDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/answer/CreateAnswerDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/question/CreateQuestionDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/question/QuestionDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/question/QuestionForPastQuizDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/quiz/PastQuizInfoDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/quiz/QuizDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/quiz/QuizDtoForLocalStorage.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/quiz/QuizDtoShortInfo.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/quiz/QuizQuestionDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/quiz/UpcomingQuizCreationDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/quiz/UpcomingQuizDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/topic/TopicDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/topic/TopicOnlyTitleDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/user/LoginRequestDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/user/PasswordChangingDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/user/UserInfoDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/dto/user/UserRegistrationDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/entity/AnswerEntity.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/entity/ConfirmationTokenEntity.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/entity/ImageEntity.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/entity/QuestionEntity.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/entity/QuizEntity.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/entity/QuizQuestionEntity.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/entity/SmallImageEntity.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/entity/TopicEntity.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/entity/UpcomingQuizEntity.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/entity/UserEntity.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/entity/enums/UserRole.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/repository/AnswerRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/repository/ConfirmationTokenRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/repository/ImageRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/repository/QuestionRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/repository/QuizQuestionRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/repository/QuizRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/repository/SmallImageRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/repository/TopicRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/repository/UpComingQuizRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/repository/UserRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/security/JwtUserDetailsService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/security/jwt/JwtAuthenticationException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/security/jwt/JwtConfigurer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/security/jwt/JwtTokenFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/security/jwt/JwtTokenProvider.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/security/jwt/JwtUser.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/ImageService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/QuestionService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/QuizService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/TopicService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/UserService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/impl/ImageServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/impl/QuestionServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/impl/QuizServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/impl/TopicServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/impl/UserServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/scheduler/DeadlineCheckerScheduler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/scheduler/QuizDurationChecker.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/ActionForbiddenException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/AnswerNotFoundException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/InactiveUserException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/InvalidAnswerCountException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/InvalidTokenException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/QuestionAlreadyExistException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/QuestionAreNotAvailableException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/QuestionIsAlreadyAnsweredException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/QuestionNotFoundException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/QuizFinishedException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/QuizNotFoundException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/QuizQuestionNotFoundException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/TopicAlreadyExistException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/TopicNotFoundException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/UpcomingQuizNotFoundException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/UserAlreadyExistsException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/UserNotFoundException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/polytech/quiz/service/util/exception/WrongPasswordException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/no_image.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/quiz_app-1.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/quiz_app-1.0.jar.original" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/polytech/quiz/service/QuestionServiceImplUT.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/polytech/quiz/service/QuizServiceImplUT.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/polytech/quiz/service/TopicServiceImplUT.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/polytech/quiz/service/UserServiceImplUT.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/univercity-client/src/components/AddEdiTopics/AddEditTopicsContainer.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/univercity-client/src/components/AdminLeftSideButtons/AdminLeftSideButtonsContainer.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/univercity-client/src/components/CenterBlock/functional/CenterBlockContainer.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/univercity-client/src/components/CenterBlock/ui/CenterBlockUi.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/univercity-client/src/redux/actions/actionTypes/topicActionTypes.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/univercity-client/src/redux/actions/topic/topicActions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../client/univercity-client/src/redux/reducers/topic/topicReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/univercity-client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/univercity-client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/univercity-client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../client/univercity-client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/univercity-client/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client/univercity-client/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/univercity-client/src/components/LogIn/ui/LogInUi.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../client/univercity-client/src/components/LogIn/ui/LogInUi.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/univercity-client/src/components/dummy/Dummy.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/univercity-client/src/redux/actions/user/userActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/univercity-client/src/redux/actions/user/userActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../client/univercity-client/src/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/../client/univercity-client/src/redux/store.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2axRqCZthkzzCk0RPs2k8LF3PvG" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
+  }
+}]]></component>
+  <component name="RunManager" selected="Spring Boot.Bootstrap">
+    <configuration name="quiz_app [clean,compile,package]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="compile" />
+                <option value="package" />
+              </list>
+            </option>
+            <option name="pomFileName" value="pom.xml" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <configuration name="Bootstrap" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="quiz_app" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.polytech.quiz.Bootstrap" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.polytech.quiz.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.Bootstrap" />
+        <item itemvalue="Maven.quiz_app [clean,compile,package]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="76b53554-8e9d-4f33-b5af-0d573e168aff" name="Changes" comment="" />
+      <created>1705258454241</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1705258454241</updated>
+      <workItem from="1705258463816" duration="1310000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

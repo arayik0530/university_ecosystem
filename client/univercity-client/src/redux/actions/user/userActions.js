@@ -25,7 +25,8 @@ export const getCurrentUser = () => (dispatch) => {
         // .then(data => console.log(data.data));
         .then(data => {
             dispatch(setUserType("USER"))
-        });
+        })
+        .catch(e => {});//TODO handle navigate if to login if not logged in
 }
 
 const setToken = (token) => ({type: adminConstants.SET_TOKEN, payload: token});

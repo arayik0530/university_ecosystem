@@ -31,3 +31,34 @@ client/univercity-client/npm-debug.log*
 # Ignore yarn debug logs and error logs
 client/univercity-client/yarn-debug.log*
 client/univercity-client/yarn-error.log*
+
+# Ignore target directory for the backend directory
+backend/target/
+
+# Ignore IntelliJ IDEA project files for the backend directory
+backend/.idea/
+backend/*.iml
+backend/*.ipr
+backend/*.iws
+
+# Ignore Maven build files
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/.mvn/wrapper/maven-wrapper.properties
+
+# Ignore Maven user-specific files
+backend/dependency-reduced-pom.xml
+backend/buildNumber.properties
+
+# Ignore logs
+backend/logs/
+
+# Ignore Maven log files
+backend/maven.log
+
+# Ignore Eclipse project files
+backend/.project
+backend/.classpath
+
+# Ignore Maven Eclipse files
+backend/.settings/

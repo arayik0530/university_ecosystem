@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {eventEmitter} from "./API";
 import {LogInContainer} from "./components/LogIn/functional/LogInContainer";
-import Dummy from "./components/dummy/Dummy";
+import CenterBlockContainer from "./components/CenterBlock/functional/CenterBlockContainer";
 import {Snackbar} from '@material-ui/core'; // Assuming you're using Material UI
 import {Alert} from '@material-ui/lab';
 import {RegisterContainer} from "./components/Register/functional/RegisterContainer";
@@ -47,7 +47,7 @@ function App() {
                 <Routes>
                     <Route path='/register' element={<RegisterContainer/>}/>
                     <Route path='/login' element={<LogInContainer/>}/>
-                    <Route path='/' element={<Dummy/>}/>
+                    <Route path='/' element={<CenterBlockContainer/>}/>
                 </Routes>
 
                 <React.Suspense fallback={<div>Loading Footer...</div>}>
