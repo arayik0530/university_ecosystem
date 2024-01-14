@@ -32,10 +32,10 @@ client/univercity-client/npm-debug.log*
 client/univercity-client/yarn-debug.log*
 client/univercity-client/yarn-error.log*
 
-# Ignore target directory for the backend directory
+# Ignore target directory for the back-end directory
 back-end/target/
 
-# Ignore IntelliJ IDEA project files for the backend directory
+# Ignore IntelliJ IDEA project files for the back-end directory
 back-end/.idea/
 back-end/*.iml
 back-end/*.ipr
@@ -57,7 +57,7 @@ back-end/logs/
 back-end/maven.log
 
 # Ignore Eclipse project files
-backend/.project
+back-end/.project
 back-end/.classpath
 
 # Ignore Maven Eclipse files
