@@ -4,8 +4,8 @@ import { EventEmitter } from 'events';
 export const API = axios.create({
     baseURL: "http://localhost:8090/api/",
     headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Method":"*",
+        // "Access-Control-Allow-Origin": "*",
+        // "Access-Control-Allow-Method":"*",
         "Content-Type": "application/json",
         ...(localStorage.getItem('token') ? {"Authorization": `Bearer_ ${localStorage.getItem('token')}`} : {})
     }

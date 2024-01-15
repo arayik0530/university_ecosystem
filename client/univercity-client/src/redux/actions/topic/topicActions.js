@@ -30,7 +30,7 @@ export const getExistingTopics = () => (dispatch) => {
 }
 
 export const updateTopic = (topic) => (dispatch) => {
-    API.post('/topic/update', topic)
+    API.put('/topic/update', topic)
         .then(data => {
             dispatch(editTopic(topic))
         })
