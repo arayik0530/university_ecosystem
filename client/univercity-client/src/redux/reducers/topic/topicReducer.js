@@ -1,4 +1,4 @@
-import {ADD_TOPIC, DELETE_TOPIC, EDIT_TOPIC, GET_TOPICS} from "../../actions/actionTypes/topicActionTypes";
+import {DELETE_TOPIC, EDIT_TOPIC, GET_TOPICS} from "../../actions/actionTypes/topicActionTypes";
 
 const initialState = {
     topics: []
@@ -19,7 +19,6 @@ const topicReducer = (state = initialState, action) => {
                 topics: state.topics.filter(topic => topic.id !== action.payload.topic.id)
             };
         case GET_TOPICS:
-            // console.log('action payload is: ', action.payload.topics[0])
             return {
                 ...state,
                 topics: [...action.payload.topics.sort((a, b) => b.id - a.id)]

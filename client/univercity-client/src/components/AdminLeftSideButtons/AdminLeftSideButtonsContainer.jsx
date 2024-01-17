@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'flex-start',
         padding: theme.spacing(2),
+        flexBasis: '14vw'
     },
     button: {
         margin: theme.spacing(1),

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getCurrentUser} from "../../../redux/actions/user/userActions";
 import {makeStyles} from "@material-ui/core";
@@ -8,20 +8,23 @@ const useStyles = makeStyles(() => ({
     CenterBlockUi: {
         height: '90vh',/*TODO remove*/
         margin: 'auto',
-        backgroundColor: 'yellow',
+        backgroundColor: 'antiquewhite',
         display: 'flex',
+        flexDirection: "row"
     }
 }));
 
 const CenterBlockContainer = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    dispatch(getCurrentUser());
+    useEffect(() => {
+        dispatch(getCurrentUser());
+    }, []);
     const userType = useSelector((state) => state.user.userType);
     return (
         <CenterBlockUi
             classes={classes}
-            usertype={userType}
+            userType={userType}
         />
     );
 }

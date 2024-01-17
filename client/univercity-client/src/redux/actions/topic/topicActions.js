@@ -24,22 +24,21 @@ export const getTopics = (topics) => ({
 export const getExistingTopics = () => (dispatch) => {
     API.get('/topic/all')
         .then(data => {
-            console.log('data is: ', data.data.content)
-            dispatch(getTopics(data.data.content))//todo check
+            dispatch(getTopics(data.data.content));
         })
 }
 
 export const updateTopic = (topic) => (dispatch) => {
     API.put('/topic/update', topic)
         .then(data => {
-            dispatch(editTopic(topic))
+            dispatch(editTopic(topic));
         })
 }
 
 export const removeTopic = (topic) => (dispatch) => {
     API.delete(`/topic/${topic.id}`)
         .then(data => {
-            dispatch(deleteTopic(topic))
+            dispatch(deleteTopic(topic));
         })
 }
 
