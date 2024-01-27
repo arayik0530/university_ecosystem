@@ -1,8 +1,9 @@
 import React from 'react';
 import FooterUI from '../ui/FooterUI';
-import { makeStyles, useMediaQuery } from '@material-ui/core';
+import {makeStyles} from "tss-react/mui";
+import useMediaQuery from '@mui/material/useMediaQuery';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles()({
     footer: {
         width:'100%',
         // marginTop:'50px',
@@ -32,11 +33,12 @@ const useStyles = makeStyles(() => ({
         justifyContent:props => props.is767 ? 'center' : 'initial'
     }
 
-}));
+});
 
 const FooterContainer = () => {
-    const is767 = useMediaQuery('(max-width:767px)')
-    const classes = useStyles({is767});
+    // const is767 = useMediaQuery('(max-width:767px)')
+    // const classes = useStyles({is767});
+    const {classes} = useStyles();
     return <FooterUI classes={classes} />
 }
 

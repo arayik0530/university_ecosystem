@@ -1,5 +1,5 @@
 import React from 'react';
-import { YMaps } from "react-yandex-maps";
+// import { YMaps } from "react-yandex-maps";
 import logo from '../../../assets/images/logo.webp'
 
 const MapContainer = React.lazy(() => import("../functional/Map/functional/MapContainer"))

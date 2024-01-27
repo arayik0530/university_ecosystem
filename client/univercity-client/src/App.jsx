@@ -3,8 +3,8 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {eventEmitter} from "./API";
 import {LogInContainer} from "./components/LogIn/functional/LogInContainer";
 import CenterBlockContainer from "./components/CenterBlock/functional/CenterBlockContainer";
-import {Snackbar} from '@material-ui/core'; // Assuming you're using Material UI
-import {Alert} from '@material-ui/lab';
+import Snackbar from '@mui/material/Snackbar'; // Assuming you're using Material UI
+import Alert from '@mui/material/Alert';
 import {RegisterContainer} from "./components/Register/functional/RegisterContainer";
 import Header from "./components/Header/Header"; // Alert component from Material UI
 
@@ -55,11 +55,11 @@ function App() {
                 </React.Suspense>
 
                 {/* Display the error message using Material UI Snackbar */}
-                <Snackbar open={!!errorMessage} autoHideDuration={6000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="error">
-                        {errorMessage}
-                    </Alert>
-                </Snackbar>
+                {/*<Snackbar open={!!errorMessage} autoHideDuration={6000} onClose={handleClose}>*/}
+                {/*    <Alert onClose={handleClose} severity="error">*/}
+                {/*        {errorMessage}*/}
+                {/*    </Alert>*/}
+                {/*</Snackbar>*/}
             </Router>
         </main>
     );

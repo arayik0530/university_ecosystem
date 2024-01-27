@@ -1,16 +1,15 @@
 import React, { useRef, useState } from 'react';
 import { RegisterUi } from '../ui/RegisterUi';
-import { makeStyles } from '@material-ui/core/styles';
-import { useNavigate } from 'react-router-dom';
+import {makeStyles} from "tss-react/mui";
+// import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { register } from '../../../redux/actions/user/userActions';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()({
     root: {
         // position: 'absolute',
         // left: '50%',
         // top: '40%',
-        marginTop: '20%',
         transform: 'translate(-50% , -50%)',
         border: '0.5px solid #1540AE',
         boxShadow: '0 0 7px #5984F2',
@@ -21,9 +20,10 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+        marginTop: '20%',
 
         '& > *': {
-            margin: theme.spacing(1),
+            margin: '8px',
             width: '25ch',
         },
     },
@@ -34,12 +34,12 @@ const useStyles = makeStyles((theme) => ({
             color: '#2196F3 !important'
         }
     }
-}));
+});
 
 
 export const RegisterContainer = () => {
-    const classes = useStyles();
-    const navigate = useNavigate();
+    const { classes } = useStyles();
+    // const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const firstNameRef = useRef(null);

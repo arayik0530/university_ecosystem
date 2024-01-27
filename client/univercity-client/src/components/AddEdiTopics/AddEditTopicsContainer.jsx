@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {makeStyles} from "@material-ui/core";
+import {makeStyles} from "tss-react/mui";
 import {useDispatch, useSelector} from "react-redux";
 import {
     createTopic,
-    deleteTopic,
     getExistingTopics,
     removeTopic,
     updateTopic,
@@ -18,18 +17,16 @@ import {
     ListItemSecondaryAction,
     Dialog,
     DialogTitle,
-    DialogContent,
-    DialogActions,
 } from "@mui/material";
 import {Add, Edit, Delete} from "@mui/icons-material";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()({
     root: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
         alignContent: "center",
-        margin: theme.spacing(2),
+        margin: '16px',
         flexBasis: "80vw",
     },
     content: {
@@ -43,9 +40,9 @@ const useStyles = makeStyles((theme) => ({
         width: "15%",
     },
     addButton: {
-        marginTop: theme.spacing(2),
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.primary.contrastText,
+        marginTop: '16px',
+        backgroundColor: '#0000FF',
+        color: '#ffffff',
     },
     listContainer: {
         position: "relative",
@@ -57,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
         height: "40vh",
         overflowY: "scroll",
         width: "80%",
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: '#EFE5D5',
         "&::-webkit-scrollbar": {
             width: "8px", // Adjust the scrollbar width
         },
@@ -66,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
             borderRadius: "5px", // Add border-radius to scrollbar thumb
         },
         "&::-webkit-scrollbar-track": {
-            backgroundColor: theme.palette.background.paper,
+            backgroundColor: '#EFE5D5',
         },
     },
     listItemContainer: {
@@ -74,11 +71,11 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: "antiquewhite", // Change the background color on hover
         },
     },
-}));
+});
 
 const AddEditTopicsContainer = () => {
     const dispatch = useDispatch();
-    const classes = useStyles();
+    const { classes } = useStyles();
     useEffect(() => {
         dispatch(getExistingTopics());
     }, [dispatch]);
@@ -188,7 +185,7 @@ const AddEditTopicsContainer = () => {
                     <Button
                         onClick={handleSave}
                         color="primary"
-                        disabled={!newItem || !newItem.title || !newItem.title.trim()}
+                        // disabled={!newItem || !newItem.title || !newItem.title.trim()
                     >
                         {editIndex !== null ? "Update" : "Add"}
                     </Button>

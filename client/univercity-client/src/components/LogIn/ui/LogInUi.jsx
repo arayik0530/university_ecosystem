@@ -1,13 +1,16 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Alert from '@material-ui/lab/Alert';
+import TextField from '@mui/material/TextField';
+import Button  from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 
 export const LogInUi = ({classes, emailRef, passwordRef, handleLogin, errorMessage}) => {
+    console.log('in child component')
+
     return (
         <div>
             <form className={classes.root} noValidate autoComplete="off" onSubmit={handleLogin}>
                 <TextField
+                    className={classes.textField}
                     type='text'
                     name='email'
                     label="Email"
@@ -15,6 +18,7 @@ export const LogInUi = ({classes, emailRef, passwordRef, handleLogin, errorMessa
                     inputRef={emailRef}
                 />
                 <TextField
+                    className={classes.textField}
                     type='password'
                     name="password"
                     label="Password"

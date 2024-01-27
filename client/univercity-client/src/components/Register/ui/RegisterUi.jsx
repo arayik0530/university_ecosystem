@@ -1,7 +1,7 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Alert from '@material-ui/lab/Alert';
+import TextField from '@mui/material/TextField';
+import Button  from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 
 export const RegisterUi = ({ classes, firstNameRef, lastNameRef, emailRef, passwordRef, confirmPasswordRef, handleRegister, errorMessage }) => {
     return (

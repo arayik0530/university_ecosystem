@@ -3,12 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.12.4",
-    "@material-ui/icons": "^4.11.3",
-    "@material-ui/lab": "^4.0.0-alpha.61",
-    "@mui/icons-material": "^5.15.4",
-    "@mui/material": "^5.15.3",
-    "@pbe/react-yandex-maps": "^1.2.5",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.6",
+    "@mui/material": "^5.15.6",
+    "@mui/system": "^5.15.6",
     "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -21,9 +20,9 @@
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
     "react-select": "^5.8.0",
-    "react-yandex-maps": "^4.6.0",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
+    "tss-react": "^4.9.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
