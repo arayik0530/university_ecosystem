@@ -4,12 +4,12 @@ import App from './App.jsx';
 import * as serviceWorker from './serviceWorker.js';
 import './index.css';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-// import { responsiveFontSizes } from '@mui/material/styles';
+import { responsiveFontSizes } from '@mui/material/styles';
 import {Provider} from "react-redux";
 import store from "./redux/store.js";
 
 let theme = createTheme();
-// theme = responsiveFontSizes(theme);
+theme = responsiveFontSizes(theme);
 
 const root = document.getElementById('root');
 

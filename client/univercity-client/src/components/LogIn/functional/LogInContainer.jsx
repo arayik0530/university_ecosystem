@@ -15,7 +15,8 @@ const useStyles = makeStyles()({
         borderRadius: 7,
         padding: '15px',
         width: 'max-content',
-        margin: 'auto',
+        marginLeft: '50%',
+        marginRight: '50%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -83,8 +84,6 @@ export const LogInContainer = () => {
                 .catch((error) => console.log(error));
         }
     };
-console.log('theme is: ', classes);
-console.log('textfield is: ', classes.textField);
     return (
         <LogInUi
             classes={classes}

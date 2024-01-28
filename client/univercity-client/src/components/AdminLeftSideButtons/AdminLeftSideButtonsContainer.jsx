@@ -19,8 +19,6 @@ const useStyles = makeStyles()({
 const AdminLeftSideButtonsContainer = () => {
     const { classes } = useStyles();
 
-    console.log('theme is: ', classes);
-    console.log('root is: ', classes.root);
     return (
         <div className={classes.root} >
             <Button className={classes.button} variant="contained" color="primary">

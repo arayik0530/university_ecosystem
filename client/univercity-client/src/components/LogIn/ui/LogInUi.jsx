@@ -4,8 +4,6 @@ import Button  from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 
 export const LogInUi = ({classes, emailRef, passwordRef, handleLogin, errorMessage}) => {
-    console.log('in child component')
-
     return (
         <div>
             <form className={classes.root} noValidate autoComplete="off" onSubmit={handleLogin}>

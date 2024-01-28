@@ -2,7 +2,7 @@ import React from 'react';
 // import { YMaps } from "react-yandex-maps";
 import logo from '../../../assets/images/logo.webp'
 
-const MapContainer = React.lazy(() => import("../functional/Map/functional/MapContainer"))
+// const MapContainer = React.lazy(() => import("../functional/Map/functional/MapContainer"))
 
 
 const FooterUI = ({ classes }) => {
@@ -19,11 +19,11 @@ const FooterUI = ({ classes }) => {
             <li>Հեռախոս` +(374) 10-58-01-02</li>
             <li>Էլ.փոստ` info@polytechnic.am</li>
           </ul>
-          <div>
-            <React.Suspense fallback={<div>Loading Map...</div>}>
-              <MapContainer />
-            </React.Suspense>
-          </div>
+          {/*<div>*/}
+          {/*  <React.Suspense fallback={<div>Loading Map...</div>}>*/}
+          {/*    <MapContainer />*/}
+          {/*  </React.Suspense>*/}
+          {/*</div>*/}
         </div>
       </footer>
   )

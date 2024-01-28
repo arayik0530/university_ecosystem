@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
-import {makeStyles} from "tss-react/mui";
-import {useDispatch, useSelector} from "react-redux";
+import React, { useEffect, useState } from "react";
+import { makeStyles } from "tss-react/mui";
+import { useDispatch, useSelector } from "react-redux";
 import {
     createTopic,
     getExistingTopics,
@@ -18,7 +18,7 @@ import {
     Dialog,
     DialogTitle,
 } from "@mui/material";
-import {Add, Edit, Delete} from "@mui/icons-material";
+import { Add, Edit, Delete } from "@mui/icons-material";
 
 const useStyles = makeStyles()({
     root: {
@@ -80,14 +80,13 @@ const AddEditTopicsContainer = () => {
         dispatch(getExistingTopics());
     }, [dispatch]);
     const topics = useSelector((state) => state.topic.topics);
-    console.log("topics are", topics);
     const [isAddDialogOpen, setAddDialogOpen] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
-    const [newItem, setNewItem] = useState("");
+    const [newItem, setNewItem] = useState({ title: "" });
 
     const handleEdit = (index) => {
         setEditIndex(index);
-        setNewItem(topics[index]);
+        setNewItem({ title: topics[index].title });
         setAddDialogOpen(true);
     };
 
@@ -97,7 +96,7 @@ const AddEditTopicsContainer = () => {
 
     const handleAdd = () => {
         setEditIndex(null);
-        setNewItem("");
+        setNewItem({ title: "" });
         setAddDialogOpen(true);
     };
 
@@ -106,20 +105,17 @@ const AddEditTopicsContainer = () => {
     };
 
     const handleSave = () => {
-        console.log('newItem is: ', newItem);
-        console.log('oldItem is: ', topics[editIndex]);
-        if (editIndex) {
-            if(newItem.title !== topics[editIndex].title) {
-                dispatch(updateTopic({...topics[editIndex], title: newItem}));
+        if (editIndex !== null) {
+            if (newItem.title !== topics[editIndex].title) {
+                dispatch(updateTopic({ ...topics[editIndex], title: newItem.title }));
             }
         } else {
-            dispatch(createTopic({title: newItem}));
+            dispatch(createTopic({ title: newItem.title }));
         }
         setEditIndex(null);
-        setNewItem("");
-        setAddDialogOpen(false);
+        setNewItem({ title: "" });
+        handleCloseDialog();
     };
-
     return (
         <div className={classes.root}>
             <div className={classes.content}>
@@ -130,7 +126,7 @@ const AddEditTopicsContainer = () => {
                                 key={index}
                                 className={classes.listItemContainer}
                             >
-                                <ListItemText primary={item.title}/>
+                                <ListItemText primary={item.title} />
                                 <ListItemSecondaryAction>
                                     <IconButton
                                         title="Edit"
@@ -138,7 +134,7 @@ const AddEditTopicsContainer = () => {
                                         edge="end"
                                         aria-label="edit"
                                     >
-                                        <Edit style={{fontSize: "16px"}}/>
+                                        <Edit style={{ fontSize: "16px" }} />
                                     </IconButton>
                                     <IconButton
                                         title="Delete"
@@ -146,7 +142,7 @@ const AddEditTopicsContainer = () => {
                                         edge="end"
                                         aria-label="delete"
                                     >
-                                        <Delete style={{fontSize: "16px"}}/>
+                                        <Delete style={{ fontSize: "16px" }} />
                                     </IconButton>
                                 </ListItemSecondaryAction>
                             </ListItem>
@@ -157,7 +153,7 @@ const AddEditTopicsContainer = () => {
                     <Button
                         className={classes.addButton}
                         variant="contained"
-                        startIcon={<Add/>}
+                        startIcon={<Add />}
                         onClick={handleAdd}
                     >
                         Add New
@@ -174,10 +170,11 @@ const AddEditTopicsContainer = () => {
                         label="Item"
                         type="text"
                         fullWidth
-                        value={newItem.title}
-                        onChange={(e) => setNewItem(e.target.value)}
+                        value={newItem.title || ""}
+                        onChange={(e) => setNewItem({ ...newItem, title: e.target.value })}
                         onKeyDown={(e) => {
                             if (e.key === "Enter") {
+                                e.preventDefault();
                                 handleSave();
                             }
                         }}
@@ -185,7 +182,7 @@ const AddEditTopicsContainer = () => {
                     <Button
                         onClick={handleSave}
                         color="primary"
-                        // disabled={!newItem || !newItem.title || !newItem.title.trim()
+                        disabled={!newItem.title}
                     >
                         {editIndex !== null ? "Update" : "Add"}
                     </Button>

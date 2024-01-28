@@ -9,18 +9,19 @@ const useStyles = makeStyles()({
         // marginTop:'50px',
         height:'max-content',
         background:'#3F51B5',
+        position: 'fixed',
+        bottom: '0'
     },
     footerCenterBlock:{
         width:'85%',
-        margin:'auto',
+        // margin:'auto',
         display:'flex',
         alignItems:'center',
-        flexDirection:props => props.is767 ? 'column': 'initial',
         justifyContent:'space-between',
-        padding: '2.604vw 0'
+        // padding: '2.604vw 0'
     },
     footerUl:{
-        padding:'20px 0',
+        padding:'0 0',
         margin:'0',
         '&>li':{
             listStyleType:'none',
@@ -30,7 +31,7 @@ const useStyles = makeStyles()({
     },
     footerLogoBlock:{
         display:'flex',
-        justifyContent:props => props.is767 ? 'center' : 'initial'
+        justifyContent: 'initial'
     }
 
 });

@@ -53,13 +53,18 @@ function App() {
                 <React.Suspense fallback={<div>Loading Footer...</div>}>
                     <FooterContainer/>
                 </React.Suspense>
-
-                {/* Display the error message using Material UI Snackbar */}
-                {/*<Snackbar open={!!errorMessage} autoHideDuration={6000} onClose={handleClose}>*/}
-                {/*    <Alert onClose={handleClose} severity="error">*/}
-                {/*        {errorMessage}*/}
-                {/*    </Alert>*/}
-                {/*</Snackbar>*/}
+                <Snackbar open={!!errorMessage}
+                          autoHideDuration={6000}
+                          onClose={handleClose}
+                          anchorOrigin={{
+                              vertical: "bottom",
+                              horizontal: "center"
+                          }}
+                >
+                    <Alert onClose={handleClose} severity="error">
+                        {errorMessage}
+                    </Alert>
+                </Snackbar>
             </Router>
         </main>
     );
