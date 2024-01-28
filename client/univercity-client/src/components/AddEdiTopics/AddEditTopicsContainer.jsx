@@ -175,14 +175,16 @@ const AddEditTopicsContainer = () => {
                         onKeyDown={(e) => {
                             if (e.key === "Enter") {
                                 e.preventDefault();
-                                handleSave();
+                                if(newItem.title && topics.map(t => t.title).indexOf(newItem.title) == -1) {
+                                    handleSave();
+                                }
                             }
                         }}
                     />
                     <Button
                         onClick={handleSave}
                         color="primary"
-                        disabled={!newItem.title}
+                        disabled={!newItem.title || topics.map(t => t.title).indexOf(newItem.title) != -1}
                     >
                         {editIndex !== null ? "Update" : "Add"}
                     </Button>
