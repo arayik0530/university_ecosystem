@@ -19,6 +19,8 @@ import {
     DialogTitle,
 } from "@mui/material";
 import { Add, Edit, Delete } from "@mui/icons-material";
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 const useStyles = makeStyles()({
     root: {
@@ -104,6 +106,10 @@ const AddEditTopicsContainer = () => {
         setAddDialogOpen(false);
     };
 
+    const handlePageChange = (event, page) => { //TODO implement
+        console.log(page);
+    };
+
     const handleSave = () => {
         if (editIndex !== null) {
             if (newItem.title !== topics[editIndex].title) {
@@ -149,6 +155,9 @@ const AddEditTopicsContainer = () => {
                         ))}
                     </List>
                 </div>
+                <Stack spacing={2}>
+                    <Pagination count={10} page={2} onChange={handlePageChange}/>
+                </Stack>
                 <div className={classes.addButtonContainer}>
                     <Button
                         className={classes.addButton}
