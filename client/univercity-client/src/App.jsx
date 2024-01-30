@@ -7,29 +7,47 @@ import Snackbar from '@mui/material/Snackbar'; // Assuming you're using Material
 import Alert from '@mui/material/Alert';
 import {RegisterContainer} from "./components/Register/functional/RegisterContainer";
 import Header from "./components/Header/Header"; // Alert component from Material UI
+import { CircularProgress, Backdrop } from '@mui/material';
+
+const LoadingComponent = ({ isLoading }) => {
+    return (
+        <Backdrop open={isLoading} style={{ zIndex: 9999 }}>
+            <CircularProgress style={{ color: 'blue' }} />
+        </Backdrop>
+    );
+};
+
 
 const FooterContainer = React.lazy(() => import("./components/Footer/functional/FooterContainer.jsx"));
 
 function App() {
     const [errorMessage, setErrorMessage] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        // Listen to the 'apiError' event
         const handleApiError = (errorMessage) => {
-            // Set the error message in the state
             setErrorMessage(errorMessage);
         };
+        const handleApiStart = (errorMessage) => {
+            // Set the error message in the state
+            setLoading(true);
+        };
+        const handleApiEnd = (errorMessage) => {
+            // Set the error message in the state
+            setLoading(false);
+        };
 
-        // Register the event listener
         eventEmitter.on('apiError', handleApiError);
+        eventEmitter.on('apiStart', handleApiStart);
+        eventEmitter.on('apiEnd', handleApiEnd);
 
-        // Clean up the event listener when the component unmounts
         return () => {
             eventEmitter.off('apiError', handleApiError);
+            eventEmitter.off('apiStart', handleApiError);
+            eventEmitter.off('apiEnd', handleApiError);
         };
     }, []);
 
-    // Function to close the error message
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -44,6 +62,7 @@ function App() {
                     <Header/>
                 </React.Suspense>
 
+                <LoadingComponent isLoading={loading} />
                 <Routes>
                     <Route path='/register' element={<RegisterContainer/>}/>
                     <Route path='/login' element={<LogInContainer/>}/>

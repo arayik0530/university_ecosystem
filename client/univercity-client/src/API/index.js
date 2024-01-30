@@ -4,17 +4,25 @@ import { EventEmitter } from 'events';
 export const API = axios.create({
     baseURL: "http://localhost:8090/api/",
     headers: {
-        // "Access-Control-Allow-Origin": "*",
-        // "Access-Control-Allow-Method":"*",
         "Content-Type": "application/json",
         ...(localStorage.getItem('token') ? {"Authorization": `Bearer_ ${localStorage.getItem('token')}`} : {})
     }
 });
 
 export const eventEmitter = new EventEmitter();
+API.interceptors.request.use(
+    (config) => {
+        eventEmitter.emit('apiStart');
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 API.interceptors.response.use(
     (response) => {
+        eventEmitter.emit('apiEnd');
         return response;
     },
     (error) => {
