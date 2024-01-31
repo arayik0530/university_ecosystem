@@ -1,6 +1,6 @@
 import React from 'react';
 import AdminLeftSideButtonsContainer from "../../AdminLeftSideButtons/AdminLeftSideButtonsContainer";
-import AddEditTopicsContainer from "../../AddEdiTopics/AddEditTopicsContainer";
+import AddEditTopicsContainer from "../../AddEdiTopics/functional/AddEditTopicsContainer";
 import {ADMIN} from "../../../redux/constants/globalConstants";
 
 export const CenterBlockUi = ({classes, userType}) => {

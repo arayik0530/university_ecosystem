@@ -6,6 +6,7 @@ import com.polytech.quiz.dto.topic.TopicOnlyTitleDto;
 import com.polytech.quiz.service.TopicService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +43,7 @@ public class TopicControllerImpl implements TopicController {
 
     @Override
     @GetMapping("all")
-    public Page<TopicDto> getAllTopics(@PageableDefault Pageable pageable) {
+    public Page<TopicDto> getAllTopics(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         return topicService.getAllTopics(pageable);
     }
 

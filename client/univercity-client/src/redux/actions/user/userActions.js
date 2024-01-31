@@ -30,18 +30,18 @@ export const setAdmin = (admin) => ({type: adminConstants.SET_ADMIN, payload: ad
 
 
 export const login = (credentials) => (dispatch) => {
-    console.log('credentiels ', credentials)
+    // console.log('credentiels ', credentials)
     return API.post('auth/login', credentials)
         .then(({data}) => {
             localStorage.setItem('token', data);
         })
         .then(res => {
             dispatch(getCurrentUser());
-        });
+        }).catch(e => {});
 }
 
 export const register = (credentials) => (dispatch) => {
-    return API.post('auth/register', credentials);
+    return API.post('auth/register', credentials).catch(e => {});
 }
 
 export const addMenuItem = () => {
@@ -51,5 +51,5 @@ export const addMenuItem = () => {
         headers: {
             AUTHORIZATION: `Bearer_ ${token}`,
         },
-    })
+    }).catch(e => {});
 }

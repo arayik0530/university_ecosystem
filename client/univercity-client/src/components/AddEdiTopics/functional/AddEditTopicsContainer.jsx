@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     createTopic,
     getExistingTopics,
-    removeTopic,
+    removeTopic, setSelectedPageIndex,
     updateTopic,
-} from "../../redux/actions/topic/topicActions";
+} from "../../../redux/actions/topic/topicActions";
 import {
     Button,
     TextField,
@@ -16,7 +16,7 @@ import {
     ListItemText,
     ListItemSecondaryAction,
     Dialog,
-    DialogTitle,
+    DialogTitle, DialogContent, DialogActions,
 } from "@mui/material";
 import { Add, Edit, Delete } from "@mui/icons-material";
 import Pagination from '@mui/material/Pagination';
@@ -78,10 +78,14 @@ const useStyles = makeStyles()({
 const AddEditTopicsContainer = () => {
     const dispatch = useDispatch();
     const { classes } = useStyles();
+    const topicsContainer = useSelector((state) => state.topic);
+    const selectedPageIndex = topicsContainer.selectedPageIndex;
+    const elementsPerPage = topicsContainer.elementsPerPage;
     useEffect(() => {
-        dispatch(getExistingTopics());
-    }, [dispatch]);
-    const topics = useSelector((state) => state.topic.topics);
+        dispatch(getExistingTopics(selectedPageIndex.index, elementsPerPage));
+    }, [selectedPageIndex]);
+    const topics = topicsContainer.topics;
+    const totalCount = topicsContainer.totalCount;
     const [isAddDialogOpen, setAddDialogOpen] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
     const [newItem, setNewItem] = useState({ title: "" });
@@ -93,7 +97,13 @@ const AddEditTopicsContainer = () => {
     };
 
     const handleRemove = (index) => {
-        dispatch(removeTopic(topics[index]));
+        let pagIndex = selectedPageIndex.index;
+        if(selectedPageIndex > 0 && topics.length === 1){
+            pagIndex--;
+        }
+        try {
+            dispatch(removeTopic(topics[index], pagIndex, elementsPerPage));
+        } catch (e){}
     };
 
     const handleAdd = () => {
@@ -106,22 +116,39 @@ const AddEditTopicsContainer = () => {
         setAddDialogOpen(false);
     };
 
-    const handlePageChange = (event, page) => { //TODO implement
-        console.log(page);
+    const handlePageChange = (event, page) => {
+        // console.log('selecting page : ', page);
+        // dispatch(setSelectedPageIndex(page - 1));
+        if(page - 1 !== selectedPageIndex.index) {
+            dispatch(setSelectedPageIndex({
+                index: page - 1
+            }));
+        }
     };
 
     const handleSave = () => {
         if (editIndex !== null) {
             if (newItem.title !== topics[editIndex].title) {
-                dispatch(updateTopic({ ...topics[editIndex], title: newItem.title }));
+                dispatch(updateTopic({...topics[editIndex], title: newItem.title}));
             }
         } else {
-            dispatch(createTopic({ title: newItem.title }));
+            try {
+                dispatch(createTopic({title: newItem.title}, 0, elementsPerPage));
+                // console.log('before redirecting to first page');
+                // if(selectedPageIndex === 0){
+                //     dispatch(getExistingTopics(selectedPageIndex, elementsPerPage));
+                // } else {
+                //     dispatch(setSelectedPageIndex(0));
+                // }
+
+            } catch (e) {
+            }
         }
         setEditIndex(null);
-        setNewItem({ title: "" });
+        setNewItem({title: ""});
         handleCloseDialog();
     };
+    const pageCount = Math.ceil(totalCount / elementsPerPage);
     return (
         <div className={classes.root}>
             <div className={classes.content}>
@@ -155,9 +182,11 @@ const AddEditTopicsContainer = () => {
                         ))}
                     </List>
                 </div>
+                {pageCount > 1 &&
                 <Stack spacing={2}>
-                    <Pagination count={10} page={2} onChange={handlePageChange}/>
+                    <Pagination count={pageCount} page={selectedPageIndex.index + 1} onChange={handlePageChange}/>
                 </Stack>
+                }
                 <div className={classes.addButtonContainer}>
                     <Button
                         className={classes.addButton}
@@ -169,36 +198,52 @@ const AddEditTopicsContainer = () => {
                     </Button>
                 </div>
 
-                {/* Add Item Dialog */}
-                <Dialog open={isAddDialogOpen} onClose={handleCloseDialog}>
+                <Dialog
+                    open={isAddDialogOpen}
+                    onClose={handleCloseDialog}
+                    maxWidth="l" // twice wider
+                    fullWidth
+                    PaperProps={{
+                        style: {
+                            maxHeight: "calc(100% - 64px * 2)",
+                            height: "calc(100% - 64px * 4)",
+                            width: "calc(100% - 64px * 8)"
+                        },
+                    }}
+                >
                     <DialogTitle>
-                        {editIndex !== null ? "Edit Item" : "Add New Item"}
+                        {editIndex !== null ? "Edit Topic" : "Add New Topic"}
                     </DialogTitle>
-                    <TextField
-                        margin="dense"
-                        label="Item"
-                        type="text"
-                        fullWidth
-                        value={newItem.title || ""}
-                        onChange={(e) => setNewItem({ ...newItem, title: e.target.value })}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                                e.preventDefault();
-                                if(newItem.title && topics.map(t => t.title).indexOf(newItem.title) == -1) {
-                                    handleSave();
+                    <DialogContent>
+                        <TextField
+                            margin="dense"
+                            label="Topic"
+                            type="text"
+                            fullWidth
+                            value={newItem.title || ""}
+                            onChange={(e) => setNewItem({ ...newItem, title: e.target.value })}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    e.preventDefault();
+                                    if(newItem.title && topics.map(t => t.title).indexOf(newItem.title) === -1) {
+                                        handleSave();
+                                    }
                                 }
-                            }
-                        }}
-                    />
-                    <Button
-                        onClick={handleSave}
-                        color="primary"
-                        disabled={!newItem.title || topics.map(t => t.title).indexOf(newItem.title) != -1}
-                    >
-                        {editIndex !== null ? "Update" : "Add"}
-                    </Button>
-
+                            }}
+                            inputProps={{ maxLength: 255 }}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button
+                            onClick={handleSave}
+                            color="primary"
+                            disabled={!newItem.title || topics.map(t => t.title).indexOf(newItem.title) !== -1}
+                        >
+                            {editIndex !== null ? "Update" : "Add"}
+                        </Button>
+                    </DialogActions>
                 </Dialog>
+
             </div>
         </div>
     );

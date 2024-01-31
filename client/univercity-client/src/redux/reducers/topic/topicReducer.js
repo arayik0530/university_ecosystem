@@ -1,7 +1,17 @@
-import {DELETE_TOPIC, EDIT_TOPIC, GET_TOPICS} from "../../actions/actionTypes/topicActionTypes";
+import {
+    DELETE_TOPIC,
+    EDIT_TOPIC,
+    GET_TOPICS,
+    SET_SELECTED_PAGE_INDEX
+} from "../../actions/actionTypes/topicActionTypes";
 
 const initialState = {
-    topics: []
+    topics: [],
+    selectedPageIndex: {
+        index: 0
+    },
+    totalCount: null,
+    elementsPerPage: 5
 };
 
 const topicReducer = (state = initialState, action) => {
@@ -19,9 +29,18 @@ const topicReducer = (state = initialState, action) => {
                 topics: state.topics.filter(topic => topic.id !== action.payload.topic.id)
             };
         case GET_TOPICS:
+            // console.log('topics are: ', [...action.payload.topics.sort((a, b) => b.id - a.id)]);
+
             return {
                 ...state,
-                topics: [...action.payload.topics.sort((a, b) => b.id - a.id)]
+                topics: [...action.payload.topics.sort((a, b) => b.id - a.id)],
+                totalCount: Number(action.payload.totalCount)
+            };
+        case SET_SELECTED_PAGE_INDEX:
+            // console.log('in reducer changing pagIndex: to', action.payload.pagIndex)
+            return {
+                ...state,
+                selectedPageIndex: action.payload.pagIndex
             };
         default:
             return state;
