@@ -4,6 +4,7 @@ import {
     DELETE_TOPIC,
     EDIT_TOPIC,
     GET_TOPICS,
+    SET_PAGE_ELEMENT_COUNT,
     SET_SELECTED_PAGE_INDEX
 } from "../actionTypes/topicActionTypes";
 
@@ -32,14 +33,16 @@ export const getExistingTopics = (selectedPageIndex, elementsPerPage) => (dispat
         .then(data => {
             const payload = data.data;
             dispatch(getTopics(payload.content, payload.totalElements));
-        }).catch(e => {});
+        }).catch(e => {
+    });
 }
 
 export const updateTopic = (topic) => (dispatch) => {
     API.put('/topic/update', topic)
         .then(data => {
             dispatch(editTopic(topic));
-        }).catch(e => {});
+        }).catch(e => {
+    });
 }
 
 export const removeTopic = (topic, selectedPageIndex, elementsPerPage) => (dispatch) => {
@@ -47,16 +50,25 @@ export const removeTopic = (topic, selectedPageIndex, elementsPerPage) => (dispa
         // .then(data => {
         //     dispatch(deleteTopic(topic));
         // })
-        .then(() => {dispatch(getExistingTopics(selectedPageIndex, elementsPerPage))});
+        .then(() => {
+            dispatch(getExistingTopics(selectedPageIndex, elementsPerPage))
+        });
 }
 
 export const createTopic = (topic, selectedPageIndex, elementsPerPage) => (dispatch) => {
     API.post('/topic/create', topic)
-        .then(() => {dispatch(getExistingTopics(selectedPageIndex, elementsPerPage))});
+        .then(() => {
+            dispatch(getExistingTopics(selectedPageIndex, elementsPerPage))
+        });
 }
 
 export const setSelectedPageIndex = (pagIndex) => ({
     type: SET_SELECTED_PAGE_INDEX,
     payload: {pagIndex}
+});
+
+export const setPageElementCount = (elementsPerPage) => ({
+    type: SET_PAGE_ELEMENT_COUNT,
+    payload: {elementsPerPage}
 });
 

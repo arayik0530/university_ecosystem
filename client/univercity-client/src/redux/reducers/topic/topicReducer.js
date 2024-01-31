@@ -2,6 +2,7 @@ import {
     DELETE_TOPIC,
     EDIT_TOPIC,
     GET_TOPICS,
+    SET_PAGE_ELEMENT_COUNT,
     SET_SELECTED_PAGE_INDEX
 } from "../../actions/actionTypes/topicActionTypes";
 
@@ -11,7 +12,9 @@ const initialState = {
         index: 0
     },
     totalCount: null,
-    elementsPerPage: 5
+    elementsPerPage: {
+        count: 10
+    }
 };
 
 const topicReducer = (state = initialState, action) => {
@@ -29,18 +32,20 @@ const topicReducer = (state = initialState, action) => {
                 topics: state.topics.filter(topic => topic.id !== action.payload.topic.id)
             };
         case GET_TOPICS:
-            // console.log('topics are: ', [...action.payload.topics.sort((a, b) => b.id - a.id)]);
-
             return {
                 ...state,
                 topics: [...action.payload.topics.sort((a, b) => b.id - a.id)],
                 totalCount: Number(action.payload.totalCount)
             };
         case SET_SELECTED_PAGE_INDEX:
-            // console.log('in reducer changing pagIndex: to', action.payload.pagIndex)
             return {
                 ...state,
                 selectedPageIndex: action.payload.pagIndex
+            };
+        case SET_PAGE_ELEMENT_COUNT:
+            return {
+                ...state,
+                elementsPerPage: action.payload.elementsPerPage
             };
         default:
             return state;
