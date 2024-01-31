@@ -65,7 +65,7 @@ public class TopicServiceImplUT {
     public void test_getAllTopics() {
         when(topicRepositoryMock.findAll(any(Pageable.class)))
                 .thenReturn(new PageImpl<>(Collections.singletonList(getTopicEntity())));
-        final Page<TopicDto> topicDtos = topicService.getAllTopics(Pageable.unpaged());
+        final Page<TopicDto> topicDtos = topicService.getAllTopicsContaining(Pageable.unpaged(), null);
 
         verify(topicRepositoryMock, times(1)).findAll(any(Pageable.class));
         assertEquals(topicDtos.getContent().get(0).getTitle(), getTopicEntity().getTitle());

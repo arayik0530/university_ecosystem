@@ -14,7 +14,7 @@ public interface TopicController {
 
     Page<TopicDto> searchByTitle(String title, Pageable pageable);
 
-    Page<TopicDto> getAllTopics(Pageable pageable);
+    Page<TopicDto> getAllTopicsContaining(Pageable pageable, String title);
 
     void remove(Long id);
 

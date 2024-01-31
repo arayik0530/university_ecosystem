@@ -43,8 +43,8 @@ public class TopicControllerImpl implements TopicController {
 
     @Override
     @GetMapping("all")
-    public Page<TopicDto> getAllTopics(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
-        return topicService.getAllTopics(pageable);
+    public Page<TopicDto> getAllTopicsContaining(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, String title) {
+        return topicService.getAllTopicsContaining(pageable, title);
     }
 
     @Override

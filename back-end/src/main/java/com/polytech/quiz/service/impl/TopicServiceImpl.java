@@ -7,6 +7,7 @@ import com.polytech.quiz.repository.TopicRepository;
 import com.polytech.quiz.service.TopicService;
 import com.polytech.quiz.service.util.exception.TopicAlreadyExistException;
 import com.polytech.quiz.service.util.exception.TopicNotFoundException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -42,9 +43,13 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public Page<TopicDto> getAllTopics(Pageable pageable) {
-
-        Page<TopicEntity> topics = topicRepository.findAll(pageable);
+    public Page<TopicDto> getAllTopicsContaining(Pageable pageable, String title) {
+        Page<TopicEntity> topics;
+        if(StringUtils.isBlank(title)) {
+            topics = topicRepository.findAll(pageable);
+        } else{
+            topics = topicRepository.findByTitleContaining(title, pageable);
+        }
         return topics.map(TopicDto::mapFromEntity);
     }
 

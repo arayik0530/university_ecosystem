@@ -13,6 +13,7 @@ public interface TopicRepository extends JpaRepository<TopicEntity, Long> {
     @Query(value = "from TopicEntity as topic where topic.title like %?1%")
     Page<TopicEntity> searchByTitle(String title, Pageable pageable);
 
+    Page<TopicEntity> findByTitleContaining(String title, Pageable pageable);
 
     Optional<TopicEntity> findByTitle(String title);
 }
