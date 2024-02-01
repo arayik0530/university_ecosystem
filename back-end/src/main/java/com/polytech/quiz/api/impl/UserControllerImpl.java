@@ -57,7 +57,7 @@ public class UserControllerImpl implements UserController {
         if (userInfoDto.getId().equals(userService.getMe())) {
             userService.update(userInfoDto);
         }else {
-            throw new ActionForbiddenException();
+            throw new ActionForbiddenException("Invalid request");
         }
     }
 

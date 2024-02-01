@@ -36,7 +36,6 @@ const useStyles = makeStyles()({
         width: "15%",
     },
     addButton: {
-        marginTop: '16px',
         backgroundColor: '#0000FF',
         color: '#ffffff',
     },
@@ -47,7 +46,7 @@ const useStyles = makeStyles()({
         overflow: "hidden",
     },
     list: {
-        height: "40vh",
+        height: "55vh",
         overflowY: "scroll",
         width: "80%",
         backgroundColor: '#EFE5D5',
@@ -76,7 +75,7 @@ const useStyles = makeStyles()({
         width: "25%",
         display: "block"
     },
-    elementCountLabel: {
+    rightSidebarLabel: {
         fontSize: "12px"
     }
 });
@@ -96,7 +95,11 @@ const AddEditTopicsUi = ({
                              setNewItem,
                              handleSave,
                              setElementsPerPageCount,
-                             pageElementCount
+                             elementsPerPageCount,
+                             setPageElementsCount,
+                             filterTitle,
+                             setFilterTitle,
+                             filterByTitle
                          }) => {
     const {classes} = useStyles();
 
@@ -134,7 +137,7 @@ const AddEditTopicsUi = ({
                     </List>
                 </div>
                 {pageCount > 1 &&
-                    <Stack spacing={2}>
+                    <Stack spacing={2} style={{marginTop: "5px"}}>
                         <Pagination count={pageCount} page={selectedPageIndex.index + 1} onChange={handlePageChange}/>
                     </Stack>
                 }
@@ -197,17 +200,54 @@ const AddEditTopicsUi = ({
             </div>
             <div className={classes.rightSideBarContainer}>
                 <div>
-                    <label className={classes.elementCountLabel}>{"Elements per page"}</label>
+                    <label className={classes.rightSidebarLabel}>{"Elements per page"}</label>
                     <input
                         className={classes.elementCountInput}
                         type="text"
-                        value={(pageElementCount && pageElementCount > 0) ? pageElementCount : 10}
+                        value={elementsPerPageCount}
                         onChange={e => {
-                            setElementsPerPageCount(e.target.value);
+                            let value = e.target.value;
+                            if (!value || value <= 0) {
+                                value = 10;
+                            }
+                            setElementsPerPageCount(value);
+                        }}
+                        onBlur={
+                            e => {
+                                setPageElementsCount(e.target.value);
+                            }
+                        }
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                e.preventDefault();
+                                setPageElementsCount(e.target.value);
+                            }
                         }}
                         maxLength={2}
                         pattern="[0-9]*"
                         inputMode="numeric"
+                    />
+                </div>
+                <div>
+                    <label className={classes.rightSidebarLabel}>{"Filter by Topic"}</label>
+                    <input
+                        type="text"
+                        value={filterTitle}
+                        onChange={e => {
+                            setFilterTitle(e.target.value);
+                        }}
+                        onBlur={
+                            e => {
+                                filterByTitle(e.target.value);
+                            }
+                        }
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                e.preventDefault();
+                                filterByTitle(e.target.value);
+                            }
+                        }}
+                        inputMode="text"
                     />
                 </div>
             </div>

@@ -5,7 +5,8 @@ import {
     EDIT_TOPIC,
     GET_TOPICS,
     SET_PAGE_ELEMENT_COUNT,
-    SET_SELECTED_PAGE_INDEX
+    SET_SELECTED_PAGE_INDEX,
+    SET_TITLE_FOR_FILTER
 } from "../actionTypes/topicActionTypes";
 
 export const addTopic = (topic) => ({
@@ -28,8 +29,8 @@ export const getTopics = (topics, totalCount) => ({
     payload: {topics, totalCount}
 });
 
-export const getExistingTopics = (selectedPageIndex, elementsPerPage) => (dispatch) => {
-    API.get(`/topic/all?page=${selectedPageIndex}&size=${elementsPerPage}`)
+export const getExistingTopics = (selectedPageIndex, elementsPerPage, titleText) => (dispatch) => {
+    API.get(`/topic/all?page=${selectedPageIndex}&size=${elementsPerPage}&title=${titleText}`)
         .then(data => {
             const payload = data.data;
             dispatch(getTopics(payload.content, payload.totalElements));
@@ -45,20 +46,21 @@ export const updateTopic = (topic) => (dispatch) => {
     });
 }
 
-export const removeTopic = (topic, selectedPageIndex, elementsPerPage) => (dispatch) => {
+export const removeTopic = (topic, selectedPageIndex, elementsPerPage, titleText) => (dispatch) => {
     API.delete(`/topic/${topic.id}`)
-        // .then(data => {
-        //     dispatch(deleteTopic(topic));
-        // })
         .then(() => {
-            dispatch(getExistingTopics(selectedPageIndex, elementsPerPage))
+            dispatch(getExistingTopics(selectedPageIndex, elementsPerPage, titleText))
+        })
+        .catch(() => {
         });
 }
 
-export const createTopic = (topic, selectedPageIndex, elementsPerPage) => (dispatch) => {
+export const createTopic = (topic, selectedPageIndex, elementsPerPage, titleText) => (dispatch) => {
     API.post('/topic/create', topic)
         .then(() => {
-            dispatch(getExistingTopics(selectedPageIndex, elementsPerPage))
+            dispatch(getExistingTopics(selectedPageIndex, elementsPerPage, titleText))
+        })
+        .catch(() => {
         });
 }
 
@@ -70,5 +72,10 @@ export const setSelectedPageIndex = (pagIndex) => ({
 export const setPageElementCount = (elementsPerPage) => ({
     type: SET_PAGE_ELEMENT_COUNT,
     payload: {elementsPerPage}
+});
+
+export const setTitleForFilter = (titleForFilter) => ({
+    type: SET_TITLE_FOR_FILTER,
+    payload: {titleForFilter}
 });
 

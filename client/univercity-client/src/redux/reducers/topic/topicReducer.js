@@ -3,7 +3,7 @@ import {
     EDIT_TOPIC,
     GET_TOPICS,
     SET_PAGE_ELEMENT_COUNT,
-    SET_SELECTED_PAGE_INDEX
+    SET_SELECTED_PAGE_INDEX, SET_TITLE_FOR_FILTER
 } from "../../actions/actionTypes/topicActionTypes";
 
 const initialState = {
@@ -14,6 +14,9 @@ const initialState = {
     totalCount: null,
     elementsPerPage: {
         count: 10
+    },
+    titleForFilter: {
+        text: ""
     }
 };
 
@@ -46,6 +49,11 @@ const topicReducer = (state = initialState, action) => {
             return {
                 ...state,
                 elementsPerPage: action.payload.elementsPerPage
+            };
+        case SET_TITLE_FOR_FILTER:
+            return {
+                ...state,
+                titleForFilter: action.payload.titleForFilter
             };
         default:
             return state;

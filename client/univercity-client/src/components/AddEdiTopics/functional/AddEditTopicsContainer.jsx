@@ -5,7 +5,7 @@ import {
     getExistingTopics,
     removeTopic,
     setPageElementCount,
-    setSelectedPageIndex,
+    setSelectedPageIndex, setTitleForFilter,
     updateTopic,
 } from "../../../redux/actions/topic/topicActions";
 import AddEditTopicsUi from "../ui/AddEditTopicUi";
@@ -15,20 +15,34 @@ const AddEditTopicsContainer = () => {
     const topicsContainer = useSelector((state) => state.topic);
     const selectedPageIndex = topicsContainer.selectedPageIndex;
     const elementsPerPage = topicsContainer.elementsPerPage;
+    const titleForFilter = topicsContainer.titleForFilter;
     useEffect(() => {
-        dispatch(getExistingTopics(selectedPageIndex.index, elementsPerPage.count));
-    }, [selectedPageIndex, elementsPerPage]);
+        dispatch(getExistingTopics(selectedPageIndex.index, elementsPerPage.count, titleForFilter.text));
+    }, [selectedPageIndex, elementsPerPage, titleForFilter]);
     const topics = topicsContainer.topics;
     const totalCount = topicsContainer.totalCount;
     const [isAddDialogOpen, setAddDialogOpen] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
     const [newItem, setNewItem] = useState({title: ""});
+    const [elementsPerPageCount, setElementsPerPageCount] = useState(elementsPerPage.count);
+    const [filterTitle, setFilterTitle] = useState(titleForFilter.text);
 
-    const setElementsPerPageCount = (count) => {
-        dispatch(setPageElementCount({
-            count: count
-        }));
+    const setPageElementsCount = (count) => {
+        if(count !== elementsPerPage.count) {
+            dispatch(setPageElementCount({
+                count: count
+            }));
+        }
     };
+
+    const filterByTitle = (text) => {
+        if(text !== titleForFilter.text) {
+            dispatch(setTitleForFilter({
+                text: text
+            }));
+        }
+    };
+
 
     const handleEdit = (index) => {
         setEditIndex(index);
@@ -41,10 +55,7 @@ const AddEditTopicsContainer = () => {
         if (selectedPageIndex > 0 && topics.length === 1) {
             pagIndex--;
         }
-        try {
-            dispatch(removeTopic(topics[index], pagIndex, elementsPerPage.count));
-        } catch (e) {
-        }
+        dispatch(removeTopic(topics[index], pagIndex, elementsPerPage.count, titleForFilter.text));
     };
 
     const handleAdd = () => {
@@ -71,10 +82,7 @@ const AddEditTopicsContainer = () => {
                 dispatch(updateTopic({...topics[editIndex], title: newItem.title}));
             }
         } else {
-            try {
-                dispatch(createTopic({title: newItem.title}, 0, elementsPerPage.count));
-            } catch (e) {
-            }
+            dispatch(createTopic({title: newItem.title}, 0, elementsPerPage.count, titleForFilter.text));
         }
         setEditIndex(null);
         setNewItem({title: ""});
@@ -97,7 +105,11 @@ const AddEditTopicsContainer = () => {
             setNewItem={setNewItem}
             handleSave={handleSave}
             setElementsPerPageCount={setElementsPerPageCount}
-            pageElementCount={elementsPerPage.count}
+            elementsPerPageCount={elementsPerPageCount}
+            setPageElementsCount={setPageElementsCount}
+            filterTitle={filterTitle}
+            setFilterTitle={setFilterTitle}
+            filterByTitle={filterByTitle}
         />
     );
 };

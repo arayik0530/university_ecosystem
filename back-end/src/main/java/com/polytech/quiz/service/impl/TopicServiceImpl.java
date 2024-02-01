@@ -2,23 +2,32 @@ package com.polytech.quiz.service.impl;
 
 import com.polytech.quiz.dto.topic.TopicDto;
 import com.polytech.quiz.dto.topic.TopicOnlyTitleDto;
+import com.polytech.quiz.entity.QuestionEntity;
 import com.polytech.quiz.entity.TopicEntity;
 import com.polytech.quiz.repository.TopicRepository;
+import com.polytech.quiz.service.QuestionService;
 import com.polytech.quiz.service.TopicService;
+import com.polytech.quiz.service.util.exception.ActionForbiddenException;
 import com.polytech.quiz.service.util.exception.TopicAlreadyExistException;
 import com.polytech.quiz.service.util.exception.TopicNotFoundException;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
 @Transactional(readOnly = true)
 public class TopicServiceImpl implements TopicService {
+
+    @Value("${the.action.can't.be.completed}")
+    String notAllowedAction;
 
     private TopicRepository topicRepository;
 
@@ -58,7 +67,19 @@ public class TopicServiceImpl implements TopicService {
     public void remove(Long id) {
         Optional<TopicEntity> byId = topicRepository.findById(id);
         if (byId.isPresent()) {
-            topicRepository.deleteById(id);
+            List<QuestionEntity> questions = byId.get().getQuestions();
+            if(questions.isEmpty()) {
+                topicRepository.deleteById(id);
+            } else {
+                throw  new ActionForbiddenException(notAllowedAction
+                        .concat("the topic is used in following questions: ")
+                        .concat(
+                        questions
+                                .stream()
+                                .map(QuestionEntity::getText)
+                                .collect(Collectors.joining(", "))
+                ));
+            }
         } else {
             throw new TopicNotFoundException(id);
         }
