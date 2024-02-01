@@ -43,8 +43,8 @@ function App() {
 
         return () => {
             eventEmitter.off('apiError', handleApiError);
-            eventEmitter.off('apiStart', handleApiError);
-            eventEmitter.off('apiEnd', handleApiError);
+            eventEmitter.off('apiStart', handleApiStart);
+            eventEmitter.off('apiEnd', handleApiEnd);
         };
     }, []);
 
