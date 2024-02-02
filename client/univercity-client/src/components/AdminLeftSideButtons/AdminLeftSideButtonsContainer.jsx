@@ -1,6 +1,7 @@
 import React from 'react';
-import {makeStyles} from "tss-react/mui";
-import Button  from '@mui/material/Button';
+import { makeStyles } from "tss-react/mui";
+import Button from '@mui/material/Button';
+import {adminConstants} from "../../redux/constants/admin/adminConstants";
 
 const useStyles = makeStyles()({
     root: {
@@ -14,20 +15,31 @@ const useStyles = makeStyles()({
         margin: '8px',
         width: '150px'
     },
+    selectedButton: {
+        margin: '8px',
+        width: '150px',
+        backgroundColor: 'lightblue',
+    },
 });
 
-const AdminLeftSideButtonsContainer = () => {
+const AdminLeftSideButtonsContainer = ({ selectedPart, selectPart }) => {
     const { classes } = useStyles();
 
     return (
         <div className={classes.root} >
-            <Button className={classes.button} variant="contained" color="primary">
+            <Button className={selectedPart === adminConstants.TOPICS ? classes.selectedButton : classes.button} variant="contained" color="primary"
+                    onClick={() => {selectPart(adminConstants.TOPICS)}}
+            >
                 Topics
             </Button>
-            <Button className={classes.button} variant="contained" color="primary">
+            <Button className={selectedPart === adminConstants.QUESTIONS ? classes.selectedButton : classes.button} variant="contained" color="primary"
+                    onClick={() => {selectPart(adminConstants.QUESTIONS)}}
+            >
                 Questions
             </Button>
-            <Button className={classes.button} variant="contained" color="primary">
+            <Button className={selectedPart === adminConstants.QUIZ ? classes.selectedButton : classes.button} variant="contained" color="primary"
+                    onClick={() => {selectPart(adminConstants.QUIZ)}}
+            >
                 Quiz
             </Button>
         </div>

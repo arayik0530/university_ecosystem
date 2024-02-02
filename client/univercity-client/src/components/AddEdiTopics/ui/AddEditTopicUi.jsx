@@ -38,6 +38,7 @@ const useStyles = makeStyles()({
     addButton: {
         backgroundColor: '#0000FF',
         color: '#ffffff',
+        width: "150px"
     },
     listContainer: {
         position: "relative",

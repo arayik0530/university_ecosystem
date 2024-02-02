@@ -4,12 +4,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import {combineReducers, compose} from "redux";
 import userReducer from "./reducers/user/userReducer";
 import topicReducer from "./reducers/topic/topicReducer";
+import adminReducer from "./reducers/admin/adminReducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const reducers = combineReducers({
     user: userReducer,
-    topic: topicReducer
+    topic: topicReducer,
+    admin: adminReducer
 });
 
 const store = configureStore({ reducer: reducers })
