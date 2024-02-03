@@ -35,6 +35,9 @@ public class QuestionEntity {
 
     private Boolean isMultiAnswer;
 
+    @OneToMany(mappedBy = "question")
+    private List<QuizQuestionEntity> quizQuestions;
+
     @Override
     public String toString() {
         return "QuestionEntity{" +

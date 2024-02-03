@@ -21,7 +21,7 @@ public class QuizQuestionEntity{
     @JoinColumn(name = "quiz_id", nullable = false)
     private QuizEntity quiz;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "question_id", nullable = false, updatable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private QuestionEntity question;

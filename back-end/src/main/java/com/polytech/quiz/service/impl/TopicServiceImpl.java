@@ -29,7 +29,7 @@ public class TopicServiceImpl implements TopicService {
     @Value("${the.action.can't.be.completed}")
     String notAllowedAction;
 
-    private TopicRepository topicRepository;
+    private final TopicRepository topicRepository;
 
     public TopicServiceImpl(TopicRepository topicRepository) {
         this.topicRepository = topicRepository;

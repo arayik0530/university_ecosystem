@@ -15,7 +15,7 @@ public interface QuestionService {
 
     Page<QuestionDto> searchByText(String text, Pageable pageable);
 
-    Page<QuestionDto> getAllQuestions(Pageable pageable);
+    Page<QuestionDto> getAllQuestions(Pageable pageable, String title, Long topicId);
 
     Page<QuestionDto> getQuestionsByTopic(TopicEntity topic, Pageable pageable);
 

@@ -23,4 +23,9 @@ public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> 
     @Query(value = "SELECT  * from questions where topic_id=:topicId " +
             "group by id order by random () limit :questionLimit", nativeQuery = true)
     List<QuestionEntity> generateQuestion(@Param("topicId") Long topicId, @Param("questionLimit") Long questionLimit);
+
+    @Query("SELECT q FROM QuestionEntity q " +
+            "WHERE (:text IS NULL OR LOWER(q.text) LIKE LOWER(CONCAT('%', :text, '%'))) " +
+            "AND (:topicId IS NULL OR q.topic.id = :topicId)")
+    Page<QuestionEntity> findAllByTextAndTopic(Pageable pageable, String text, Long topicId);
 }

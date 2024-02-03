@@ -7,6 +7,7 @@ import com.polytech.quiz.entity.TopicEntity;
 import com.polytech.quiz.service.QuestionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +37,9 @@ public class QuestionControllerImpl implements QuestionController {
 
     @Override
     @GetMapping("all")
-    public Page<QuestionDto> getAllQuestions(@PageableDefault Pageable pageable) {
-        return questionService.getAllQuestions(pageable);
+    public Page<QuestionDto> getAllQuestions(@PageableDefault(sort = "id", direction = Sort.Direction.DESC)
+                                                           Pageable pageable, String text, Long topicId) {
+        return questionService.getAllQuestions(pageable, text, topicId);
     }
 
     @Override

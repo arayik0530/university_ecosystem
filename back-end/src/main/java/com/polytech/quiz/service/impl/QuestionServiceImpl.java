@@ -3,13 +3,17 @@ package com.polytech.quiz.service.impl;
 import com.polytech.quiz.dto.question.CreateQuestionDto;
 import com.polytech.quiz.dto.question.QuestionDto;
 import com.polytech.quiz.entity.QuestionEntity;
+import com.polytech.quiz.entity.QuizQuestionEntity;
 import com.polytech.quiz.entity.TopicEntity;
 import com.polytech.quiz.repository.AnswerRepository;
 import com.polytech.quiz.repository.QuestionRepository;
 import com.polytech.quiz.repository.TopicRepository;
 import com.polytech.quiz.service.QuestionService;
+import com.polytech.quiz.service.util.exception.ActionForbiddenException;
 import com.polytech.quiz.service.util.exception.QuestionNotFoundException;
 import com.polytech.quiz.service.util.exception.TopicNotFoundException;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,10 +21,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
 public class QuestionServiceImpl implements QuestionService {
+
+    @Value("${the.action.can't.be.completed}")
+    String notAllowedAction;
 
     private QuestionRepository questionRepository;
 
@@ -51,8 +59,13 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Page<QuestionDto> getAllQuestions(Pageable pageable) {
-        Page<QuestionEntity> questions = questionRepository.findAll(pageable);
+    public Page<QuestionDto> getAllQuestions(Pageable pageable, String text, Long topicId) {
+        Page<QuestionEntity> questions;
+        if(StringUtils.isBlank(text) && topicId == null) {
+            questions = questionRepository.findAll(pageable);
+        } else {
+            questions = questionRepository.findAllByTextAndTopic(pageable, text, topicId);
+        }
         return questions.map(QuestionDto::mapFromEntity);
     }
 
@@ -67,7 +80,20 @@ public class QuestionServiceImpl implements QuestionService {
     public void remove(Long id) {
         Optional<QuestionEntity> byId = questionRepository.findById(id);
         if (byId.isPresent()) {
-            questionRepository.deleteById(id);
+            List<QuizQuestionEntity> quizQuestions = byId.get().getQuizQuestions();
+            if(quizQuestions.isEmpty()) {
+                questionRepository.deleteById(id);
+            } else {
+                throw  new ActionForbiddenException(notAllowedAction
+                        .concat("the question is used in following quizzes: ")
+                        .concat(
+                                quizQuestions
+                                        .stream()
+                                        .map(qQ -> qQ.getQuiz().getName())
+                                        .distinct()
+                                        .collect(Collectors.joining(", "))
+                        ));
+            }
         } else {
             throw new QuestionNotFoundException(id);
         }
