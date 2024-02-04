@@ -32,7 +32,9 @@ const questionsReducer = (state = initialState, action) => {
                 questions: state.questions.map(question =>
                     question.id === action.payload.question.id ? {
                         ...question,
-                        text: action.payload.question.text
+                        text: action.payload.question.text,
+                        answers: action.payload.question.answers,
+                        isUsedInQuizzes: action.payload.question.isUsedInQuizzes
                     } : question
                 )
             };
