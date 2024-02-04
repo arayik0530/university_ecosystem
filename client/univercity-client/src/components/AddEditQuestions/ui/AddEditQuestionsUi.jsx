@@ -1,6 +1,7 @@
 import {makeStyles} from "tss-react/mui";
 import {
     Button,
+    Checkbox,
     Dialog,
     DialogActions,
     DialogContent,
@@ -10,9 +11,10 @@ import {
     ListItem,
     ListItemSecondaryAction,
     ListItemText,
+    TextareaAutosize,
     TextField,
 } from "@mui/material";
-import {Add, Delete, Edit} from "@mui/icons-material";
+import {Add, Close, Delete, Edit} from "@mui/icons-material";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
@@ -78,6 +80,35 @@ const useStyles = makeStyles()({
     },
     rightSidebarLabel: {
         fontSize: "12px"
+    },
+    questionDialog: {
+        height: "55vh",
+        overflowY: "scroll",
+        "&::-webkit-scrollbar": {
+            width: "8px",
+        },
+        "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "silver",
+            borderRadius: "5px",
+        },
+        "&::-webkit-scrollbar-track": {
+            backgroundColor: 'white',
+        },
+    },
+    textarea: {
+        borderRadius: "4px",
+        minHeight: "70px !important",
+        fontSize: "20px",
+        border: "2px solid #8080802e",
+        width: '100%',
+        maxWidth: "100% !important",
+        marginBottom: '16px',
+        "&:focus": {
+            transition: "border-color 0.2s ease",
+            borderStyle: "solid",
+            borderColor: "#1976d2",
+            outline: "none"
+        }
     }
 });
 
@@ -103,7 +134,8 @@ const AddEditQuestionsUi = ({
                                 filterByText,
                                 topics,
                                 filterTopic,
-                                filterByTopic
+                                filterByTopic,
+                                isQuestionValid
                             }) => {
     const {classes} = useStyles();
     return (
@@ -162,39 +194,109 @@ const AddEditQuestionsUi = ({
                     fullWidth
                     PaperProps={{
                         style: {
-                            maxHeight: "calc(100% - 64px * 2)",
-                            height: "calc(100% - 64px * 4)",
+                            // maxHeight: "calc(100% - 64px * 2)",
+                            // height: "calc(100% - 64px * 4)",
                             width: "calc(100% - 64px * 8)"
                         },
                     }}
                 >
                     <DialogTitle>
                         {editIndex !== null ? "Edit Question" : "Add New Question"}
+                        <IconButton aria-label="close" onClick={handleCloseDialog} sx={{ position: 'absolute', right: 8, top: 8 }}>
+                            <Close />
+                        </IconButton>
                     </DialogTitle>
-                    <DialogContent>
-                        <TextField
-                            margin="dense"
-                            label="Question"
-                            type="text"
-                            fullWidth
-                            value={newItem.text || ""}
-                            onChange={(e) => setNewItem({...newItem, text: e.target.value})}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    e.preventDefault();
-                                    if (newItem.text && questions.map(t => t.text).indexOf(newItem.text) === -1) {
-                                        handleSave();
-                                    }
-                                }
-                            }}
-                            inputProps={{maxLength: 255}}
-                        />
+                    <DialogContent className={classes.questionDialog} style={{width: '100%', marginBottom: '16px'}}>
+                        <div>
+                            <TextareaAutosize
+                                className={classes.textarea}
+                                disabled={newItem.isUsedInQuizzes}
+                                aria-label="Question"
+                                placeholder="Question"
+                                value={newItem.text}
+                                onChange={(e) => setNewItem({...newItem, text: e.target.value})}
+                            />
+                            <div className={classes.answerList}>
+                                {newItem.answers.map((answer, index) => (
+                                    <div key={index}
+                                         style={{display: 'flex', alignItems: 'center', marginBottom: '8px'}}>
+                                        <TextField
+                                            disabled={newItem.isUsedInQuizzes}
+                                            margin="dense"
+                                            label={`Answer ${index + 1}`}
+                                            type="text"
+                                            value={answer.text}
+                                            onChange={(e) => {
+                                                setNewItem({
+                                                    ...newItem,
+                                                    answers: [
+                                                        ...newItem.answers.slice(0, index),
+                                                        {...newItem.answers[index], text: e.target.value},
+                                                        ...newItem.answers.slice(index + 1)
+                                                    ]
+                                                });
+                                            }
+                                            }
+                                            style={{flex: 1, marginRight: '8px'}}
+                                        />
+                                        <Checkbox
+                                            disabled={newItem.isUsedInQuizzes}
+                                            title="Right answer"
+                                            color="primary"
+                                            checked={answer.rightAnswer}
+                                            onChange={(e) => {
+                                                setNewItem({
+                                                    ...newItem,
+                                                    answers: [
+                                                        ...newItem.answers.slice(0, index),
+                                                        {...newItem.answers[index], rightAnswer: e.target.checked},
+                                                        ...newItem.answers.slice(index + 1)
+                                                    ]
+                                                });
+                                            }
+                                            }
+                                            style={{marginRight: '8px'}}
+                                        />
+                                        <IconButton
+                                            disabled={newItem.isUsedInQuizzes}
+                                            title="Delete"
+                                            onClick={() => {
+                                                setNewItem({
+                                                    ...newItem,
+                                                    answers: newItem.answers.filter((_, idx) => idx !== index)
+                                                })
+                                            }
+                                            }
+                                            edge="end"
+                                            aria-label="delete"
+                                        >
+                                            <Delete style={{fontSize: "24px"}}/>
+                                        </IconButton>
+                                    </div>
+                                ))}
+                            </div>
+                            <Button variant="outlined" onClick={() => {
+                                setNewItem({
+                                    ...newItem,
+                                    answers: [
+                                        ...newItem.answers,
+                                        {text: "", rightAnswer: false}
+                                    ]
+                                })
+                            }
+                            }
+                                    style={{marginTop: '8px', marginBottom: '16px'}}
+                                    disabled={newItem.isUsedInQuizzes}
+                            >
+                                Add Answer
+                            </Button>
+                        </div>
                     </DialogContent>
                     <DialogActions>
                         <Button
                             onClick={handleSave}
                             color="primary"
-                            disabled={!newItem.text || questions.map(t => t.text).indexOf(newItem.text) !== -1}
+                            disabled={!isQuestionValid() || newItem.isUsedInQuizzes}
                         >
                             {editIndex !== null ? "Update" : "Add"}
                         </Button>

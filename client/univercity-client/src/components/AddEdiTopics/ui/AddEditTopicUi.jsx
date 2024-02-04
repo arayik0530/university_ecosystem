@@ -65,7 +65,7 @@ const useStyles = makeStyles()({
     listItemContainer: {
         "&:hover": {
             backgroundColor: "antiquewhite",
-        },
+        }
     },
     rightSideBarContainer: {
         display: "flex",

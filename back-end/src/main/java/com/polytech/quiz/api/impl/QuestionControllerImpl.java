@@ -57,7 +57,7 @@ public class QuestionControllerImpl implements QuestionController {
 
     @Override
     @PutMapping("update")
-    public void update(QuestionDto question) {
+    public void update(@RequestBody QuestionDto question) {
         questionService.update(question);
     }
 

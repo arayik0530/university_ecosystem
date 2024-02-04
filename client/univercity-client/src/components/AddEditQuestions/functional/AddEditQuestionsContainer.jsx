@@ -26,7 +26,11 @@ const AddEditQuestionsContainer = () => {
     const totalCount = questionsContainer.totalCount;
     const [isAddDialogOpen, setAddDialogOpen] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
-    const [newItem, setNewItem] = useState({text: ""});
+    const [newItem, setNewItem] = useState({
+        text: "",
+        answers: [],
+        isUsedInQuizzes: false
+    });
     const [elementsPerPageCount, setElementsPerPageCount] = useState(elementsPerPage.count);
     const [filterText, setFilterText] = useState(textForFilter.text);
     const filterTopic = topicForFilter.id;
@@ -58,7 +62,12 @@ const AddEditQuestionsContainer = () => {
 
     const handleEdit = (index) => {
         setEditIndex(index);
-        setNewItem({text: questions[index].text});
+        const question = questions[index];
+        setNewItem({
+            text: question.text,
+            answers: question.answers,
+            isUsedInQuizzes: question.isUsedInQuizzes
+        });
         setAddDialogOpen(true);
     };
 
@@ -72,7 +81,11 @@ const AddEditQuestionsContainer = () => {
 
     const handleAdd = () => {
         setEditIndex(null);
-        setNewItem({text: ""});
+        setNewItem({
+            text: "",
+            answers: [],
+            isUsedInQuizzes: false
+        });
         setAddDialogOpen(true);
     };
 
@@ -88,17 +101,34 @@ const AddEditQuestionsContainer = () => {
         }
     };
 
-    const handleSave = () => {
+    const handleSave = () => {//TODO 89+8+8
         if (editIndex !== null) {
-            if (newItem.text !== questions[editIndex].text) {
-                dispatch(updateQuestion({...questions[editIndex], text: newItem.text}));
-            }
+            dispatch(updateQuestion({...questions[editIndex], text: newItem.text, answers: newItem.answers, isUsedInQuizzes: newItem.isUsedInQuizzes}));
         } else {
-            dispatch(createQuestion({text: newItem.text}, 0, elementsPerPage.count, textForFilter.text, filterTopic));
+            dispatch(createQuestion({text: newItem.text, answers: newItem.answers, isUsedInQuizzes: newItem.isUsedInQuizzes}, 0, elementsPerPage.count, textForFilter.text, filterTopic));
         }
         setEditIndex(null);
-        setNewItem({text: ""});
+        setNewItem({
+            text: "",
+            answers: [],
+            isUsedInQuizzes: false
+        });
         handleCloseDialog();
+    };
+    const isQuestionValid = () => {
+        if (!newItem.text || newItem.answers.length === 0) {
+            return false;
+        }
+        let hasAtLeastOneRightAnswer = false;
+        for (const answer of newItem.answers) {
+            if (!answer.text) {
+                return false;
+            }
+            if (answer.rightAnswer) {
+                hasAtLeastOneRightAnswer = true;
+            }
+        }
+        return hasAtLeastOneRightAnswer;
     };
     const pageCount = Math.ceil(totalCount / elementsPerPage.count);
     return (
@@ -125,6 +155,7 @@ const AddEditQuestionsContainer = () => {
             topics={topics}
             filterTopic={filterTopic}
             filterByTopic={filterByTopic}
+            isQuestionValid={isQuestionValid}
         />
     );
 };

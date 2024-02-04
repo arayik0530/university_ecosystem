@@ -24,10 +24,14 @@ public class QuestionDto {
     private Long nextQuizQuestionId;
 
     private Long quizId;
+
+    private Boolean isUsedInQuizzes;
     public QuestionEntity toEntity() {
 
         QuestionEntity question = new QuestionEntity();
         question.setText(this.text);
+        456
+                //TODO implement
 
         return question;
     }
@@ -42,6 +46,7 @@ public class QuestionDto {
         questionDto.setAnswers(question.getAnswers().stream()
                 .map(AnswerDto::mapFromEntity).collect(Collectors.toList()));
         questionDto.setIsMultiAnswer(question.getIsMultiAnswer());
+        questionDto.setIsUsedInQuizzes(!question.getQuizQuestions().isEmpty());
         return questionDto;
     }
 
