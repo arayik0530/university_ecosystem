@@ -7,6 +7,7 @@ import lombok.Data;
 public class AnswerDto {
     private Long id;
     private String text;
+    private boolean isRightAnswer;
 
     public AnswerEntity toEntity(){
 
@@ -21,7 +22,7 @@ public class AnswerDto {
 
         answerDto.id = answerEntity.getId();
         answerDto.text = answerEntity.getText();
-
+        answerDto.isRightAnswer = answerEntity.getIsRight();
         return answerDto;
     }
 

@@ -82,31 +82,30 @@ const useStyles = makeStyles()({
 });
 
 const AddEditQuestionsUi = ({
-                             questions,
-                             handleEdit,
-                             handleRemove,
-                             pageCount,
-                             selectedPageIndex,
-                             handlePageChange,
-                             handleAdd,
-                             isAddDialogOpen,
-                             handleCloseDialog,
-                             editIndex,
-                             newItem,
-                             setNewItem,
-                             handleSave,
-                             setElementsPerPageCount,
-                             elementsPerPageCount,
-                             setPageElementsCount,
-                             filterText,
-                             setFilterText,
-                             filterByText,
-                             topics,
-                             filterTopic,
-                             filterByTopic
-                         }) => {
+                                questions,
+                                handleEdit,
+                                handleRemove,
+                                pageCount,
+                                selectedPageIndex,
+                                handlePageChange,
+                                handleAdd,
+                                isAddDialogOpen,
+                                handleCloseDialog,
+                                editIndex,
+                                newItem,
+                                setNewItem,
+                                handleSave,
+                                setElementsPerPageCount,
+                                elementsPerPageCount,
+                                setPageElementsCount,
+                                filterText,
+                                setFilterText,
+                                filterByText,
+                                topics,
+                                filterTopic,
+                                filterByTopic
+                            }) => {
     const {classes} = useStyles();
-
     return (
         <div className={classes.root}>
             <div className={classes.content}>
