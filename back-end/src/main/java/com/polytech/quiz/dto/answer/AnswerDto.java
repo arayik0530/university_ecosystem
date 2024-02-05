@@ -13,6 +13,7 @@ public class AnswerDto {
 
         AnswerEntity answer = new AnswerEntity();
         answer.setText(this.text);
+        answer.setIsRight(this.isRightAnswer);
 
         return answer;
     }

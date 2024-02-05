@@ -29,7 +29,8 @@ const AddEditQuestionsContainer = () => {
     const [newItem, setNewItem] = useState({
         text: "",
         answers: [],
-        isUsedInQuizzes: false
+        isUsedInQuizzes: false,
+        topicId: null
     });
     const [elementsPerPageCount, setElementsPerPageCount] = useState(elementsPerPage.count);
     const [filterText, setFilterText] = useState(textForFilter.text);
@@ -66,7 +67,8 @@ const AddEditQuestionsContainer = () => {
         setNewItem({
             text: question.text,
             answers: question.answers,
-            isUsedInQuizzes: question.isUsedInQuizzes
+            isUsedInQuizzes: question.isUsedInQuizzes,
+            topicId: question.topicId
         });
         setAddDialogOpen(true);
     };
@@ -84,7 +86,8 @@ const AddEditQuestionsContainer = () => {
         setNewItem({
             text: "",
             answers: [],
-            isUsedInQuizzes: false
+            isUsedInQuizzes: false,
+            topicId: null
         });
         setAddDialogOpen(true);
     };
@@ -101,22 +104,23 @@ const AddEditQuestionsContainer = () => {
         }
     };
 
-    const handleSave = () => {//TODO 89+8+8
+    const handleSave = () => {
         if (editIndex !== null) {
-            dispatch(updateQuestion({...questions[editIndex], text: newItem.text, answers: newItem.answers, isUsedInQuizzes: newItem.isUsedInQuizzes}));
+            dispatch(updateQuestion({...questions[editIndex], text: newItem.text, answers: newItem.answers, isUsedInQuizzes: newItem.isUsedInQuizzes, topicId: newItem.topicId}));
         } else {
-            dispatch(createQuestion({text: newItem.text, answers: newItem.answers, isUsedInQuizzes: newItem.isUsedInQuizzes}, 0, elementsPerPage.count, textForFilter.text, filterTopic));
+            dispatch(createQuestion({text: newItem.text, answers: newItem.answers, isUsedInQuizzes: newItem.isUsedInQuizzes, topicId: newItem.topicId}, 0, elementsPerPage.count, textForFilter.text, filterTopic));
         }
         setEditIndex(null);
         setNewItem({
             text: "",
             answers: [],
-            isUsedInQuizzes: false
+            isUsedInQuizzes: false,
+            topicId: null
         });
         handleCloseDialog();
     };
     const isQuestionValid = () => {
-        if (!newItem.text || newItem.answers.length === 0) {
+        if (!newItem.text || newItem.answers.length === 0 || !newItem.topicId) {
             return false;
         }
         let hasAtLeastOneRightAnswer = false;

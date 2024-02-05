@@ -202,8 +202,30 @@ const AddEditQuestionsUi = ({
                 >
                     <DialogTitle>
                         {editIndex !== null ? "Edit Question" : "Add New Question"}
-                        <IconButton aria-label="close" onClick={handleCloseDialog} sx={{ position: 'absolute', right: 8, top: 8 }}>
-                            <Close />
+                        <div>
+                            <label style={{marginRight: '3%'}} className={classes.rightSidebarLabel}>{"Topic"}</label>
+                            <select
+                                disabled={newItem.isUsedInQuizzes}
+                                style={{width: '200px'}}
+                                onChange={(e) => {
+                                    setNewItem({
+                                        ...newItem,
+                                        topicId: (e.target.value !== "0" ? e.target.value : null)
+                                    });
+                                }}
+                                value={newItem.topicId ? newItem.topicId : "0"}
+                            >
+                                <option value="0">Select Topic</option>
+                                {topics.map(topic => (
+                                    <option key={topic.id} value={topic.id}>
+                                        {topic.title}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <IconButton aria-label="close" onClick={handleCloseDialog}
+                                    sx={{position: 'absolute', right: 8, top: 8}}>
+                            <Close/>
                         </IconButton>
                     </DialogTitle>
                     <DialogContent className={classes.questionDialog} style={{width: '100%', marginBottom: '16px'}}>

@@ -30,8 +30,9 @@ public class QuestionDto {
 
         QuestionEntity question = new QuestionEntity();
         question.setText(this.text);
-        456
-                //TODO implement
+        question.setAnswers(this.getAnswers().stream()
+                .map(AnswerDto::toEntity)
+                .collect(Collectors.toList()));
 
         return question;
     }

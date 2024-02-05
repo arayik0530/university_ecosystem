@@ -27,14 +27,16 @@ const initialState = {
 const questionsReducer = (state = initialState, action) => {
     switch (action.type) {
         case EDIT_QUESTION:
+            const updatingQuestion = action.payload.question;
             return {
                 ...state,
                 questions: state.questions.map(question =>
-                    question.id === action.payload.question.id ? {
+                    question.id === updatingQuestion.id ? {
                         ...question,
-                        text: action.payload.question.text,
-                        answers: action.payload.question.answers,
-                        isUsedInQuizzes: action.payload.question.isUsedInQuizzes
+                        text: updatingQuestion.text,
+                        answers: updatingQuestion.answers,
+                        isUsedInQuizzes: updatingQuestion.isUsedInQuizzes,
+                        topicId: updatingQuestion.topicId
                     } : question
                 )
             };

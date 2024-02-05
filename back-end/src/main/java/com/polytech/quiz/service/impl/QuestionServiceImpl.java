@@ -1,7 +1,9 @@
 package com.polytech.quiz.service.impl;
 
+import com.polytech.quiz.dto.answer.AnswerDto;
 import com.polytech.quiz.dto.question.CreateQuestionDto;
 import com.polytech.quiz.dto.question.QuestionDto;
+import com.polytech.quiz.entity.AnswerEntity;
 import com.polytech.quiz.entity.QuestionEntity;
 import com.polytech.quiz.entity.QuizQuestionEntity;
 import com.polytech.quiz.entity.TopicEntity;
@@ -19,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -61,7 +64,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Page<QuestionDto> getAllQuestions(Pageable pageable, String text, Long topicId) {
         Page<QuestionEntity> questions;
-        if(StringUtils.isBlank(text) && topicId == null) {
+        if (StringUtils.isBlank(text) && topicId == null) {
             questions = questionRepository.findAll(pageable);
         } else {
             questions = questionRepository.findAllByTextAndTopic(pageable, text, topicId);
@@ -81,10 +84,10 @@ public class QuestionServiceImpl implements QuestionService {
         Optional<QuestionEntity> byId = questionRepository.findById(id);
         if (byId.isPresent()) {
             List<QuizQuestionEntity> quizQuestions = byId.get().getQuizQuestions();
-            if(quizQuestions.isEmpty()) {
+            if (quizQuestions.isEmpty()) {
                 questionRepository.deleteById(id);
             } else {
-                throw  new ActionForbiddenException(notAllowedAction
+                throw new ActionForbiddenException(notAllowedAction
                         .concat("the question is used in following quizzes: ")
                         .concat(
                                 quizQuestions
@@ -105,7 +108,35 @@ public class QuestionServiceImpl implements QuestionService {
         Optional<QuestionEntity> byId = questionRepository.findById(question.getId());
         if (byId.isPresent()) {
             QuestionEntity questionEntity = byId.get();
-            questionEntity = question.toEntity();
+            questionEntity.setText(question.getText());
+            List<Long> answerIdsToRemove = new ArrayList<>();
+            List<AnswerEntity> addedAnswerEntityList = new ArrayList<>();
+
+            for (AnswerDto answer : question.getAnswers()) {
+                Long answerId = answer.getId();
+                if (answerId != null) {
+                    boolean isDeleted = true;
+                    for (AnswerEntity answerEntity : questionEntity.getAnswers()) {
+                        if (answerId.equals(answerEntity.getId())) {
+                            isDeleted = false;
+                            answerEntity.setIsRight(answer.isRightAnswer());
+                            answerEntity.setText(answer.getText());
+                            break;
+                        }
+                    }
+                    if (isDeleted) {
+                        answerIdsToRemove.add(answer.getId());
+                    }
+                } else {
+                    AnswerEntity answerEntity = new AnswerEntity();
+                    answerEntity.setText(answer.getText());
+                    answerEntity.setIsRight(answer.isRightAnswer());
+                    answerEntity.setQuestion(questionEntity);
+                }
+            }
+            questionEntity.getAnswers().removeIf(a -> answerIdsToRemove.contains(a.getId()));
+            questionEntity.getAnswers().addAll(addedAnswerEntityList);
+            questionEntity.setTopic(topicRepository.getById(question.getTopicId()));
             questionRepository.save(questionEntity);
         } else {
             throw new QuestionNotFoundException(question.getId());
@@ -122,10 +153,9 @@ public class QuestionServiceImpl implements QuestionService {
     public void create(CreateQuestionDto question) {
         QuestionEntity questionEntity = question.toEntity();
         Optional<TopicEntity> byId = topicRepository.findById(question.getTopicId());
-        if(byId.isPresent()){
+        if (byId.isPresent()) {
             questionEntity.setTopic(byId.get());
-        }
-        else {
+        } else {
             throw new TopicNotFoundException(question.getTopicId());
         }
 
