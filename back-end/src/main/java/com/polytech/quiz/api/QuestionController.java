@@ -21,5 +21,5 @@ QuestionController {
 
     void update(QuestionDto question);
 
-    void create(CreateQuestionDto question);
+    void create(QuestionDto question);
 }

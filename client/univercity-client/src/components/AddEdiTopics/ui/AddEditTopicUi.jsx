@@ -78,6 +78,9 @@ const useStyles = makeStyles()({
     },
     rightSidebarLabel: {
         fontSize: "12px"
+    },
+    rightSidebarInput: {
+        width: "100%"
     }
 });
 
@@ -232,6 +235,7 @@ const AddEditTopicsUi = ({
                 <div>
                     <label className={classes.rightSidebarLabel}>{"Filter by Topic"}</label>
                     <input
+                        className={classes.rightSidebarInput}
                         type="text"
                         value={filterTitle}
                         onChange={e => {

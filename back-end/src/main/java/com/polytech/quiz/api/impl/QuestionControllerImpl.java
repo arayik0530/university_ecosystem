@@ -64,7 +64,7 @@ public class QuestionControllerImpl implements QuestionController {
     @Override
     @PostMapping("create")
   //  @PreAuthorize(value = "hasAuthority('ADMIN')")
-    public void create(@RequestBody CreateQuestionDto question) {
+    public void create(@RequestBody QuestionDto question) {
         questionService.create(question);
     }
 }

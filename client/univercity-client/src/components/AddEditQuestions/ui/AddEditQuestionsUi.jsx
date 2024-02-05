@@ -224,6 +224,7 @@ const AddEditQuestionsUi = ({
                             </select>
                         </div>
                         <IconButton aria-label="close" onClick={handleCloseDialog}
+                                    title={"Close"}
                                     sx={{position: 'absolute', right: 8, top: 8}}>
                             <Close/>
                         </IconButton>
@@ -358,6 +359,7 @@ const AddEditQuestionsUi = ({
                 <div>
                     <label className={classes.rightSidebarLabel}>{"Filter by Question"}</label>
                     <input
+                        style={{width: '100%'}}
                         type="text"
                         value={filterText}
                         onChange={e => {
@@ -380,6 +382,7 @@ const AddEditQuestionsUi = ({
                 <div>
                     <label className={classes.rightSidebarLabel}>{"Filter by Topic"}</label>
                     <select
+                        style={{width: '100%'}}
                         onChange={e => {
                             filterByTopic(e.target.value);
                         }}

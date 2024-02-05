@@ -150,7 +150,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     @Transactional
-    public void create(CreateQuestionDto question) {
+    public void create(QuestionDto question) {
         QuestionEntity questionEntity = question.toEntity();
         Optional<TopicEntity> byId = topicRepository.findById(question.getTopicId());
         if (byId.isPresent()) {
@@ -159,9 +159,13 @@ public class QuestionServiceImpl implements QuestionService {
             throw new TopicNotFoundException(question.getTopicId());
         }
 
-        questionEntity
-                .getAnswers()
-                .forEach(answer -> answer.setQuestion(questionEntity));
+        for (AnswerDto answer : question.getAnswers()) {
+            AnswerEntity answerEntity = new AnswerEntity();
+            answerEntity.setIsRight(answer.isRightAnswer());
+            answerEntity.setText(answer.getText());
+            answerEntity.setQuestion(questionEntity);
+            questionEntity.getAnswers().add(answerEntity);
+        }
 
         questionRepository.save(questionEntity);
     }
