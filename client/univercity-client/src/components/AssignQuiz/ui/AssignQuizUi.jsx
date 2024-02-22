@@ -153,7 +153,7 @@ const AssignQuizUi = () => {
                                         label="Select deadline"
                                         sx={{
                                             '& .MuiInputBase-root': {
-                                                width: '200px',
+                                                width: '220px',
                                             },
                                         }}
                                         format="DD/MM/YYYY"
@@ -166,7 +166,7 @@ const AssignQuizUi = () => {
                         value={questionCount}
                         onChange={handleQuestionCountChange}
                         className={classes.formControl}
-                        style={{fontSize: 'small', width: '200px'}}
+                        style={{fontSize: 'small', width: '220px'}}
                         variant="outlined" size="small"
                     />
                     <TextField
@@ -174,7 +174,7 @@ const AssignQuizUi = () => {
                         value={durationInMinutes}
                         onChange={handleDurationChange}
                         className={classes.formControl}
-                        style={{fontSize: 'small', width: '200px'}}
+                        style={{fontSize: 'small', width: '220px'}}
                         variant="outlined" size="small"
                     />
                 </div>
