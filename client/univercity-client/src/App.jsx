@@ -7,12 +7,14 @@ import Snackbar from '@mui/material/Snackbar'; // Assuming you're using Material
 import Alert from '@mui/material/Alert';
 import {RegisterContainer} from "./components/Register/functional/RegisterContainer";
 import Header from "./components/Header/Header"; // Alert component from Material UI
-import { CircularProgress, Backdrop } from '@mui/material';
+import {Backdrop, CircularProgress} from '@mui/material';
+import {useDispatch, useSelector} from "react-redux";
+import {setMessage} from './redux/actions/message/messageActions';
 
-const LoadingComponent = ({ isLoading }) => {
+const LoadingComponent = ({isLoading}) => {
     return (
-        <Backdrop open={isLoading} style={{ zIndex: 9999 }}>
-            <CircularProgress style={{ color: 'blue' }} />
+        <Backdrop open={isLoading} style={{zIndex: 9999}}>
+            <CircularProgress style={{color: 'blue'}}/>
         </Backdrop>
     );
 };
@@ -21,18 +23,20 @@ const LoadingComponent = ({ isLoading }) => {
 const FooterContainer = React.lazy(() => import("./components/Footer/functional/FooterContainer.jsx"));
 
 function App() {
-    const [errorMessage, setErrorMessage] = useState(null);
+    // const [errorMessage, setErrorMessage] = useState(null);
+    const message = useSelector((state) => state.message);
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const handleApiError = (errorMessage) => {
-            setErrorMessage(errorMessage);
+            dispatch(setMessage(errorMessage, 'error'))
         };
-        const handleApiStart = (errorMessage) => {
+        const handleApiStart = () => {
             // Set the error message in the state
             setLoading(true);
         };
-        const handleApiEnd = (errorMessage) => {
+        const handleApiEnd = () => {
             // Set the error message in the state
             setLoading(false);
         };
@@ -52,7 +56,7 @@ function App() {
         if (reason === 'clickaway') {
             return;
         }
-        setErrorMessage(null);
+        dispatch(setMessage(null))
     };
 
     return (
@@ -62,7 +66,7 @@ function App() {
                     <Header/>
                 </React.Suspense>
 
-                <LoadingComponent isLoading={loading} />
+                <LoadingComponent isLoading={loading}/>
                 <Routes>
                     <Route path='/register' element={<RegisterContainer/>}/>
                     <Route path='/login' element={<LogInContainer/>}/>
@@ -72,7 +76,7 @@ function App() {
                 <React.Suspense fallback={<div>Loading Footer...</div>}>
                     <FooterContainer/>
                 </React.Suspense>
-                <Snackbar open={!!errorMessage}
+                <Snackbar open={!!message.messageText}
                           autoHideDuration={6000}
                           onClose={handleClose}
                           anchorOrigin={{
@@ -80,8 +84,8 @@ function App() {
                               horizontal: "center"
                           }}
                 >
-                    <Alert onClose={handleClose} severity="error">
-                        {errorMessage}
+                    <Alert onClose={handleClose} severity={message.messageType}>
+                        {message.messageText}
                     </Alert>
                 </Snackbar>
             </Router>

@@ -17,6 +17,8 @@ import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import API from "../../../API";
+import {useDispatch, useSelector} from "react-redux";
+import {setMessage} from '../../../redux/actions/message/messageActions';
 
 const useStyles = makeStyles()({
     formControl: {
@@ -51,6 +53,9 @@ const useStyles = makeStyles()({
 });
 
 const AssignQuizUi = () => {
+    const message = useSelector((state) => state.message);
+    const dispatch = useDispatch();
+
     const {classes} = useStyles();
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [selectedTopic, setSelectedTopic] = useState('');
@@ -133,6 +138,7 @@ const AssignQuizUi = () => {
                 setDeadline(null);
                 setSearchTextUsers('');
                 setSearchTextTopics('');
+                dispatch(setMessage('Quiz assigned successfully', 'success'));
             })
             .catch(e => {
             });
@@ -292,7 +298,6 @@ const AssignQuizUi = () => {
                                         .map((topic) => (
                                             <ListItem key={topic.id} dense button onClick={() => {
                                                 setSelectedTopic(topic);
-                                                console.log(topic);
                                             }}>
                                                 <ListItemIcon>
                                                     <Radio
