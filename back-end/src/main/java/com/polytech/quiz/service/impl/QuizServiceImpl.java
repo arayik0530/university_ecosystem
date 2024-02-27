@@ -171,23 +171,25 @@ public class QuizServiceImpl implements QuizService {
     @Override
     @Transactional
     public void createUpcomingQuiz(UpcomingQuizCreationDto quizCreationDto) {
-        UpcomingQuizEntity upcomingQuizEntity = new UpcomingQuizEntity();
 
-        UserEntity userEntity = userRepository.findById(quizCreationDto.getUserId())
-                .orElseThrow(() -> new UserNotFoundException(quizCreationDto.getUserId()));
+        List<UserEntity> userEntityList = userRepository.findAllByIdList(quizCreationDto.getUserIdList());
 
         TopicEntity topicEntity = topicRepository.findById(quizCreationDto.getTopicId())
                 .orElseThrow(() -> new TopicNotFoundException(quizCreationDto.getTopicId()));
 
-        upcomingQuizEntity.setUser(userEntity);
-        upcomingQuizEntity.setTopic(topicEntity);
+        for (UserEntity userEntity : userEntityList) {
+            UpcomingQuizEntity upcomingQuizEntity = new UpcomingQuizEntity();
+            upcomingQuizEntity.setUser(userEntity);
+            upcomingQuizEntity.setTopic(topicEntity);
 
-        upcomingQuizEntity.setDeadline(quizCreationDto.getDeadline().atStartOfDay());
-        upcomingQuizEntity.setCount(quizCreationDto.getQuestionCount());
-        upcomingQuizEntity.setDurationInMinutes(quizCreationDto.getDurationInMinutes());
-        upComingQuizRepository.save(upcomingQuizEntity);
-        userEntity.getUpcomingQuizes().add(upcomingQuizEntity);
-        userRepository.save(userEntity);
+            upcomingQuizEntity.setDeadline(quizCreationDto.getDeadline().atStartOfDay());
+            upcomingQuizEntity.setCount(quizCreationDto.getQuestionCount());
+            upcomingQuizEntity.setDurationInMinutes(quizCreationDto.getDurationInMinutes());
+            upComingQuizRepository.save(upcomingQuizEntity);
+
+            userEntity.getUpcomingQuizes().add(upcomingQuizEntity);
+            userRepository.save(userEntity);
+        }
     }
 
     @Override

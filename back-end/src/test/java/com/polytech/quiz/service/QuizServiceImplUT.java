@@ -268,7 +268,7 @@ public class QuizServiceImplUT {
         quizCreationDto.setDurationInMinutes(120);
         quizCreationDto.setQuestionCount(2L);
         quizCreationDto.setTopicId(1L);
-        quizCreationDto.setUserId(1L);
+        quizCreationDto.setUserIdList(1L);
 
         quizService.createUpcomingQuiz(quizCreationDto);
 
@@ -280,7 +280,7 @@ public class QuizServiceImplUT {
     public void test_createUpcomingQuiz_fail() {
         when(userRepositoryMock.findById(any())).thenReturn(Optional.empty());
         final UpcomingQuizCreationDto quizCreationDto = new UpcomingQuizCreationDto();
-        quizCreationDto.setUserId(1L);
+        quizCreationDto.setUserIdList(1L);
 
         assertThrows(UserNotFoundException.class, () -> quizService.createUpcomingQuiz(quizCreationDto));
         verify(upComingQuizRepositoryMock, times(0)).save(any());

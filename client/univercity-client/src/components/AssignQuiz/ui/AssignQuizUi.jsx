@@ -1,24 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {makeStyles} from 'tss-react/mui';
 import {
+    Button,
+    Checkbox,
+    InputAdornment,
     List,
     ListItem,
     ListItemIcon,
-    ListItemText,
-    Checkbox,
+    OutlinedInput,
     Radio,
     TextField,
     Typography,
-    Button,
-    OutlinedInput,
-    InputAdornment,
 } from '@mui/material';
 import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import API from "../../../API";
-import {getExistingTopics} from "../../../redux/actions/topic/topicActions";
 
 const useStyles = makeStyles()({
     formControl: {
@@ -65,11 +63,17 @@ const AssignQuizUi = () => {
     const [allTopics, setAllTopics] = useState([]);
     useEffect(() => {
         API.get('/user/all/lite')
-            .then(users => {setAllUsers(users.data);})
-            .catch(e => {});
+            .then(users => {
+                setAllUsers(users.data);
+            })
+            .catch(e => {
+            });
         API.get('/topic/all/lite')
-            .then(topics => {setAllTopics(topics.data);})
-            .catch(e => {});
+            .then(topics => {
+                setAllTopics(topics.data);
+            })
+            .catch(e => {
+            });
     }, []);
 
     const handleUserToggle = (user) => () => {
@@ -114,13 +118,24 @@ const AssignQuizUi = () => {
     const handleSubmit = () => {
         // Send data to the server
         const data = {
-            selectedUsers,
-            selectedTopic,
             deadline,
-            questionCount,
             durationInMinutes,
+            questionCount,
+            topicId: selectedTopic.id,
+            userIdList: selectedUsers.map(user => user.id),
         };
-        console.log('Data to be sent to the server:', data);
+        API.post('/quiz/create-upcoming-quiz', data)
+            .then(r => {
+                setSelectedTopic('');
+                setQuestionCount('');
+                setDurationInMinutes('');
+                setSelectedUsers([]);
+                setDeadline(null);
+                setSearchTextUsers('');
+                setSearchTextTopics('');
+            })
+            .catch(e => {
+            });
     };
 
     const isDisabled = !selectedUsers.length || !selectedTopic || !deadline || !questionCount || !durationInMinutes;
@@ -169,6 +184,7 @@ const AssignQuizUi = () => {
                                         }}
                                         format="DD/MM/YYYY"
                                         slotProps={{textField: {size: 'small', readOnly: true}}}
+                                        value={deadline}
                             />
                         </DemoContainer>
                     </LocalizationProvider>
@@ -274,7 +290,10 @@ const AssignQuizUi = () => {
                                     {allTopics
                                         .filter((topic) => topic.title.toLowerCase().includes(searchTextTopics.toLowerCase()))
                                         .map((topic) => (
-                                            <ListItem key={topic.id} dense button onClick={() => setSelectedTopic(topic)}>
+                                            <ListItem key={topic.id} dense button onClick={() => {
+                                                setSelectedTopic(topic);
+                                                console.log(topic);
+                                            }}>
                                                 <ListItemIcon>
                                                     <Radio
                                                         edge="start"

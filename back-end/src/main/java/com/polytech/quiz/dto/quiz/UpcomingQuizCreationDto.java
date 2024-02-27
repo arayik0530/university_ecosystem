@@ -3,11 +3,11 @@ package com.polytech.quiz.dto.quiz;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class UpcomingQuizCreationDto {
-    private Long userId;
+    private List<Long> userIdList;
 
     private Long topicId;
 
