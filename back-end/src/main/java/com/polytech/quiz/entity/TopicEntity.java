@@ -13,6 +13,14 @@ import java.util.Objects;
 @Data
 public class TopicEntity {
 
+    public TopicEntity() {
+    }
+
+    public TopicEntity(Long id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

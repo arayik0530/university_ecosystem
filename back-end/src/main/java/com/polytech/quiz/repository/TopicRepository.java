@@ -1,11 +1,13 @@
 package com.polytech.quiz.repository;
 
+import com.polytech.quiz.dto.topic.TopicDto;
 import com.polytech.quiz.entity.TopicEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface TopicRepository extends JpaRepository<TopicEntity, Long> {
@@ -16,4 +18,7 @@ public interface TopicRepository extends JpaRepository<TopicEntity, Long> {
     Page<TopicEntity> findByTitleContaining(String title, Pageable pageable);
 
     Optional<TopicEntity> findByTitle(String title);
+
+    @Query("SELECT new TopicEntity (t.id, t.title) FROM TopicEntity t")
+    List<TopicEntity> getAllLiteTopics();
 }

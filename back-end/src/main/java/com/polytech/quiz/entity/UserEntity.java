@@ -18,6 +18,15 @@ import java.util.Set;
 })
 public class UserEntity {
 
+    public UserEntity() {
+    }
+
+    public UserEntity(Long id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

@@ -109,4 +109,10 @@ public class TopicServiceImpl implements TopicService {
 
         topicRepository.save(topic);
     }
+
+    @Override
+    public List<TopicDto> getAllLiteTopics() {
+        return topicRepository.getAllLiteTopics().stream().map(TopicDto::mapFromEntity).collect(Collectors.toList());
+    }
+
 }

@@ -10,6 +10,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/topic/")
@@ -58,5 +60,11 @@ public class TopicControllerImpl implements TopicController {
     @PutMapping("update")
     public void update(@RequestBody TopicDto topic) {
         topicService.update(topic);
+    }
+
+    @Override
+    @GetMapping("all/lite")
+    public List<TopicDto> getAllLiteTopics() {
+        return topicService.getAllLiteTopics();
     }
 }

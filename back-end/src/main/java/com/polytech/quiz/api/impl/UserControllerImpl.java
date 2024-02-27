@@ -39,6 +39,13 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
+    @GetMapping("all/lite")
+    @PreAuthorize(value = "hasAuthority('ADMIN')")
+    public List<UserInfoDto> getAllLiteUsers() {
+        return userService.getAllLiteUsers();
+    }
+
+    @Override
     @GetMapping("search")
     public Page<UserInfoDto> search(@RequestParam String text, @PageableDefault Pageable pageable) {
         return userService.searchByName(text, pageable);

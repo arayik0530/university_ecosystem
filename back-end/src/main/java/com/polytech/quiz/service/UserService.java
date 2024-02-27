@@ -39,4 +39,6 @@ public interface UserService {
     byte[] getSmallImage(Long userId);
 
     void saveImage(MultipartFile image,Long userId);
+
+    List<UserInfoDto> getAllLiteUsers();
 }

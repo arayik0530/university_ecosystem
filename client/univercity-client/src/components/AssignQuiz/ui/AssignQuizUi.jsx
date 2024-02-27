@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from 'tss-react/mui';
 import {
     List,
@@ -6,6 +6,7 @@ import {
     ListItemIcon,
     ListItemText,
     Checkbox,
+    Radio,
     TextField,
     Typography,
     Button,
@@ -16,6 +17,8 @@ import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
+import API from "../../../API";
+import {getExistingTopics} from "../../../redux/actions/topic/topicActions";
 
 const useStyles = makeStyles()({
     formControl: {
@@ -58,8 +61,16 @@ const AssignQuizUi = () => {
     const [durationInMinutes, setDurationInMinutes] = useState('');
     const [searchTextUsers, setSearchTextUsers] = useState('');
     const [searchTextTopics, setSearchTextTopics] = useState('');
-    const users = ['User 1', 'User 2', 'User 3', 'User 4', 'User 5', 'User 6', 'User 7', 'User 8', 'User 9']; // Example user list
-    const topics = ['Topic 1', 'Topic 2', 'Topic 3', 'Topic 4', 'Topic456666666666666666666666664655555555555 5', 'Topic 6']; // Example topic list
+    const [allUsers, setAllUsers] = useState([]);
+    const [allTopics, setAllTopics] = useState([]);
+    useEffect(() => {
+        API.get('/user/all/lite')
+            .then(users => {setAllUsers(users.data);})
+            .catch(e => {});
+        API.get('/topic/all/lite')
+            .then(topics => {setAllTopics(topics.data);})
+            .catch(e => {});
+    }, []);
 
     const handleUserToggle = (user) => () => {
         const currentIndex = selectedUsers.indexOf(user);
@@ -216,10 +227,10 @@ const AssignQuizUi = () => {
                             />
                             <div className={classes.listContainer}>
                                 <List>
-                                    {users
-                                        .filter((user) => user.toLowerCase().includes(searchTextUsers.toLowerCase()))
+                                    {allUsers
+                                        .filter((user) => `${user.firstName} ${user.lastName}`.toLowerCase().includes(searchTextUsers.toLowerCase()))
                                         .map((user) => (
-                                            <ListItem key={user} dense button onClick={handleUserToggle(user)}>
+                                            <ListItem key={user.id} dense button onClick={handleUserToggle(user)}>
                                                 <ListItemIcon>
                                                     <Checkbox
                                                         edge="start"
@@ -230,9 +241,9 @@ const AssignQuizUi = () => {
                                                 </ListItemIcon>
                                                 <p
                                                     className={classes.listItemText}
-                                                    title={user}
+                                                    title={`${user.firstName} ${user.lastName}`}
                                                 >
-                                                    {user}
+                                                    {`${user.firstName} ${user.lastName}`}
                                                 </p>
                                             </ListItem>
                                         ))}
@@ -260,12 +271,12 @@ const AssignQuizUi = () => {
                             />
                             <div className={classes.listContainer}>
                                 <List>
-                                    {topics
-                                        .filter((topic) => topic.toLowerCase().includes(searchTextTopics.toLowerCase()))
+                                    {allTopics
+                                        .filter((topic) => topic.title.toLowerCase().includes(searchTextTopics.toLowerCase()))
                                         .map((topic) => (
-                                            <ListItem key={topic} dense button onClick={() => setSelectedTopic(topic)}>
+                                            <ListItem key={topic.id} dense button onClick={() => setSelectedTopic(topic)}>
                                                 <ListItemIcon>
-                                                    <Checkbox
+                                                    <Radio
                                                         edge="start"
                                                         checked={selectedTopic === topic}
                                                         tabIndex={-1}
@@ -274,9 +285,9 @@ const AssignQuizUi = () => {
                                                 </ListItemIcon>
                                                 <p
                                                     className={classes.listItemText}
-                                                    title={topic}
+                                                    title={topic.title}
                                                 >
-                                                    {topic}
+                                                    {topic.title}
                                                 </p>
                                             </ListItem>
                                         ))}
