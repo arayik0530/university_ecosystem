@@ -19,6 +19,7 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import API from "../../../API";
 import {useDispatch, useSelector} from "react-redux";
 import {setMessage} from '../../../redux/actions/message/messageActions';
+import noImage from '../../../assets/images/no-image-icon.png'
 
 const useStyles = makeStyles()({
     formControl: {
@@ -49,6 +50,18 @@ const useStyles = makeStyles()({
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis'
+    },
+    userIcon: {
+        height: '60px',
+        width: '60px'
+    },
+    userContainer : {
+        display: 'flex',
+        justifyContent: 'space-between',
+        width: '85%'
+    },
+    userName: {
+        width: '420px'
     }
 });
 
@@ -211,12 +224,6 @@ const AssignQuizUi = () => {
                         variant="outlined" size="small"
                     />
                 </div>
-                {/*<div style={{*/}
-                {/*    display: 'flex',*/}
-                {/*    flexDirection: 'column',*/}
-                {/*    alignItems: 'baseline',*/}
-                {/*    justifyContent: 'space-between',*/}
-                {/*}}>*/}
                 <div style={{
                     display: 'flex',
                     flexDirection: 'column',
@@ -261,12 +268,16 @@ const AssignQuizUi = () => {
                                                         disableRipple
                                                     />
                                                 </ListItemIcon>
-                                                <p
-                                                    className={classes.listItemText}
-                                                    title={`${user.firstName} ${user.lastName}`}
-                                                >
-                                                    {`${user.firstName} ${user.lastName}`}
-                                                </p>
+                                                <div className={classes.userContainer}>
+                                                    <p
+                                                        className={`${classes.listItemText} ${classes.userName}`}
+                                                        title={`${user.firstName} ${user.lastName}`}
+                                                    >
+                                                        {`${user.firstName} ${user.lastName}`}
+                                                    </p>
+                                                    <span><img src={noImage} alt="no-image-icon.png"
+                                                               className={classes.userIcon}/></span>
+                                                </div>
                                             </ListItem>
                                         ))}
                                 </List>
