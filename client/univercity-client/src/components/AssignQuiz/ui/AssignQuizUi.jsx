@@ -19,7 +19,7 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import API from "../../../API";
 import {useDispatch, useSelector} from "react-redux";
 import {setMessage} from '../../../redux/actions/message/messageActions';
-import noImage from '../../../assets/images/no-image-icon.png'
+import {UserIcon} from "./UserIcon";
 
 const useStyles = makeStyles()({
     formControl: {
@@ -61,12 +61,11 @@ const useStyles = makeStyles()({
         width: '85%'
     },
     userName: {
-        width: '420px'
+        width: '400px'
     }
 });
 
 const AssignQuizUi = () => {
-    const message = useSelector((state) => state.message);
     const dispatch = useDispatch();
 
     const {classes} = useStyles();
@@ -83,6 +82,7 @@ const AssignQuizUi = () => {
         API.get('/user/all/lite')
             .then(users => {
                 setAllUsers(users.data);
+                return users.data;
             })
             .catch(e => {
             });
@@ -105,10 +105,6 @@ const AssignQuizUi = () => {
         }
 
         setSelectedUsers(newSelectedUsers);
-    };
-
-    const handleTopicChange = (event) => {
-        setSelectedTopic(event.target.value);
     };
 
     const handleDeadlineChange = (date) => {
@@ -134,7 +130,6 @@ const AssignQuizUi = () => {
     };
 
     const handleSubmit = () => {
-        // Send data to the server
         const data = {
             deadline,
             durationInMinutes,
@@ -275,8 +270,7 @@ const AssignQuizUi = () => {
                                                     >
                                                         {`${user.firstName} ${user.lastName}`}
                                                     </p>
-                                                    <span><img src={noImage} alt="no-image-icon.png"
-                                                               className={classes.userIcon}/></span>
+                                                    <UserIcon user={user} classes={classes}/>
                                                 </div>
                                             </ListItem>
                                         ))}

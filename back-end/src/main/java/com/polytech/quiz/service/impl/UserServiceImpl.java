@@ -179,7 +179,7 @@ public class UserServiceImpl implements UserService {
         if (userEntity.getSmallImage() != null) {
             return userEntity.getSmallImage().getPicture();
         }
-        return imageService.getStandardImage();
+        return null;
     }
 
     @Override
