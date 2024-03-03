@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {makeStyles} from 'tss-react/mui';
 import {
     Button,
@@ -16,25 +16,17 @@ import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
-import API from "../../../API";
-import {useDispatch, useSelector} from "react-redux";
-import {setMessage} from '../../../redux/actions/message/messageActions';
 import {UserIcon} from "./UserIcon";
 
 const useStyles = makeStyles()({
     formControl: {
-        // margin: theme.spacing(1),
         width: '100%',
     },
     listContainer: {
         border: '1px solid #ddd',
-        // borderRadius: theme.spacing(1),
-        // padding: theme.spacing(2),
         width: '100%',
         overflowY: 'auto',
-        // marginBottom: theme.spacing(2),
         marginTop: '10px',
-        // overflowY: 'scroll',
         "&::-webkit-scrollbar": {
             width: "8px",
         },
@@ -55,7 +47,7 @@ const useStyles = makeStyles()({
         height: '60px',
         width: '60px'
     },
-    userContainer : {
+    userContainer: {
         display: 'flex',
         justifyContent: 'space-between',
         width: '85%'
@@ -68,133 +60,85 @@ const useStyles = makeStyles()({
         padding: '10px',
         height: '350px',
         width: '45%'
+    },
+    d_flex: {
+        display: 'flex',
+    },
+    flex_column: {
+        flexDirection: 'column',
+    },
+    flex_row: {
+        flexDirection: 'row',
+    },
+    flex_start: {
+        justifyContent: 'flex-start'
+    },
+    space_around: {
+        justifyContent: 'space-around'
+
+    },
+    space_between: {
+        justifyContent: 'space-between'
+
+    },
+    align_items_start: {
+        alignItems: 'flex-start'
+    },
+    align_items_center: {
+        alignItems: 'center'
+    },
+    align_items_baseline: {
+        alignItems: 'baseline'
+    },
+    main_container: {
+        marginTop: '10px',
+        width: '85%',
+    },
+    width_100: {
+        width: '100%',
+    },
+    inputs_container: {
+        height: '200px',
+        width: '20%'
     }
-    // userName: {
-    //     width: '400px'
-    // }
 });
 
-const AssignQuizUi = () => {
-    const dispatch = useDispatch();
+const AssignQuizUi = ({
+                          handleDeadlineChange,
+                          deadline,
+                          questionCount,
+                          handleQuestionCountChange,
+                          durationInMinutes,
+                          handleDurationChange,
+                          searchTextUsers,
+                          handleSearchUsersChange,
+                          allUsers,
+                          selectedUsers,
+                          searchTextTopics,
+                          handleUserToggle,
+                          setSearchTextTopics,
+                          allTopics,
+                          setSelectedTopic,
+                          selectedTopic,
+                          handleSubmit,
+                          isDisabled
+                      }) => {
 
     const {classes} = useStyles();
-    const [selectedUsers, setSelectedUsers] = useState([]);
-    const [selectedTopic, setSelectedTopic] = useState('');
-    const [deadline, setDeadline] = useState(null);
-    const [questionCount, setQuestionCount] = useState('');
-    const [durationInMinutes, setDurationInMinutes] = useState('');
-    const [searchTextUsers, setSearchTextUsers] = useState('');
-    const [searchTextTopics, setSearchTextTopics] = useState('');
-    const [allUsers, setAllUsers] = useState([]);
-    const [allTopics, setAllTopics] = useState([]);
-    useEffect(() => {
-        API.get('/user/all/lite')
-            .then(users => {
-                setAllUsers(users.data);
-                return users.data;
-            })
-            .catch(e => {
-            });
-        API.get('/topic/all/lite')
-            .then(topics => {
-                setAllTopics(topics.data);
-            })
-            .catch(e => {
-            });
-    }, []);
-
-    const handleUserToggle = (user) => () => {
-        const currentIndex = selectedUsers.indexOf(user);
-        const newSelectedUsers = [...selectedUsers];
-
-        if (currentIndex === -1) {
-            newSelectedUsers.push(user);
-        } else {
-            newSelectedUsers.splice(currentIndex, 1);
-        }
-
-        setSelectedUsers(newSelectedUsers);
-    };
-
-    const handleDeadlineChange = (date) => {
-        setDeadline(date);
-    };
-
-    const handleQuestionCountChange = (event) => {
-        const value = event.target.value;
-        if (/^[1-9]\d*$/.test(value) || value === '') {
-            setQuestionCount(value);
-        }
-    };
-
-    const handleDurationChange = (event) => {
-        const value = event.target.value;
-        if (/^[1-9]\d*$/.test(value) || value === '') {
-            setDurationInMinutes(value);
-        }
-    };
-
-    const handleSearchUsersChange = (event) => {
-        setSearchTextUsers(event.target.value);
-    };
-
-    const handleSubmit = () => {
-        const data = {
-            deadline,
-            durationInMinutes,
-            questionCount,
-            topicId: selectedTopic.id,
-            userIdList: selectedUsers.map(user => user.id),
-        };
-        API.post('/quiz/create-upcoming-quiz', data)
-            .then(r => {
-                setSelectedTopic('');
-                setQuestionCount('');
-                setDurationInMinutes('');
-                setSelectedUsers([]);
-                setDeadline(null);
-                setSearchTextUsers('');
-                setSearchTextTopics('');
-                dispatch(setMessage('Quiz assigned successfully', 'success'));
-            })
-            .catch(e => {
-            });
-    };
-
-    const isDisabled = !selectedUsers.length || !selectedTopic || !deadline || !questionCount || !durationInMinutes;
 
     return (
-        <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            marginTop: '10px',
-            width: '85%',
-        }}>
-            <div style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-                marginBottom: '20px'
-            }}>
+        <div
+            className={`${classes.main_container} ${classes.d_flex} ${classes.flex_column} ${classes.align_items_start}`}>
+            <div className={`${classes.d_flex} ${classes.align_items_center} ${classes.flex_row} ${classes.flex_start}`}
+                 style={{
+                     marginBottom: '20px'
+                 }}>
                 <Typography variant="h5">Assign Quiz</Typography>
             </div>
-            <div style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                width: '100%',
-                alignItems: 'baseline'
-            }}>
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'baseline',
-                    justifyContent: 'space-between',
-                    height: '200px',
-                    width: '20%'
-                }}>
+            <div
+                className={`${classes.width_100} ${classes.d_flex} ${classes.align_items_baseline} ${classes.flex_row} ${classes.space_between}`}>
+                <div
+                    className={`${classes.d_flex} ${classes.inputs_container} ${classes.align_items_baseline} ${classes.flex_column} ${classes.space_between}`}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DemoContainer components={['DatePicker']}>
                             <DatePicker className={classes.datePicker}
@@ -229,18 +173,12 @@ const AssignQuizUi = () => {
                         variant="outlined" size="small"
                     />
                 </div>
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
+                <div className={`${classes.d_flex} ${classes.flex_column}`} style={{
                     flexGrow: '1',
                     marginLeft: '20px',
                     width: '65%'
                 }}>
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'space-around'
-                    }}>
+                    <div className={`${classes.d_flex} ${classes.flex_row} ${classes.space_around}`}>
                         <div className={classes.listBlock}>
                             <Typography variant="subtitle1">Select Users</Typography>
                             <OutlinedInput
@@ -249,7 +187,7 @@ const AssignQuizUi = () => {
                                 value={searchTextUsers}
                                 onChange={handleSearchUsersChange}
                                 startAdornment={<InputAdornment position="start">🔍</InputAdornment>}
-                                style={{fontSize: 'small', width: '100%'}}
+                                style={{fontSize: 'small'}}
                                 variant="outlined" size="small"
                             />
                             <div className={classes.listContainer}>
@@ -268,7 +206,7 @@ const AssignQuizUi = () => {
                                                 </ListItemIcon>
                                                 <div className={classes.userContainer}>
                                                     <p
-                                                        className={`${classes.listItemText} ${classes.userName}`}
+                                                        className={classes.listItemText}
                                                         title={`${user.firstName} ${user.lastName}`}
                                                     >
                                                         {`${user.firstName} ${user.lastName}`}
@@ -288,7 +226,7 @@ const AssignQuizUi = () => {
                                 value={searchTextTopics}
                                 onChange={(e) => setSearchTextTopics(e.target.value)}
                                 startAdornment={<InputAdornment position="start">🔍</InputAdornment>}
-                                style={{fontSize: 'small', width: '100%'}}
+                                style={{fontSize: 'small'}}
                                 variant="outlined" size="small"
                             />
                             <div className={classes.listContainer}>
@@ -321,13 +259,10 @@ const AssignQuizUi = () => {
                     </div>
                 </div>
             </div>
-            <div style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-                marginTop: '10px'
-            }}>
+            <div className={`${classes.d_flex} ${classes.align_items_center} ${classes.flex_row} ${classes.flex_start}`}
+                 style={{
+                     marginTop: '10px'
+                 }}>
                 <Button
                     variant="contained"
                     color="primary"
