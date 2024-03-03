@@ -6,11 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import {userLogoutSuccess} from "../../redux/actions/user/userActions";
+import UserEditDialog from "./UserEditDialog";
 
 const Header = () => {
     const dispatch = useDispatch();
     const [isLoginPage, setIsLoginPage] = useState(false); // Local state to manage login page visibility
     const navigate = useNavigate();
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     // const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
     const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
@@ -35,10 +37,15 @@ const Header = () => {
         dispatch(userLogoutSuccess());
     };
 
+    function handleDialogOpen() {
+        // alert(111)
+        setIsDialogOpen(true);
+    }
+
     return (
         <div className="header">
             {/* User Icon */}
-            {isLoggedIn && <FaUser className="header-icon" />}
+            {isLoggedIn && <FaUser className="header-icon" onClick={handleDialogOpen}/>}
 
             {/* Login Button */}
             {!isLoggedIn && !isLoginPage && (
@@ -60,6 +67,7 @@ const Header = () => {
                     <FaSignOutAlt /> Logout
                 </button>
             )}
+            <UserEditDialog open={isDialogOpen} setIsDialogOpen={setIsDialogOpen}/>
         </div>
     );
 };
