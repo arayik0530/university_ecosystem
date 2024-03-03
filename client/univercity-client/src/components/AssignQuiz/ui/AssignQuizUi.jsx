@@ -50,7 +50,7 @@ const useStyles = makeStyles()({
     userContainer: {
         display: 'flex',
         justifyContent: 'space-between',
-        width: '85%'
+        width: '80%'
     },
     listBlock: {
         display: 'flex',
