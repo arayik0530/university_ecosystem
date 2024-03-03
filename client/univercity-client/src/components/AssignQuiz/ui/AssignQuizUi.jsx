@@ -60,9 +60,18 @@ const useStyles = makeStyles()({
         justifyContent: 'space-between',
         width: '85%'
     },
-    userName: {
-        width: '400px'
+    listBlock: {
+        display: 'flex',
+        flexDirection: 'column',
+        border: '1px solid gray',
+        borderRadius: '5px',
+        padding: '10px',
+        height: '350px',
+        width: '45%'
     }
+    // userName: {
+    //     width: '400px'
+    // }
 });
 
 const AssignQuizUi = () => {
@@ -160,7 +169,7 @@ const AssignQuizUi = () => {
             flexDirection: 'column',
             alignItems: 'flex-start',
             marginTop: '10px',
-            width: '100%',
+            width: '85%',
         }}>
             <div style={{
                 display: 'flex',
@@ -183,7 +192,8 @@ const AssignQuizUi = () => {
                     flexDirection: 'column',
                     alignItems: 'baseline',
                     justifyContent: 'space-between',
-                    height: '200px'
+                    height: '200px',
+                    width: '20%'
                 }}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DemoContainer components={['DatePicker']}>
@@ -223,22 +233,15 @@ const AssignQuizUi = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     flexGrow: '1',
-                    marginLeft: '20px'
+                    marginLeft: '20px',
+                    width: '65%'
                 }}>
                     <div style={{
                         display: 'flex',
                         flexDirection: 'row',
                         justifyContent: 'space-around'
                     }}>
-                        <div style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            border: '1px solid gray',
-                            borderRadius: '5px',
-                            padding: '10px',
-                            height: '350px',
-                            width: '45%'
-                        }}>
+                        <div className={classes.listBlock}>
                             <Typography variant="subtitle1">Select Users</Typography>
                             <OutlinedInput
                                 className={classes.formControl}
@@ -277,15 +280,7 @@ const AssignQuizUi = () => {
                                 </List>
                             </div>
                         </div>
-                        <div style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            border: '1px solid gray',
-                            borderRadius: '5px',
-                            padding: '10px',
-                            height: '350px',
-                            width: '45%'
-                        }}>
+                        <div className={classes.listBlock}>
                             <Typography variant="subtitle1">Select Topic</Typography>
                             <OutlinedInput
                                 className={classes.formControl}

@@ -9,15 +9,16 @@ const useStyles = makeStyles()({
         flexDirection: 'column',
         alignItems: 'flex-start',
         padding: '16px',
-        flexBasis: '14vw'
+        // flexBasis: '14vw'
+        width: '15%'
     },
     button: {
         margin: '8px',
-        width: '150px'
+        width: '90%',
     },
     selectedButton: {
         margin: '8px',
-        width: '150px',
+        width: '90%',
         backgroundColor: 'lightblue',
     },
 });
