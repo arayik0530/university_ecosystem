@@ -7,7 +7,8 @@ const UserEditDialog = ({ open, setIsDialogOpen }) => {
     };
 
     return (
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={open} onClose={handleClose} fullWidth
+                maxWidth="sm">
             <DialogTitle>
                 <Typography variant="h6">Edit User Information</Typography>
                 <IconButton
@@ -24,11 +25,11 @@ const UserEditDialog = ({ open, setIsDialogOpen }) => {
             </DialogTitle>
             <DialogContent dividers>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <Avatar alt="User Picture" src="/path/to/user/picture.jpg" sx={{ width: 300, height: 300, alignSelf: 'center' }} />
                     <TextField label="First Name" fullWidth />
                     <TextField label="Last Name" fullWidth />
                     <TextField label="Email" fullWidth />
                     <TextField label="Password" fullWidth type="password" />
-                    <Avatar alt="User Picture" src="/path/to/user/picture.jpg" sx={{ width: 100, height: 100, alignSelf: 'center' }} />
                     <Button variant="contained" color="primary" onClick={handleClose} sx={{ alignSelf: 'center' }}>Save</Button>
                 </div>
             </DialogContent>
