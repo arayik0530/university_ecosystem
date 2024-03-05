@@ -176,17 +176,17 @@ const UserEditDialog = ({open, setIsDialogOpen}) => {
                                 <Close/>
                             </IconButton>
                         </div>
-                        <TextField label="First Name" fullWidth value={user.firstName}
+                        <TextField label="First Name" fullWidth value={user.firstName ? user.firstName : ''}
                                    onChange={
                                        (e) => setUser({...user, firstName: e.target.value})
                                    }/>
-                        <TextField label="Last Name" fullWidth value={user.lastName} onChange={
+                        <TextField label="Last Name" fullWidth value={user.lastName ? user.lastName : ''} onChange={
                             (e) => setUser({...user, lastName: e.target.value})
                         }/>
-                        <TextField label="Email" fullWidth value={user.email} onChange={
+                        <TextField label="Email" fullWidth value={user.email ? user.email : ''} onChange={
                             (e) => setUser({...user, email: e.target.value})
                         }/>
-                        <TextField label="Password" fullWidth type="password" value={user.password}
+                        <TextField label="Password" fullWidth type="password" value={user.password ? user.password : ''}
                                    onChange={
                                        (e) => setUser({...user, password: e.target.value})
                                    }/>
