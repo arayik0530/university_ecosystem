@@ -1,12 +1,10 @@
-import { useState, useRef } from 'react';
-import { Avatar, Button, Dialog, DialogContent, DialogTitle, IconButton, TextField, Typography } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import {useRef, useState} from 'react';
+import {Avatar, Button, Dialog, DialogContent, DialogTitle, IconButton, TextField, Typography} from "@mui/material";
+import {Close} from "@mui/icons-material";
 
-const UserEditDialog = ({ open, setIsDialogOpen }) => {
-    const [avatarImage, setAvatarImage] = useState("/path/to/user/picture.jpg");
+const UserEditDialog = ({open, setIsDialogOpen}) => {
+    const [avatarImage, setAvatarImage] = useState("assets/images/no-image-icon.png");
     const inputRef = useRef(null);
-    const [showDeleteButton, setShowDeleteButton] = useState(false);
-    const [timerId, setTimerId] = useState(null);
 
     const handleClose = () => {
         setIsDialogOpen(false);
@@ -28,23 +26,8 @@ const UserEditDialog = ({ open, setIsDialogOpen }) => {
     };
 
     const handleDeleteClick = () => {
-        setAvatarImage(""); // Set the image to an empty string or implement your logic for deletion
-        setShowDeleteButton(false); // Hide the delete button after deletion
-        console.log('onmouseEnter');
+        setAvatarImage("");
     };
-
-    function onImageDeleteButtonDisappear() {
-        console.log('onmouseleave');
-        setTimerId(setTimeout(() => {setShowDeleteButton(false)}, 3000));
-    }
-
-    function onImageDeleteButtonAppear() {
-        if(timerId){
-            clearTimeout(timerId);
-            setTimerId(null);
-        }
-        setShowDeleteButton(true);
-    }
 
     return (
         <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
@@ -59,17 +42,24 @@ const UserEditDialog = ({ open, setIsDialogOpen }) => {
                         top: 8,
                     }}
                 >
-                    <Close />
+                    <Close/>
                 </IconButton>
             </DialogTitle>
             <DialogContent dividers>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center', position: 'relative' }}>
-                    <input ref={inputRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleImageChange} />
-                    <div style={{ position: 'relative', display: 'inline-block' }}>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '1rem',
+                    alignItems: 'center',
+                    position: 'relative'
+                }}>
+                    <input ref={inputRef} type="file" accept="image/*" style={{display: 'none'}}
+                           onChange={handleImageChange}/>
+                    <div style={{position: 'relative', display: 'inline-block'}}>
                         <Avatar
                             alt="User Picture"
                             src={avatarImage}
-                            sx={{ width: 300, height: 300, cursor: 'pointer', borderRadius: 0 }}
+                            sx={{width: 300, height: 300, cursor: 'pointer', borderRadius: 0}}
                             onClick={handleAvatarClick}
                         />
                         <div
@@ -82,22 +72,23 @@ const UserEditDialog = ({ open, setIsDialogOpen }) => {
                                 cursor: 'pointer',
                                 backgroundColor: 'transparent'
                             }}
-                            onMouseOver={onImageDeleteButtonAppear}
-                            onMouseOut={onImageDeleteButtonDisappear}
                         />
-                        {showDeleteButton && (
-                            <div
-                                onClick={handleDeleteClick}
-                                title={'Delete Image'}
-                               style={{position: 'absolute',
-                                   top: '0',
-                                   right: '0',
-                                   cursor: 'pointer'
-                               }}
-                            >
-                                <Close />
-                            </div>
-                        )}
+                        <IconButton
+                            title={'Delete Image'}
+                            aria-label="close"
+                            onClick={handleDeleteClick}
+                            sx={{
+                                position: 'absolute',
+                                right: 8,
+                                top: 8,
+                                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                '& svg': {
+                                    fontSize: 14
+                                }
+                            }}
+                        >
+                            <Close/>
+                        </IconButton>
                     </div>
                     <TextField label="First Name" fullWidth />
                     <TextField label="Last Name" fullWidth />
