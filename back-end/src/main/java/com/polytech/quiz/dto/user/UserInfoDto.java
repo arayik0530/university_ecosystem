@@ -21,6 +21,8 @@ public class UserInfoDto {
 
     private Long imageId;
 
+    private String password;
+
 
     public static UserInfoDto mapFromEntity(UserEntity userEntity) {
         UserInfoDto userInfoDto = new UserInfoDto();
