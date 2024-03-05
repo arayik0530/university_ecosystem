@@ -128,6 +128,7 @@ const UserEditDialogContainer = ({open, setIsDialogOpen}) => {
     const handleDeleteClick = () => {
         setAvatarImage("");
         setIconFile(null);
+        uploadRef.current.value = '';
     };
 
     const isPasswordComplex = (password) => {
