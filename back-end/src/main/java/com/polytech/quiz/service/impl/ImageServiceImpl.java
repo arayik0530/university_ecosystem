@@ -49,6 +49,8 @@ public class ImageServiceImpl implements ImageService {
                 .orElseThrow(() -> new UserNotFoundException(userId));
         SmallImageEntity smallImage = userEntity.getSmallImage();
         ImageEntity profileImage = userEntity.getProfileImage();
+        userEntity.setSmallImage(null);
+        userEntity.setProfileImage(null);
         if (smallImage != null) {
             smallImageRepository.delete(smallImage);
         }
