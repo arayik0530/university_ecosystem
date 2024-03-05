@@ -187,8 +187,10 @@ public class UserServiceImpl implements UserService {
     public void saveImage(MultipartFile image, Long userId) {
         try {
             imageService.deleteImage(userId);
-            imageService.saveOriginalImage(image.getBytes(),userId);
-            imageService.saveSmallImage(image.getBytes(),userId);
+            if(image != null) {
+                imageService.saveOriginalImage(image.getBytes(), userId);
+                imageService.saveSmallImage(image.getBytes(), userId);
+            }
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }

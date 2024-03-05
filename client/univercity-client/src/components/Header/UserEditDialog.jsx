@@ -10,6 +10,7 @@ const UserEditDialog = ({open, setIsDialogOpen}) => {
 
     const [user, setUser] = useState({});
     const [avatarImage, setAvatarImage] = useState(null);
+    const [iconFile, setIconFile] = useState(null);
 
     const uploadRef = useRef(null);
     const emailRef = useRef(null);
@@ -22,9 +23,6 @@ const UserEditDialog = ({open, setIsDialogOpen}) => {
             .then(response => {
                 const user = response.data;
                 setUser(user);
-                emailRef.current.defaultValue = user.email;
-                firstNameRef.current.defaultValue = user.firstName;
-                lastNameRef.current.defaultValue = user.lastName;
                 return user;
             })
             .then(user => {
@@ -36,6 +34,7 @@ const UserEditDialog = ({open, setIsDialogOpen}) => {
                             const data = response.data;
                             if (data && data.byteLength > 0) {
                                 const blob = new Blob([data], {type: response.headers['content-type']});
+                                setIconFile(new File([blob], 'image', { type: blob.type }))
                                 const src = URL.createObjectURL(blob);
                                 setAvatarImage(src);
                             }
@@ -69,7 +68,16 @@ const UserEditDialog = ({open, setIsDialogOpen}) => {
         }
         if(valid) {
             const formData = new FormData();
-            formData.append('avatarImage', avatarImage);
+            formData.append('image', iconFile);
+
+            API.post('/user/upload-image', formData, {
+                headers: {
+                    ...API.defaults.headers,
+                    "Content-Type": "multipart/form-data"
+                }
+            })
+                .catch(e => {
+                });
             setIsDialogOpen(false);
         } else {
             dispatch(setMessage(errorMessage, 'error'));
@@ -87,6 +95,7 @@ const UserEditDialog = ({open, setIsDialogOpen}) => {
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         if (file) {
+            setIconFile(file);
             const reader = new FileReader();
             reader.onloadend = () => {
                 setAvatarImage(reader.result);
@@ -97,6 +106,7 @@ const UserEditDialog = ({open, setIsDialogOpen}) => {
 
     const handleDeleteClick = () => {
         setAvatarImage("");
+        setIconFile(null);
     };
 
     const isPasswordComplex = (password) => {

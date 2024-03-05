@@ -85,7 +85,7 @@ function App() {
                           }}
                 >
                     <Alert onClose={handleClose} severity={message.messageType}>
-                        {message.messageText && message.messageText.split('\n').map((line, index) => (
+                        {!console.log('message is: ', message) && message.messageText && message.messageText.split('\n').map((line, index) => (
                             <span key={index}>{line}<br /></span>
                         ))}
                     </Alert>
