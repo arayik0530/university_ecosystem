@@ -84,8 +84,8 @@ public class AuthControllerImpl implements AuthController {
 
 //            javaMailSender.send(msg);
         } catch (Exception e){
-            System.out.println(e.getMessage());
-            System.out.println(e.getStackTrace());
+//            System.out.println(e.getMessage());
+//            System.out.println(e.getStackTrace());
 //            throw e;
         }
     }

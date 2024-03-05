@@ -10,19 +10,61 @@ import com.polytech.quiz.service.UserService;
 import com.polytech.quiz.service.scheduler.QuizDurationChecker;
 import com.polytech.quiz.service.util.exception.*;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
-@AllArgsConstructor
 @Transactional(readOnly = true)
 public class QuizServiceImpl implements QuizService {
+
+    @Autowired
+    public QuizServiceImpl(UserService userService, QuizRepository quizRepository,
+                           QuestionService questionService, TopicRepository topicRepository,
+                           UpComingQuizRepository upComingQuizRepository, UserRepository userRepository,
+                           QuizQuestionRepository quizQuestionRepository, QuizDurationChecker quizDurationChecker,
+                           AnswerRepository answerRepository, JavaMailSender javaMailSender,
+                           @Value("${client.base.url}") String clientBaseUrl,
+                           @Value("${spring.mail.username}") String mailSendFrom,
+                           @Value("${mail.sender}") String mailSender) {
+        this.userService = userService;
+        this.quizRepository = quizRepository;
+        this.questionService = questionService;
+        this.topicRepository = topicRepository;
+        this.upComingQuizRepository = upComingQuizRepository;
+        this.userRepository = userRepository;
+        this.quizQuestionRepository = quizQuestionRepository;
+        this.quizDurationChecker = quizDurationChecker;
+        this.answerRepository = answerRepository;
+        this.javaMailSender = javaMailSender;
+        this.clientBaseUrl = clientBaseUrl;
+        this.mailSender = mailSender;
+        this.mailSendFrom = mailSendFrom;
+    }
+
+
+    private String clientBaseUrl;
+
+    private final String mailSender;
+
+    private final String mailSendFrom;
+
     private UserService userService;
 
     private QuizRepository quizRepository;
@@ -35,6 +77,7 @@ public class QuizServiceImpl implements QuizService {
     private QuizQuestionRepository quizQuestionRepository;
     private QuizDurationChecker quizDurationChecker;
     private AnswerRepository answerRepository;
+    private JavaMailSender javaMailSender;
 
 
     @Override
@@ -115,7 +158,7 @@ public class QuizServiceImpl implements QuizService {
             quizQuestionRepository.save(quizQuestionEntity);
         }
 
-        for (int x = 0; x < quizQuestionEntities.size()-1; x++) {
+        for (int x = 0; x < quizQuestionEntities.size() - 1; x++) {
 
             QuizQuestionEntity currentQuizQuestionEntity = quizQuestionEntities.get(x);
             QuizQuestionEntity nextQuizQuestionEntity = quizQuestionEntities.get(x + 1);
@@ -131,7 +174,7 @@ public class QuizServiceImpl implements QuizService {
     public QuestionDto getFirstQuestion(Long quizId) {
         QuizEntity quizEntity = quizRepository
                 .findById(quizId).orElseThrow(() -> new QuizNotFoundException(quizId));
-    QuizQuestionEntity quizQuestionEntity = quizQuestionRepository.findFirstByQuizOrderById(quizEntity);
+        QuizQuestionEntity quizQuestionEntity = quizQuestionRepository.findFirstByQuizOrderById(quizEntity);
         QuestionDto questionDto = QuestionDto
                 .mapFromEntity(quizQuestionEntity.getQuestion());
         questionDto.setQuizQuestionId(quizQuestionEntity.getId());
@@ -189,6 +232,45 @@ public class QuizServiceImpl implements QuizService {
 
             userEntity.getUpcomingQuizes().add(upcomingQuizEntity);
             userRepository.save(userEntity);
+        }
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Runnable sendEmailTask = () -> {
+            try {
+                sendEmails(userEntityList, topicEntity, quizCreationDto.getDeadline());
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+        };
+        executor.submit(sendEmailTask);
+    }
+
+    private void sendEmails(List<UserEntity> userEntityList, TopicEntity topicEntity, LocalDate deadline)
+            throws MessagingException, UnsupportedEncodingException {
+        for (UserEntity user : userEntityList) {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(user.getEmail());
+            helper.setSubject("New Quiz Assignment");
+            helper.setFrom(new InternetAddress(mailSendFrom, mailSender));
+
+            StringBuilder messageBodyBuilder = new StringBuilder();
+            messageBodyBuilder.append("<p>Dear <strong>%s %s</strong>.</p>");
+            messageBodyBuilder.append("<p>A new quiz of topic  <strong>%s</strong> has been assigned to you.</p>");
+            messageBodyBuilder.append("<p> Please visit this website in order to pass it.</p>");
+            messageBodyBuilder.append("<p>The deadline is %s</p>");
+            messageBodyBuilder.append("<p><a href='%s'>Visit Website</a></p>");
+
+            String messageBody = String.format(messageBodyBuilder.toString(),
+                    user.getFirstName(), user.getLastName(),
+                    topicEntity.getTitle(),
+                    deadline,
+                    clientBaseUrl);
+
+            helper.setText(messageBody, true);
+            javaMailSender.send(message);
         }
     }
 
