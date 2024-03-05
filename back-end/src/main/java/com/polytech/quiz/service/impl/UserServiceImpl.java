@@ -18,6 +18,7 @@ import com.polytech.quiz.service.util.exception.UserAlreadyExistsException;
 import com.polytech.quiz.service.util.exception.UserNotFoundException;
 import com.polytech.quiz.service.util.exception.WrongPasswordException;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -101,6 +102,9 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userRepository.findById(user.getId())
                 .orElseThrow(() -> new UserNotFoundException(user.getId()));
         user.toEntity(userEntity);
+        if(StringUtils.isNoneBlank(user.getPassword())){
+            userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         userRepository.save(userEntity);
 
     }
