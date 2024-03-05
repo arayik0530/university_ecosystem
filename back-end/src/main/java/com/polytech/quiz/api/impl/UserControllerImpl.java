@@ -106,4 +106,11 @@ public class UserControllerImpl implements UserController {
     public List<UserInfoDto> findAllUsers() {
         return userService.findAllUsers();
     }
+
+    @Override
+    @GetMapping(value = "exists-email")
+    public boolean existsEmail(@RequestParam String email, @RequestParam Long userId) {
+
+        return userService.existsEmail(email, userId);
+    }
 }

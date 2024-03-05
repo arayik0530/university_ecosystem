@@ -206,5 +206,18 @@ public class UserServiceImpl implements UserService {
         return users.stream().map(UserInfoDto::mapFromEntity).collect(Collectors.toList());
     }
 
+    @Override
+    public boolean existsEmail(String email, Long userId) {
+        Optional<UserEntity> byEmail = userRepository.findByEmail(email);
+        if(byEmail.isPresent()){
+            UserEntity userEntity = byEmail.get();
+            if(!userEntity.getId().equals(userId)){
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
 
 }

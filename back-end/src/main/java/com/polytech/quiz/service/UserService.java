@@ -41,4 +41,6 @@ public interface UserService {
     void saveImage(MultipartFile image,Long userId);
 
     List<UserInfoDto> getAllLiteUsers();
+
+    boolean existsEmail(String email, Long userId);
 }

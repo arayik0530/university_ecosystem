@@ -60,32 +60,41 @@ const UserEditDialog = ({open, setIsDialogOpen}) => {
             errorMessage = errorMessage.concat(`Please enter a valid email address. \n`);
         }
         if(user.email){
-            await 
-        }
-        if (user.password && !isPasswordComplex(user.password)) {
-            valid = false;
-            errorMessage = errorMessage.concat(`Password must be at least 6 characters long and contain at least one letter and one number.`);
-        }
-        if (valid) {
-            const formData = new FormData();
-            formData.append('image', iconFile);
+            API.get(`/user/exists-email?email=${user.email}&userId=${user.id}`)
+                .then(res => {
+                   if(res.data){//if another user with the same email exists
+                       errorMessage = errorMessage.concat(`A User with this email already exists \n`);
+                       valid = false;
+                   }
+                    if (user.password && !isPasswordComplex(user.password)) {
+                        valid = false;
+                        errorMessage = errorMessage.concat(`Password must be at least 6 characters long and contain at least one letter and one number.`);
+                        dispatch(setMessage(errorMessage, 'error'));
+                    }
+                    if (valid) {
+                        const formData = new FormData();
+                        formData.append('image', iconFile);
 
-            API.post('/user/upload-image', formData, {
-                headers: {
-                    ...API.defaults.headers,
-                    "Content-Type": "multipart/form-data"
-                }
-            })
-                .then(r => {API.put('/user/update', user)
-                    .then(data => {
-                        dispatch(setMessage('User Info SuccessFully Updated', 'success'));
-                    }).catch(e => {
-                    })})
+                        API.post('/user/upload-image', formData, {
+                            headers: {
+                                ...API.defaults.headers,
+                                "Content-Type": "multipart/form-data"
+                            }
+                        })
+                            .then(r => {API.put('/user/update', user)
+                                .then(data => {
+                                    dispatch(setMessage('User Info SuccessFully Updated', 'success'));
+                                }).catch(e => {
+                                })})
+                            .catch(e => {
+                            });
+                        setIsDialogOpen(false);
+                    } else {
+                        dispatch(setMessage(errorMessage, 'error'));
+                    }
+                })
                 .catch(e => {
                 });
-            setIsDialogOpen(false);
-        } else {
-            dispatch(setMessage(errorMessage, 'error'));
         }
     };
 
