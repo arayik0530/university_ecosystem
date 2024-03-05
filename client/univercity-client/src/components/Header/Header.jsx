@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import {userLogoutSuccess} from "../../redux/actions/user/userActions";
-import UserEditDialog from "./UserEditDialog";
+import UserEditDialogContainer from "../UserEdit/functional/UserEditDialogContainer";
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -67,7 +67,7 @@ const Header = () => {
                     <FaSignOutAlt /> Logout
                 </button>
             )}
-            {isDialogOpen && <UserEditDialog open={isDialogOpen} setIsDialogOpen={setIsDialogOpen}/>}
+            {isDialogOpen && <UserEditDialogContainer open={isDialogOpen} setIsDialogOpen={setIsDialogOpen}/>}
         </div>
     );
 };
