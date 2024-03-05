@@ -27,7 +27,7 @@ API.interceptors.response.use(
     },
     (error) => {
         if (error.response) {
-            // const status = error.response.status;
+            // const status = error.response.status;TODO handle 500 internal server error
             // eventEmitter.emit('apiError', (status === 401 || status === 403 || status === 404) ? 'Invalid credentials' : error.data);
             eventEmitter.emit('apiError', error.response.data);
         } else {

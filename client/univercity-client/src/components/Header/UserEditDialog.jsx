@@ -13,10 +13,6 @@ const UserEditDialog = ({open, setIsDialogOpen}) => {
     const [iconFile, setIconFile] = useState(null);
 
     const uploadRef = useRef(null);
-    const emailRef = useRef(null);
-    const passwordRef = useRef(null);
-    const firstNameRef = useRef(null);
-    const lastNameRef = useRef(null);
 
     useEffect(() => {
         API.get('/user/getMe')
@@ -50,19 +46,19 @@ const UserEditDialog = ({open, setIsDialogOpen}) => {
     const handleSubmit = () => {
         let valid = true;
         let errorMessage = '';
-        if(!firstNameRef.current.value){
+        if(!user.firstName){
             valid = false;
             errorMessage = errorMessage.concat(`First Name can't be empty \n`);
         }
-        if(!lastNameRef.current.value){
+        if(!user.lastName){
             valid = false;
             errorMessage = errorMessage.concat(`Last Name can't be empty \n`);
         }
-        if(!emailRef.current.value || !isEmailValid(emailRef.current.value)){
+        if(!user.email || !isEmailValid(user.email)){
             valid = false;
             errorMessage = errorMessage.concat(`Please enter a valid email address. \n`);
         }
-        if(passwordRef.current.value && !isPasswordComplex(passwordRef.current.value)){
+        if(user.password && !isPasswordComplex(user.password)){
             valid = false;
             errorMessage = errorMessage.concat(`Password must be at least 6 characters long and contain at least one letter and one number.`);
         }
@@ -180,17 +176,17 @@ const UserEditDialog = ({open, setIsDialogOpen}) => {
                                 <Close/>
                             </IconButton>
                         </div>
-                        <TextField label="First Name" fullWidth inputRef={firstNameRef} value={user.firstName}
+                        <TextField label="First Name" fullWidth value={user.firstName}
                                    onChange={
                                        (e) => setUser({...user, firstName: e.target.value})
                                    }/>
-                        <TextField label="Last Name" fullWidth inputRef={lastNameRef} value={user.lastName} onChange={
+                        <TextField label="Last Name" fullWidth value={user.lastName} onChange={
                             (e) => setUser({...user, lastName: e.target.value})
                         }/>
-                        <TextField label="Email" fullWidth inputRef={emailRef} value={user.email} onChange={
+                        <TextField label="Email" fullWidth value={user.email} onChange={
                             (e) => setUser({...user, email: e.target.value})
                         }/>
-                        <TextField label="Password" fullWidth type="password" inputRef={passwordRef} value={user.password}
+                        <TextField label="Password" fullWidth type="password" value={user.password}
                                    onChange={
                                        (e) => setUser({...user, password: e.target.value})
                                    }/>
