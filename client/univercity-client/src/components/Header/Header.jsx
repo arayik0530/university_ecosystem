@@ -67,7 +67,7 @@ const Header = () => {
                     <FaSignOutAlt /> Logout
                 </button>
             )}
-            <UserEditDialog open={isDialogOpen} setIsDialogOpen={setIsDialogOpen}/>
+            {isDialogOpen && <UserEditDialog open={isDialogOpen} setIsDialogOpen={setIsDialogOpen}/>}
         </div>
     );
 };

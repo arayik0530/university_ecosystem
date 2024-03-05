@@ -85,7 +85,9 @@ function App() {
                           }}
                 >
                     <Alert onClose={handleClose} severity={message.messageType}>
-                        {message.messageText}
+                        {message.messageText && message.messageText.split('\n').map((line, index) => (
+                            <span key={index}>{line}<br /></span>
+                        ))}
                     </Alert>
                 </Snackbar>
             </Router>
