@@ -2,6 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {makeStyles} from "tss-react/mui";
 import {Typography} from "@mui/material";
 import API from "../../API";
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {setQuiz} from "../../redux/actions/quiz/quizActions";
+import {QUIZ_TYPE_ACTIVE, QUIZ_TYPE_PASSED} from "../../redux/constants/globalConstants";
 
 const useStyles = makeStyles()({
     container: {
@@ -52,7 +56,9 @@ const useStyles = makeStyles()({
 });
 
 const UserContent = () => {
+    const navigate = useNavigate();
     const {classes} = useStyles();
+    const dispatch = useDispatch();
     const[activeQuizzes, setActiveQuizzes] = useState([]);
     const[passedQuizzes, setPassedQuizzes] = useState([]);
 
@@ -76,7 +82,8 @@ const UserContent = () => {
 
 
     const handleQuizClick = (quizId, isActiveQuiz) => {
-        // Navigate to another page
+        dispatch(setQuiz({quizId: quizId, quizType : isActiveQuiz ? QUIZ_TYPE_ACTIVE : QUIZ_TYPE_PASSED}))
+        navigate('/quiz');
     };
 
     return (

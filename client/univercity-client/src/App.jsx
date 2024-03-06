@@ -10,6 +10,7 @@ import Header from "./components/Header/Header"; // Alert component from Materia
 import {Backdrop, CircularProgress} from '@mui/material';
 import {useDispatch, useSelector} from "react-redux";
 import {setMessage} from './redux/actions/message/messageActions';
+import QuizPage from "./components/Quiz/functional/QuizPage";
 
 const LoadingComponent = ({isLoading}) => {
     return (
@@ -71,6 +72,7 @@ function App() {
                     <Route path='/register' element={<RegisterContainer/>}/>
                     <Route path='/login' element={<LogInContainer/>}/>
                     <Route path='/' element={<CenterBlockContainer/>}/>
+                    <Route path='/quiz' element={<QuizPage/>}/>
                 </Routes>
 
                 <React.Suspense fallback={<div>Loading Footer...</div>}>
