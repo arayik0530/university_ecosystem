@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public interface UpComingQuizRepository extends JpaRepository<UpcomingQuizEntity, Long> {
 
-    Page<UpcomingQuizEntity> findAllByUser(UserEntity userEntity, Pageable pageable);
+    List<UpcomingQuizEntity> findAllByUser(UserEntity userEntity);
 
     @Query(value = "from UpcomingQuizEntity where deadline< :now")
     List<UpcomingQuizEntity> findAllByDeadline(@Param("now") LocalDateTime localDateTime);

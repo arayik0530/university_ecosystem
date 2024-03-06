@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -107,11 +108,11 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public Page<QuizDtoShortInfo> getQuizesByUserId(Long userId, Pageable pageable) {
+    public List<QuizDtoShortInfo> getQuizesByUserId(Long userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
 
-        Page<QuizEntity> allByUser = quizRepository.findAllByUser(userEntity, pageable);
-        return allByUser.map(QuizDtoShortInfo::mapFromEntity);
+        List<QuizEntity> allByUser = quizRepository.findAllByUser(userEntity);
+        return allByUser.stream().map(QuizDtoShortInfo::mapFromEntity).collect(Collectors.toList());
     }
 
 
@@ -205,10 +206,10 @@ public class QuizServiceImpl implements QuizService {
     }
 
     @Override
-    public Page<UpcomingQuizDto> getUpcomingQuizes(Long userId, Pageable pageable) {
+    public List<UpcomingQuizDto> getUpcomingQuizes(Long userId, Pageable pageable) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
-        Page<UpcomingQuizEntity> allByUser = upComingQuizRepository.findAllByUser(userEntity, pageable);
-        return allByUser.map(UpcomingQuizDto::mapFromEntity);
+        List<UpcomingQuizEntity> allByUser = upComingQuizRepository.findAllByUser(userEntity);
+        return allByUser.stream().map(UpcomingQuizDto::mapFromEntity).collect(Collectors.toList());
     }
 
     @Override

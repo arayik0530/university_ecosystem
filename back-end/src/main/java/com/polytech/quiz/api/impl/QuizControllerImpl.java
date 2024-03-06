@@ -84,28 +84,28 @@ public class QuizControllerImpl implements QuizController {
 
     @Override
     @GetMapping("own")
-    public Page<QuizDtoShortInfo> getQuizesForAuthenticatedUser(@PageableDefault Pageable pageable) {
-        return quizService.getQuizesByUserId(userService.getMe(), pageable);
+    public List<QuizDtoShortInfo> getQuizesForAuthenticatedUser() {
+        return quizService.getQuizesByUserId(userService.getMe());
     }
 
     @Override
     @GetMapping("user/{userId}")
     @PreAuthorize(value = "hasAnyAuthority('ADMIN','OBSERVER')")
-    public Page<QuizDtoShortInfo> getQuizesForUser(@PathVariable Long userId,
-                                                   @PageableDefault Pageable pageable) {
-        return quizService.getQuizesByUserId(userId, pageable);
+    public List<QuizDtoShortInfo> getQuizesForUser(@PathVariable Long userId) {
+        return quizService.getQuizesByUserId(userId);
     }
 
     @Override
     @GetMapping("upcoming/own")
-    public Page<UpcomingQuizDto> getUpcomingQuizForAuthenticatedUser(Pageable pageable) {
+    public List<UpcomingQuizDto> getUpcomingQuizForAuthenticatedUser(Pageable pageable) {
         return quizService.getUpcomingQuizes(userService.getMe(), pageable);
     }
+
 
     @Override
     @GetMapping("upcoming/user/{userId}")
     @PreAuthorize(value = "hasAnyAuthority('ADMIN,OBSERVER')")
-    public Page<UpcomingQuizDto> getUpcomingQuizForUser(@PathVariable Long userId, @PageableDefault Pageable pageable) {
+    public List<UpcomingQuizDto> getUpcomingQuizForUser(@PathVariable Long userId, @PageableDefault Pageable pageable) {
         return quizService.getUpcomingQuizes(userId, pageable);
     }
 

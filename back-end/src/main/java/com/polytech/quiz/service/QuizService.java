@@ -21,14 +21,14 @@ public interface QuizService {
 
     void remove(Long id);
 
-    Page<QuizDtoShortInfo> getQuizesByUserId(Long userId, Pageable pageable);
+    List<QuizDtoShortInfo> getQuizesByUserId(Long userId);
 
     @Transactional
     QuestionDto getFirstQuestion(Long quizId);
 
     PastQuizInfoDto getQuizInfo(Long quizId);
 
-    Page<UpcomingQuizDto> getUpcomingQuizes(Long userId, Pageable pageable);
+    List<UpcomingQuizDto> getUpcomingQuizes(Long userId, Pageable pageable);
 
     void createUpcomingQuiz(UpcomingQuizCreationDto quizCreationDto);
 
@@ -43,4 +43,5 @@ public interface QuizService {
     void answerToQuestion(Long questionId, List<Long> answeredIds);
 
     QuizDtoForLocalStorage findByQuizId(Long id);
+
 }

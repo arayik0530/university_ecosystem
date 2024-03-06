@@ -5,6 +5,7 @@ import com.polytech.quiz.dto.quiz.*;
 import com.polytech.quiz.entity.TopicEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -28,13 +29,13 @@ public interface QuizController {
 
     void answerToQuestion(Long questionId, List<Long> answeredIds);
 
-    Page<QuizDtoShortInfo> getQuizesForAuthenticatedUser(Pageable pageable);
+    List<QuizDtoShortInfo> getQuizesForAuthenticatedUser();
 
-    Page<QuizDtoShortInfo> getQuizesForUser(Long userId, Pageable pageable);
+    List<QuizDtoShortInfo> getQuizesForUser(Long userId);
 
-    Page<UpcomingQuizDto> getUpcomingQuizForAuthenticatedUser(Pageable pageable);
+    List<UpcomingQuizDto> getUpcomingQuizForAuthenticatedUser(Pageable pageable);
 
-    Page<UpcomingQuizDto> getUpcomingQuizForUser(Long userId, Pageable pageable);
+    List<UpcomingQuizDto> getUpcomingQuizForUser(Long userId, Pageable pageable);
 
     void createUpcomingQuizForUser(UpcomingQuizCreationDto upcomingQuizCreationDto);
 }

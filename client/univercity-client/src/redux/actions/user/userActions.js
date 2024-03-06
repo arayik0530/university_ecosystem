@@ -36,7 +36,6 @@ export const login = (credentials) => (dispatch) => {
         })
         .then(res => {
             dispatch(getCurrentUser());
-        }).catch(e => {
         });
 }
 
