@@ -34,6 +34,8 @@ public interface QuizService {
 
     QuestionDto getNextQuestion(Long nextQuestionId);
 
+    QuestionDto getPreviousQuestion(Long previousQuizQuestionId);
+
     void computePercentage(Long quizId);
 
     void finishQuiz(Long quizId);

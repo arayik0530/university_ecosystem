@@ -6,6 +6,7 @@ import com.polytech.quiz.entity.QuestionEntity;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
@@ -22,11 +23,11 @@ public class CreateQuestionDto {
     public QuestionEntity toEntity() {
 
         QuestionEntity question = new QuestionEntity();
-        List<AnswerEntity> answerEntities =
+        Set<AnswerEntity> answerEntities =
                 createAnswerDtoList
                         .stream()
                         .map(CreateAnswerDto::toEntity)
-                        .collect(Collectors.toList());
+                        .collect(Collectors.toSet());
 
         question.setIsMultiAnswer(isMultiAnswer);
         question.setAnswers(answerEntities);

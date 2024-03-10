@@ -74,7 +74,6 @@ const UserContent = () => {
             .then(response => {
                 const passedQuizzes = response.data;
                 setPassedQuizzes(passedQuizzes);
-                console.log(passedQuizzes);
             })
             .catch(e => {
             });
@@ -108,8 +107,8 @@ const UserContent = () => {
                         <div className={classes.box} key={quiz.id} onClick={() => handleQuizClick(quiz.id, false)}>
                             <div style={{color: "grey"}}>
                                 <p className={`${classes.box_title} ${classes.passed_text}`}>{quiz.topic}</p>
-                                <p className={`${classes.box_title} ${classes.passed_text}`}>{quiz.endTime.split('T')[0]}</p>
-                                <div className={`${classes.box_text} ${classes.passed_text}`}>{parseFloat(quiz.successPercent).toFixed(2)}%</div>
+                                <p className={`${classes.box_title} ${classes.passed_text}`}>{quiz.endTime && quiz.endTime.split('T')[0]}</p>
+                                <div className={`${classes.box_text} ${classes.passed_text}`}>{quiz.successPercent ? parseFloat(quiz.successPercent).toFixed(2) : 0}%</div>
                             </div>
                         </div>
                     ))}

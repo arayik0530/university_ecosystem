@@ -6,6 +6,7 @@ import com.polytech.quiz.entity.TopicEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -23,7 +24,10 @@ public interface QuizController {
 
     QuestionDto startQuiz(Long upComingQuizId);
 
-    QuestionDto getQuestion(Long nextQuestionId);
+    QuestionDto getNextQuestion(Long nextQuestionId);
+
+    @GetMapping("next-question")
+    QuestionDto getPreviousQuestion(@RequestParam Long previousQuestionId);
 
     PastQuizInfoDto finishQuiz(Long quizId);
 

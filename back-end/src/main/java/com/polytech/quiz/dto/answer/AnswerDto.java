@@ -27,4 +27,12 @@ public class AnswerDto {
         return answerDto;
     }
 
+    public static AnswerDto mapFromEntityLight(AnswerEntity answerEntity) {
+        AnswerDto answerDto = new AnswerDto();
+
+        answerDto.id = answerEntity.getId();
+        answerDto.text = answerEntity.getText();
+        return answerDto;
+    }
+
 }

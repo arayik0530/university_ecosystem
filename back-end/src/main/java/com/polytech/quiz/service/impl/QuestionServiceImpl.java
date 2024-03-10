@@ -92,7 +92,10 @@ public class QuestionServiceImpl implements QuestionService {
                         .concat(
                                 quizQuestions
                                         .stream()
-                                        .map(qQ -> qQ.getQuiz().getName())
+                                        .map(qQ -> qQ.getQuiz().getTopic().getTitle()
+//                                                .concat(": ")TODO
+//                                                .concat(qQ.getQuiz().get)
+                                        )
                                         .distinct()
                                         .collect(Collectors.joining(", "))
                         ));

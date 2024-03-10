@@ -5,9 +5,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Data
@@ -29,11 +27,14 @@ public class QuizQuestionEntity{
     @Column(name = "next_question_id")
     private Long nextQuestionId;
 
+    @Column(name = "previous_question_id")
+    private Long previousQuestionId;
+
     @ManyToMany
     @JoinTable(name = "quiz_questions_answers",
             joinColumns = {@JoinColumn(name = "quiz_question_id")},
             inverseJoinColumns = {@JoinColumn(name = "answer_id")})
-    private List<AnswerEntity> givenAnswers = new ArrayList<>();
+    private Set<AnswerEntity> givenAnswers = new HashSet<>();
 
     @Override
     public String toString() {

@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "questions", indexes = {
@@ -31,7 +32,7 @@ public class QuestionEntity {
 
     @OneToMany(mappedBy = "question", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @EqualsAndHashCode.Exclude
-    private List<AnswerEntity> answers;
+    private Set<AnswerEntity> answers;
 
     private Boolean isMultiAnswer;
 

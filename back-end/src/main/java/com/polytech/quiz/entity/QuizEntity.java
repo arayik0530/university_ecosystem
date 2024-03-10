@@ -20,7 +20,7 @@ public class QuizEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name", nullable = true, unique = false)
     private String name;
 
     @JoinColumn(name = "user_id", nullable = false)

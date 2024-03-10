@@ -65,8 +65,14 @@ public class QuizControllerImpl implements QuizController {
 
     @Override
     @GetMapping("next-question")
-    public QuestionDto getQuestion(@RequestParam Long nextQuestionId) {
+    public QuestionDto getNextQuestion(@RequestParam Long nextQuestionId) {
         return quizService.getNextQuestion(nextQuestionId);
+    }
+
+    @Override
+    @GetMapping("previous-question")
+    public QuestionDto getPreviousQuestion(@RequestParam Long previousQuestionId) {
+        return quizService.getPreviousQuestion(previousQuestionId);
     }
 
     @Override

@@ -1,10 +1,11 @@
 package com.polytech.quiz.dto.question;
 
 import com.polytech.quiz.dto.answer.AnswerDto;
+import com.polytech.quiz.entity.AnswerEntity;
 import com.polytech.quiz.entity.QuestionEntity;
 import lombok.Data;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
@@ -17,11 +18,13 @@ public class QuestionDto {
 
     private String text;
 
-    private List<AnswerDto> answers;
+    private Set<AnswerDto> answers;
 
     private Boolean isMultiAnswer;
 
     private Long nextQuizQuestionId;
+
+    private Long previousQuizQuestionId;
 
     private Long quizId;
 
@@ -32,7 +35,7 @@ public class QuestionDto {
         question.setText(this.text);
         question.setAnswers(this.getAnswers().stream()
                 .map(AnswerDto::toEntity)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toSet()));
 
         return question;
     }
@@ -44,12 +47,27 @@ public class QuestionDto {
         questionDto.setId(question.getId());
         questionDto.setText(question.getText());
         questionDto.setTopicId(question.getTopic().getId());
-        questionDto.setAnswers(question.getAnswers().stream()
-                .map(AnswerDto::mapFromEntity).collect(Collectors.toList()));
-        questionDto.setIsMultiAnswer(question.getIsMultiAnswer());
+        Set<AnswerEntity> answerEntities = question.getAnswers();
+        long rightAnswerCount = answerEntities.stream().filter(AnswerEntity::getIsRight).count();
+        questionDto.setAnswers(answerEntities.stream()
+                .map(AnswerDto::mapFromEntity).collect(Collectors.toSet()));
+        questionDto.setIsMultiAnswer(rightAnswerCount > 1);
         questionDto.setIsUsedInQuizzes(!question.getQuizQuestions().isEmpty());
         return questionDto;
     }
 
 
+    public static QuestionDto mapFromEntityLight(QuestionEntity question) {
+
+        QuestionDto questionDto = new QuestionDto();
+        questionDto.setId(question.getId());
+        questionDto.setText(question.getText());
+        questionDto.setTopicId(question.getTopic().getId());
+        Set<AnswerEntity> answerEntities = question.getAnswers();
+        long rightAnswerCount = answerEntities.stream().filter(AnswerEntity::getIsRight).count();
+        questionDto.setAnswers(answerEntities.stream()
+                .map(AnswerDto::mapFromEntityLight).collect(Collectors.toSet()));
+        questionDto.setIsMultiAnswer(rightAnswerCount > 1);
+        return questionDto;
+    }
 }
