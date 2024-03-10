@@ -1,6 +1,6 @@
 // Header.js
 import React, { useState } from 'react';
-import { FaUser, FaSignInAlt, FaSignOutAlt, FaUserPlus } from 'react-icons/fa';
+import {FaUser, FaSignInAlt, FaSignOutAlt, FaUserPlus, FaHome} from 'react-icons/fa';
 import './Header.css';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -42,8 +42,14 @@ const Header = () => {
         setIsDialogOpen(true);
     }
 
+    function handleNavigateHome() {
+        navigate('/');
+    }
+
     return (
         <div className="header">
+            {isLoggedIn && <FaHome className="header-icon" onClick={handleNavigateHome}/>}
+
             {/* User Icon */}
             {isLoggedIn && <FaUser className="header-icon" onClick={handleDialogOpen}/>}
 
