@@ -1,5 +1,6 @@
 package com.polytech.quiz.service.impl;
 
+import com.polytech.quiz.dto.answer.AnswerDto;
 import com.polytech.quiz.dto.question.QuestionDto;
 import com.polytech.quiz.dto.quiz.*;
 import com.polytech.quiz.entity.*;
@@ -294,6 +295,11 @@ public class QuizServiceImpl implements QuizService {
         questionDto.setNextQuizQuestionId(quizQuestionEntity.getNextQuestionId());
         questionDto.setPreviousQuizQuestionId(quizQuestionEntity.getPreviousQuestionId());
         questionDto.setQuizId(quizQuestionEntity.getQuiz().getId());
+        for (AnswerDto answer : questionDto.getAnswers()) {
+            answer.setSelected(quizQuestionEntity.getGivenAnswers().stream()
+                    .map(AnswerEntity::getId)
+                    .collect(Collectors.toList()).contains(answer.getId()));
+        }
         return questionDto;
     }
 
@@ -308,6 +314,11 @@ public class QuizServiceImpl implements QuizService {
             questionDto.setNextQuizQuestionId(quizQuestionEntity.getNextQuestionId());
             questionDto.setPreviousQuizQuestionId(quizQuestionEntity.getPreviousQuestionId());
             questionDto.setQuizId(quizQuestionEntity.getQuiz().getId());
+            for (AnswerDto answer : questionDto.getAnswers()) {
+                answer.setSelected(quizQuestionEntity.getGivenAnswers().stream()
+                        .map(AnswerEntity::getId)
+                        .collect(Collectors.toList()).contains(answer.getId()));
+            }
             return questionDto;
         }
         return null;

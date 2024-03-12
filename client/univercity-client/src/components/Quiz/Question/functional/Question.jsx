@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {FormControl, FormGroup, FormControlLabel, Checkbox, RadioGroup, Radio, Typography} from '@mui/material';
+import React, {useEffect, useState} from 'react';
+import {Checkbox, FormControl, FormControlLabel, FormGroup, Radio, RadioGroup, Typography} from '@mui/material';
 import {makeStyles} from "tss-react/mui";
 import API from "../../../../API";
 
@@ -37,23 +37,29 @@ const useStyles = makeStyles()({
 const Question = ({question}) => {
     const {classes} = useStyles();
 
-    const [selectedAnswers, setSelectedAnswers] = useState([]);
+    const [selectedAnswers, setSelectedAnswers] = useState(question.answers.filter(a => a.isSelected).map(a => a.id));
 
-    const handleAnswerSelection = (answerId) => {
+    useEffect(() => {
+        answerToQuestion();
+    }, [selectedAnswers]);
+
+    const handleAnswerSelection = (answerId, checked) => {
         if (question.isMultiAnswer) {
-            setSelectedAnswers((prevSelected) =>
-                prevSelected.includes(answerId)
-                    ? prevSelected.filter((id) => id !== answerId)
-                    : [...prevSelected, answerId]
-            );
+            if (checked) {
+                setSelectedAnswers([...selectedAnswers, answerId]);
+            } else {
+                setSelectedAnswers(selectedAnswers.filter(item => item !== answerId));
+            }
         } else {
             setSelectedAnswers([answerId]);
         }
+    };
 
-        API.post(`/quiz/${question.id}/question-answers`, selectedAnswers)
+    function answerToQuestion() {
+        API.post(`/quiz/${question.quizQuestionId}/question-answers`, selectedAnswers)
             .catch(e => {
             });
-    };
+    }
 
     return (
         <div className={classes.container}>
@@ -75,7 +81,7 @@ const Question = ({question}) => {
                                             <Checkbox
                                                 size="small"
                                                 checked={selectedAnswers.includes(answer.id)}
-                                                onChange={() => handleAnswerSelection(answer.id)}
+                                                onChange={(e) => handleAnswerSelection(answer.id, e.target.checked)}
                                                 name={`answer-${answer.id}`}
                                             />
                                         }
@@ -101,7 +107,7 @@ const Question = ({question}) => {
                                             </Typography>
                                         }
                                         checked={selectedAnswers.includes(answer.id)}
-                                        onChange={() => handleAnswerSelection(answer.id)}
+                                        onChange={(e) => handleAnswerSelection(answer.id)}
                                     />
                                 ))}
                             </RadioGroup>

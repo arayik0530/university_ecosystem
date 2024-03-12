@@ -33,7 +33,7 @@ public class DataLoader implements ApplicationRunner {
             admin.setEmail(email);
             admin.setFirstName("admin");
             admin.setLastName("admin");
-            admin.setPassword(passwordEncoder.encode("a921113a"));
+            admin.setPassword(passwordEncoder.encode("QWEqwe111"));
             admin.getRoles().add(UserRole.ADMIN);
 //            admin.getRoles().add(UserRole.USER);
             userRepository.save(admin);

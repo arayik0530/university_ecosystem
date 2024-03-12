@@ -8,6 +8,7 @@ public class AnswerDto {
     private Long id;
     private String text;
     private boolean isRightAnswer;
+    private boolean isSelected;
 
     public AnswerEntity toEntity(){
 

@@ -33,9 +33,9 @@ public class QuestionDto {
 
         QuestionEntity question = new QuestionEntity();
         question.setText(this.text);
-        question.setAnswers(this.getAnswers().stream()
-                .map(AnswerDto::toEntity)
-                .collect(Collectors.toSet()));
+//        question.setAnswers(this.getAnswers().stream()
+//                .map(AnswerDto::toEntity)
+//                .collect(Collectors.toSet()));
 
         return question;
     }

@@ -48,7 +48,7 @@ const QuizPage = () => {
             .then(response => {
                 const firstQuestion = response.data;
                 setQuizQuestion(firstQuestion);
-                console.log(quizQuestion)
+                // console.log(quizQuestion)
             })
             .catch(e => {
             });
@@ -60,7 +60,7 @@ const QuizPage = () => {
             .then(response => {
                 const previousQuestion = response.data;
                 setQuizQuestion(previousQuestion);
-                console.log(quizQuestion)
+                // console.log(quizQuestion)
             })
             .catch(e => {
             });
@@ -80,7 +80,7 @@ const QuizPage = () => {
             .then(response => {
                 const nextQuestion = response.data;
                 setQuizQuestion(nextQuestion);
-                console.log(quizQuestion)
+                // console.log(quizQuestion)
             })
             .catch(e => {
             });
@@ -88,7 +88,7 @@ const QuizPage = () => {
 
     return (
         <div className={classes.container}>
-            {quizQuestion.id && <Question question={quizQuestion}/>}
+            {quizQuestion.quizQuestionId && <Question question={quizQuestion}/>}
             <div className={classes.buttonContainer}>
                 <Button
                     style={{marginLeft: '20px', visibility: quizQuestion.previousQuizQuestionId ? 'visible' : 'hidden'}}
