@@ -1,11 +1,14 @@
 package com.polytech.quiz.dto.user;
 
 import com.polytech.quiz.entity.UserEntity;
-import lombok.Data;
+import lombok.*;
 
 import java.util.stream.Stream;
 
-@Data
+@Getter
+ @Setter
+ @RequiredArgsConstructor
+ @EqualsAndHashCode
 public class UserInfoDto {
     private Long id;
 

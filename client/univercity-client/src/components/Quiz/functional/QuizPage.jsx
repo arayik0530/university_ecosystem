@@ -59,6 +59,8 @@ const QuizPage = () => {
         API.get(`/quiz/previous-question?previousQuestionId=${quizQuestion.previousQuizQuestionId}`)
             .then(response => {
                 const previousQuestion = response.data;
+                console.log('getting previous question, previous question id is: ', previousQuestion.quizQuestionId);
+                console.log('answers from DB of previous question are : ', previousQuestion.answers.filter(a => a.isSelected));
                 setQuizQuestion(previousQuestion);
                 // console.log(quizQuestion)
             })
@@ -79,6 +81,8 @@ const QuizPage = () => {
         API.get(`/quiz/next-question?nextQuestionId=${quizQuestion.nextQuizQuestionId}`)
             .then(response => {
                 const nextQuestion = response.data;
+                console.log('getting next question, next question id is: ', nextQuestion.quizQuestionId);
+                console.log('answers from DB of next question are : ', nextQuestion.answers.filter(a => a.isSelected));
                 setQuizQuestion(nextQuestion);
                 // console.log(quizQuestion)
             })

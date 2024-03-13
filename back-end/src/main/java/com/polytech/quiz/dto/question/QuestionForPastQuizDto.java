@@ -2,11 +2,14 @@ package com.polytech.quiz.dto.question;
 
 import com.polytech.quiz.dto.answer.AnswerForPastQuizDto;
 import com.polytech.quiz.entity.QuestionEntity;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-@Data
+@Getter
+ @Setter
+ @RequiredArgsConstructor
+ @EqualsAndHashCode
 public class QuestionForPastQuizDto
 {
     private Long id;

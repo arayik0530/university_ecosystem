@@ -1,6 +1,6 @@
 package com.polytech.quiz.entity;
 
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -8,7 +8,10 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Data
+@Getter
+ @Setter
+ @RequiredArgsConstructor
+// @EqualsAndHashCode
 @Table(name = "quiz_questions")
 public class QuizQuestionEntity{
     @Id

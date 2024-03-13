@@ -1,14 +1,17 @@
 package com.polytech.quiz.dto.answer;
 
 import com.polytech.quiz.entity.AnswerEntity;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+ @Setter
+ @RequiredArgsConstructor
+ @EqualsAndHashCode
 public class AnswerDto {
     private Long id;
     private String text;
     private boolean isRightAnswer;
-    private boolean isSelected;
+    private boolean selected;
 
     public AnswerEntity toEntity(){
 

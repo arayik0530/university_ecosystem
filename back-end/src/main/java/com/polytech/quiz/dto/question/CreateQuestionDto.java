@@ -3,13 +3,16 @@ package com.polytech.quiz.dto.question;
 import com.polytech.quiz.dto.answer.CreateAnswerDto;
 import com.polytech.quiz.entity.AnswerEntity;
 import com.polytech.quiz.entity.QuestionEntity;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Data
+@Getter
+ @Setter
+ @RequiredArgsConstructor
+ @EqualsAndHashCode
 public class CreateQuestionDto {
 
     private Long topicId;

@@ -1,6 +1,6 @@
 package com.polytech.quiz.entity;
 
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Data
+@Getter
+ @Setter
+ @RequiredArgsConstructor
+ @EqualsAndHashCode
 @Entity
 @Table(name = "quizes")
 public class QuizEntity {

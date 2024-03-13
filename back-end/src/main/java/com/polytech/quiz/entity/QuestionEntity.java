@@ -1,7 +1,6 @@
 package com.polytech.quiz.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -14,7 +13,10 @@ import java.util.Set;
 @Table(name = "questions", indexes = {
         @Index(name = "questions_text_IDX", columnList = "text")
 })
-@Data
+@Getter
+ @Setter
+ @RequiredArgsConstructor
+ @EqualsAndHashCode
 public class QuestionEntity {
 
     @Id

@@ -1,9 +1,12 @@
 package com.polytech.quiz.dto.user;
 
 import com.polytech.quiz.entity.UserEntity;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+ @Setter
+ @RequiredArgsConstructor
+ @EqualsAndHashCode
 public class UserRegistrationDto {
     public UserEntity toEntity() {
         UserEntity userEntity = new UserEntity();

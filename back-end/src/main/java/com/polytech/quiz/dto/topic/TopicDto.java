@@ -1,9 +1,12 @@
 package com.polytech.quiz.dto.topic;
 
 import com.polytech.quiz.entity.TopicEntity;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+ @Setter
+ @RequiredArgsConstructor
+ @EqualsAndHashCode
 public class TopicDto {
 
     private String title;

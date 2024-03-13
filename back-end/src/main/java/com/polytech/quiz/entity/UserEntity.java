@@ -1,7 +1,7 @@
 package com.polytech.quiz.entity;
 
 import com.polytech.quiz.entity.enums.UserRole;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,7 +10,10 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+ @Setter
+// @RequiredArgsConstructor
+ @EqualsAndHashCode
 @Table(name = "users", indexes = {
         @Index(name = "users_first_name_IDX", columnList = "first_name"),
         @Index(name = "users_last_name_IDX", columnList = "last_name"),

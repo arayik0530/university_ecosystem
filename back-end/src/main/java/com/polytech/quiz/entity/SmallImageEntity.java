@@ -1,13 +1,14 @@
 package com.polytech.quiz.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Getter
+ @Setter
+ @RequiredArgsConstructor
+ @EqualsAndHashCode
 @Table(name = "small_images")
 public class SmallImageEntity {
     @Id

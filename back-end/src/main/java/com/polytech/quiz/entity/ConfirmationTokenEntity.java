@@ -3,12 +3,15 @@ package com.polytech.quiz.entity;
 import java.util.UUID;
 import javax.persistence.*;
 
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-@Data
+@Getter
+ @Setter
+ @RequiredArgsConstructor
+ @EqualsAndHashCode
 @Table(name = "confirmation_token")
 public class ConfirmationTokenEntity {
 

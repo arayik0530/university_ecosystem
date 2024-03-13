@@ -1,8 +1,11 @@
 package com.polytech.quiz.dto.user;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+ @Setter
+ @RequiredArgsConstructor
+ @EqualsAndHashCode
 public class PasswordChangingDto {
     private String email;
     private String oldPassword;

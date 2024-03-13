@@ -1,8 +1,6 @@
 package com.polytech.quiz.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,7 +8,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "topics")
-@Data
+@Getter
+ @Setter
+// @RequiredArgsConstructor
+ @EqualsAndHashCode
 public class TopicEntity {
 
     public TopicEntity() {

@@ -3,12 +3,15 @@ package com.polytech.quiz.dto.quiz;
 import com.polytech.quiz.dto.answer.AnswerForPastQuizDto;
 import com.polytech.quiz.dto.question.QuestionDto;
 import com.polytech.quiz.entity.QuizQuestionEntity;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
+@Getter
+ @Setter
+ @RequiredArgsConstructor
+ @EqualsAndHashCode
 public class QuizQuestionDto {
     private Long id;
     private Long quizId;

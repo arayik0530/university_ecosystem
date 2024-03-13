@@ -1,11 +1,14 @@
 package com.polytech.quiz.dto.quiz;
 
 import com.polytech.quiz.entity.UpcomingQuizEntity;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
+@Getter
+ @Setter
+ @RequiredArgsConstructor
+ @EqualsAndHashCode
 public class UpcomingQuizDto {
     private Long id;
 

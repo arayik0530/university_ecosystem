@@ -1,12 +1,15 @@
 package com.polytech.quiz.dto.quiz;
 
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+ @Setter
+ @RequiredArgsConstructor
+ @EqualsAndHashCode
 public class PastQuizInfoDto {
     private Long id;
 

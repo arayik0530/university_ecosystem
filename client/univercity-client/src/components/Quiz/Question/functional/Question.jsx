@@ -37,26 +37,30 @@ const useStyles = makeStyles()({
 const Question = ({question}) => {
     const {classes} = useStyles();
 
-    const [selectedAnswers, setSelectedAnswers] = useState(question.answers.filter(a => a.isSelected).map(a => a.id));
-
-    useEffect(() => {
-        answerToQuestion();
-    }, [selectedAnswers]);
-
     const handleAnswerSelection = (answerId, checked) => {
+        let newAnswers;
+        const oldAnswers = question.answers.filter(a => a.selected).map(a => a.id);
         if (question.isMultiAnswer) {
             if (checked) {
-                setSelectedAnswers([...selectedAnswers, answerId]);
+                newAnswers = [...oldAnswers, answerId];
             } else {
-                setSelectedAnswers(selectedAnswers.filter(item => item !== answerId));
+                newAnswers = oldAnswers.filter(item => item !== answerId);
             }
         } else {
-            setSelectedAnswers([answerId]);
+            newAnswers = [answerId];
         }
+        question.answers.forEach(a => {
+            if (newAnswers.includes(a.id)) {
+                a.selected = true;
+            } else {
+                a.selected = false;
+            }
+        });
+        answerToQuestion(newAnswers);
     };
 
-    function answerToQuestion() {
-        API.post(`/quiz/${question.quizQuestionId}/question-answers`, selectedAnswers)
+    function answerToQuestion(newAnswers) {
+        API.post(`/quiz/${question.quizQuestionId}/question-answers`, newAnswers)
             .catch(e => {
             });
     }
@@ -80,7 +84,7 @@ const Question = ({question}) => {
                                         control={
                                             <Checkbox
                                                 size="small"
-                                                checked={selectedAnswers.includes(answer.id)}
+                                                checked={question.answers.filter(a => a.selected).map(a => a.id).includes(answer.id)}
                                                 onChange={(e) => handleAnswerSelection(answer.id, e.target.checked)}
                                                 name={`answer-${answer.id}`}
                                             />
@@ -99,15 +103,19 @@ const Question = ({question}) => {
                                     <FormControlLabel
                                         key={answer.id}
                                         style={{marginTop: '10px'}}
-                                        value={String(answer.id)}
-                                        control={<Radio size="small"/>}
+                                        control={
+                                            <Radio
+                                                size="small"
+                                                checked={question.answers.filter(a => a.selected).map(a => a.id).includes(answer.id)}
+                                                onChange={(e) => handleAnswerSelection(answer.id, e.target.checked)}
+                                                name={`answer-${answer.id}`}
+                                            />
+                                        }
                                         label={
                                             <Typography variant="body1" style={{fontSize: '16px'}}>
                                                 {answer.text}
                                             </Typography>
                                         }
-                                        checked={selectedAnswers.includes(answer.id)}
-                                        onChange={(e) => handleAnswerSelection(answer.id)}
                                     />
                                 ))}
                             </RadioGroup>
