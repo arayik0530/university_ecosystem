@@ -29,6 +29,21 @@ const useStyles = makeStyles()({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around',
+    },
+    missed: {
+        '& .MuiTypography-root, & .MuiCheckbox-root, & .MuiRadio-root': {
+            color: 'darkorange'
+        }
+    },
+    answeredWrong: {
+        '& .MuiTypography-root, & .MuiCheckbox-root, & .MuiRadio-root': {
+            color: 'red'
+        }
+    },
+    answeredRight: {
+        '& .MuiTypography-root, & .MuiCheckbox-root, & .MuiRadio-root': {
+            color: 'green'
+        }
     }
 });
 
@@ -77,6 +92,9 @@ const Question = ({question, activeQuiz}) => {
                             <FormGroup>
                                 {question.answers.map((answer) => (
                                     <FormControlLabel
+                                        className={!activeQuiz && (
+                                            answer.selected ? (answer.rightAnswer ? classes.answeredRight : classes.answeredWrong) : (answer.rightAnswer ? classes.missed : '')
+                                        )}
                                         key={answer.id}
                                         style={{marginTop: '10px'}}
                                         control={
@@ -98,7 +116,11 @@ const Question = ({question, activeQuiz}) => {
                         ) : (
                             <RadioGroup>
                                 {question.answers.map((answer) => (
+
                                     <FormControlLabel
+                                        className={!activeQuiz && (
+                                            answer.selected ? (answer.rightAnswer ? classes.answeredRight : classes.answeredWrong) : (answer.rightAnswer ? classes.missed : '')
+                                        )}
                                         key={answer.id}
                                         style={{marginTop: '10px'}}
                                         control={
