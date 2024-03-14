@@ -10,14 +10,14 @@ import lombok.*;
 public class AnswerDto {
     private Long id;
     private String text;
-    private boolean isRightAnswer;
+    private boolean rightAnswer;
     private boolean selected;
 
     public AnswerEntity toEntity(){
 
         AnswerEntity answer = new AnswerEntity();
         answer.setText(this.text);
-        answer.setIsRight(this.isRightAnswer);
+        answer.setIsRight(this.rightAnswer);
 
         return answer;
     }
@@ -27,15 +27,18 @@ public class AnswerDto {
 
         answerDto.id = answerEntity.getId();
         answerDto.text = answerEntity.getText();
-        answerDto.isRightAnswer = answerEntity.getIsRight();
+        answerDto.rightAnswer = answerEntity.getIsRight();
         return answerDto;
     }
 
-    public static AnswerDto mapFromEntityLight(AnswerEntity answerEntity) {
+    public static AnswerDto mapFromEntityLight(AnswerEntity answerEntity, Boolean isFinished) {
         AnswerDto answerDto = new AnswerDto();
 
         answerDto.id = answerEntity.getId();
         answerDto.text = answerEntity.getText();
+        if(isFinished){
+            answerDto.setRightAnswer(answerEntity.getIsRight());
+        }
         return answerDto;
     }
 

@@ -1,7 +1,6 @@
 package com.polytech.quiz.service.impl;
 
 import com.polytech.quiz.dto.answer.AnswerDto;
-import com.polytech.quiz.dto.question.CreateQuestionDto;
 import com.polytech.quiz.dto.question.QuestionDto;
 import com.polytech.quiz.entity.AnswerEntity;
 import com.polytech.quiz.entity.QuestionEntity;

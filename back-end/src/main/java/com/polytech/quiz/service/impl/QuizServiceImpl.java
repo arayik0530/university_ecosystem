@@ -184,12 +184,17 @@ public class QuizServiceImpl implements QuizService {
                 .findById(quizId).orElseThrow(() -> new QuizNotFoundException(quizId));
         QuizQuestionEntity quizQuestionEntity = quizQuestionRepository.findFirstByQuizOrderById(quizEntity);
         QuestionDto questionDto = QuestionDto
-                .mapFromEntityLight(quizQuestionEntity.getQuestion());
+                .mapFromEntityLight(quizQuestionEntity.getQuestion(), quizEntity.getIsFinished());
         questionDto.setQuizQuestionId(quizQuestionEntity.getId());
 
         questionDto.setQuizId(quizEntity.getId());
         questionDto.setNextQuizQuestionId(quizQuestionEntity.getNextQuestionId());
         questionDto.setPreviousQuizQuestionId(quizQuestionEntity.getPreviousQuestionId());
+        for (AnswerDto answer : questionDto.getAnswers()) {
+            answer.setSelected(quizQuestionEntity.getGivenAnswers().stream()
+                    .map(AnswerEntity::getId)
+                    .collect(Collectors.toList()).contains(answer.getId()));
+        }
 
         return questionDto;
     }
@@ -290,7 +295,7 @@ public class QuizServiceImpl implements QuizService {
         QuizQuestionEntity quizQuestionEntity = quizQuestionRepository.findById(nextQuizQuestionId)
                 .orElseThrow(() -> new QuizQuestionNotFoundException(nextQuizQuestionId));
 
-        QuestionDto questionDto = QuestionDto.mapFromEntityLight(quizQuestionEntity.getQuestion());
+        QuestionDto questionDto = QuestionDto.mapFromEntityLight(quizQuestionEntity.getQuestion(), quizQuestionEntity.getQuiz().getIsFinished());
         questionDto.setQuizQuestionId(quizQuestionEntity.getId());
         questionDto.setNextQuizQuestionId(quizQuestionEntity.getNextQuestionId());
         questionDto.setPreviousQuizQuestionId(quizQuestionEntity.getPreviousQuestionId());
@@ -309,7 +314,7 @@ public class QuizServiceImpl implements QuizService {
             QuizQuestionEntity quizQuestionEntity = quizQuestionRepository.findById(previousQuizQuestionId)
                     .orElseThrow(() -> new QuizQuestionNotFoundException(previousQuizQuestionId));
 
-            QuestionDto questionDto = QuestionDto.mapFromEntityLight(quizQuestionEntity.getQuestion());
+            QuestionDto questionDto = QuestionDto.mapFromEntityLight(quizQuestionEntity.getQuestion(), quizQuestionEntity.getQuiz().getIsFinished());
             questionDto.setQuizQuestionId(quizQuestionEntity.getId());
             questionDto.setNextQuizQuestionId(quizQuestionEntity.getNextQuestionId());
             questionDto.setPreviousQuizQuestionId(quizQuestionEntity.getPreviousQuestionId());
@@ -424,5 +429,23 @@ public class QuizServiceImpl implements QuizService {
         } else {
             throw new QuizNotFoundException(id);
         }
+    }
+
+    @Override
+    public QuestionDto getQuizQuestion(Long quizQuestionId) {
+        QuizQuestionEntity quizQuestionEntity = quizQuestionRepository.findById(quizQuestionId)
+                .orElseThrow(() -> new QuizQuestionNotFoundException(quizQuestionId));
+
+        QuestionDto questionDto = QuestionDto.mapFromEntityLight(quizQuestionEntity.getQuestion(), quizQuestionEntity.getQuiz().getIsFinished());
+        questionDto.setQuizQuestionId(quizQuestionEntity.getId());
+        questionDto.setNextQuizQuestionId(quizQuestionEntity.getNextQuestionId());
+        questionDto.setPreviousQuizQuestionId(quizQuestionEntity.getPreviousQuestionId());
+        questionDto.setQuizId(quizQuestionEntity.getQuiz().getId());
+        for (AnswerDto answer : questionDto.getAnswers()) {
+            answer.setSelected(quizQuestionEntity.getGivenAnswers().stream()
+                    .map(AnswerEntity::getId)
+                    .collect(Collectors.toList()).contains(answer.getId()));
+        }
+        return questionDto;
     }
 }

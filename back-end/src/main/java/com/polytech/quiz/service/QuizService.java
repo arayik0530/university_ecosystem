@@ -46,4 +46,5 @@ public interface QuizService {
 
     QuizDtoForLocalStorage findByQuizId(Long id);
 
+    QuestionDto getQuizQuestion(Long quizQuestionId);
 }

@@ -60,7 +60,7 @@ public class QuestionDto {
     }
 
 
-    public static QuestionDto mapFromEntityLight(QuestionEntity question) {
+    public static QuestionDto mapFromEntityLight(QuestionEntity question, Boolean isFinished) {
 
         QuestionDto questionDto = new QuestionDto();
         questionDto.setId(question.getId());
@@ -69,7 +69,7 @@ public class QuestionDto {
         Set<AnswerEntity> answerEntities = question.getAnswers();
         long rightAnswerCount = answerEntities.stream().filter(AnswerEntity::getIsRight).count();
         questionDto.setAnswers(answerEntities.stream()
-                .map(AnswerDto::mapFromEntityLight).collect(Collectors.toSet()));
+                .map(answerEntity -> AnswerDto.mapFromEntityLight(answerEntity, isFinished)).collect(Collectors.toSet()));
         questionDto.setIsMultiAnswer(rightAnswerCount > 1);
         return questionDto;
     }

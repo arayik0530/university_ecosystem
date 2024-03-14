@@ -64,9 +64,22 @@ public class QuizControllerImpl implements QuizController {
     }
 
     @Override
+    @GetMapping("get/{quizId}")
+    public QuestionDto openPassedQuiz(@PathVariable Long quizId) {
+
+        return quizService.getFirstQuestion(quizId);
+    }
+
+    @Override
     @GetMapping("next-question")
     public QuestionDto getNextQuestion(@RequestParam Long nextQuestionId) {
         return quizService.getNextQuestion(nextQuestionId);
+    }
+
+    @Override
+    @GetMapping("get/question/{quizQuestionId}")
+    public QuestionDto getQuestion(@PathVariable String quizQuestionId) {
+        return quizService.getQuizQuestion(Long.parseLong(quizQuestionId));
     }
 
     @Override
