@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Checkbox, FormControl, FormControlLabel, FormGroup, Radio, RadioGroup, Typography} from '@mui/material';
 import {makeStyles} from "tss-react/mui";
 import API from "../../../../API";
@@ -14,7 +14,6 @@ const useStyles = makeStyles()({
         height: "65vh",
         width: '100%',
         overflowY: "scroll",
-        // backgroundColor: '#EFE5D5',
         "&::-webkit-scrollbar": {
             width: "8px",
         },
@@ -30,11 +29,10 @@ const useStyles = makeStyles()({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around',
-        // alignItems: 'center'
     }
 });
 
-const Question = ({question}) => {
+const Question = ({question, activeQuiz}) => {
     const {classes} = useStyles();
 
     const handleAnswerSelection = (answerId, checked) => {

@@ -1,19 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {makeStyles} from "tss-react/mui";
-import {Button, Typography} from "@mui/material";
+import {Button} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import API from "../../../API";
 import Question from "../Question/functional/Question";
 import {setQuiz} from "../../../redux/actions/quiz/quizActions";
-import {QUIZ_TYPE_ACTIVE, QUIZ_TYPE_PASSED} from "../../../redux/constants/globalConstants";
 import {useNavigate} from "react-router-dom";
+import {QUIZ_TYPE_ACTIVE} from "../../../redux/constants/globalConstants";
 
 const useStyles = makeStyles()({
     button: {
-        // margin: theme.spacing(1),
         borderRadius: 5,
         padding: '5px 15px',
-        // fontWeight: 'bold',
         boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
         transition: 'all 0.3s ease',
         '&:hover': {
@@ -40,51 +38,76 @@ const QuizPage = () => {
     const {classes} = useStyles();
     const quizInfo = useSelector((state) => state.quiz);
     const [quizQuestion, setQuizQuestion] = useState({});
+    const [activeQuiz, setActiveQuiz] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        API.get(`/quiz/start/${quizInfo.quizId}`)
-            .then(response => {
-                const firstQuestion = response.data;
-                setQuizQuestion(firstQuestion);
-                // console.log(quizQuestion)
-            })
-            .catch(e => {
-            });
-        dispatch(setQuiz({}));
+        if (quizInfo && quizInfo.quizId) {
+            if(quizInfo.quizType === QUIZ_TYPE_ACTIVE) {
+                setActiveQuiz(true);
+                API.get(`/quiz/start/${quizInfo.quizId}`)
+                    .then(response => {
+                        const firstQuestion = response.data;
+                        setQuizQuestion(firstQuestion);
+                        localStorage.setItem('quiz_question_id', firstQuestion.quizQuestionId);
+                    })
+                    .catch(e => {
+                    });
+            } else {
+                setActiveQuiz(false);
+                API.get(`/quiz/get/${quizInfo.quizId}`)
+                    .then(response => {
+                        const question = response.data;
+                        setQuizQuestion(question);
+                        localStorage.setItem('quiz_question_id', question.quizQuestionId);
+                    })
+                    .catch(e => {
+                    });
+            }
+            dispatch(setQuiz({}));
+        } else if (localStorage.getItem('quiz_question_id')) {
+            API.get(`/quiz/get/question/${localStorage.getItem('quiz_question_id')}`)
+                .then(response => {
+                    const question = response.data;
+                    setQuizQuestion(question);
+                })
+                .catch(e => {
+                });
+        }
     }, []);
 
-    function getPreviousQuestion () {
+    function getPreviousQuestion() {
         API.get(`/quiz/previous-question?previousQuestionId=${quizQuestion.previousQuizQuestionId}`)
             .then(response => {
                 const previousQuestion = response.data;
-                console.log('getting previous question, previous question id is: ', previousQuestion.quizQuestionId);
-                console.log('answers from DB of previous question are : ', previousQuestion.answers.filter(a => a.isSelected));
                 setQuizQuestion(previousQuestion);
-                // console.log(quizQuestion)
+                localStorage.setItem('quiz_question_id', previousQuestion.quizQuestionId);
             })
             .catch(e => {
             });
     }
 
-    function handleSubmit () {
-        API.post(`/quiz/finish?quizId=${quizQuestion.quizId}`)
-            .then(response => {
-                navigate('/');
-            })
-            .catch(e => {
-            });
+    function handleSubmit() {
+        if(activeQuiz) {
+            API.post(`/quiz/finish?quizId=${quizQuestion.quizId}`)
+                .then(response => {
+                    localStorage.removeItem('quiz_question_id');
+                    navigate('/');
+                })
+                .catch(e => {
+                });
+        } else {
+            navigate('/');
+        }
     }
 
-    function getNextQuestion () {
+    function getNextQuestion() {
         API.get(`/quiz/next-question?nextQuestionId=${quizQuestion.nextQuizQuestionId}`)
             .then(response => {
                 const nextQuestion = response.data;
-                console.log('getting next question, next question id is: ', nextQuestion.quizQuestionId);
-                console.log('answers from DB of next question are : ', nextQuestion.answers.filter(a => a.isSelected));
                 setQuizQuestion(nextQuestion);
-                // console.log(quizQuestion)
+                localStorage.setItem('quiz_question_id', nextQuestion.quizQuestionId);
             })
             .catch(e => {
             });
@@ -92,7 +115,7 @@ const QuizPage = () => {
 
     return (
         <div className={classes.container}>
-            {quizQuestion.quizQuestionId && <Question question={quizQuestion}/>}
+            {!console.log(quizQuestion) && quizQuestion.quizQuestionId && <Question question={quizQuestion} activeQuiz={activeQuiz}/>}
             <div className={classes.buttonContainer}>
                 <Button
                     style={{marginLeft: '20px', visibility: quizQuestion.previousQuizQuestionId ? 'visible' : 'hidden'}}
@@ -110,7 +133,7 @@ const QuizPage = () => {
                     color="primary"
                     onClick={handleSubmit}
                 >
-                    Submit
+                    {activeQuiz ? 'Submit' : 'Close'}
                 </Button>
                 <Button
                     style={{marginRight: '20px', visibility: quizQuestion.nextQuizQuestionId ? 'visible' : 'hidden'}}
