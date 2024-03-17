@@ -63,6 +63,7 @@ public class ExceptionHandlerController {
             TopicAlreadyExistException.class,
             QuestionAlreadyExistException.class,
             QuizFinishedException.class,
+            QuizDeadLinePassedException.class,
             QuestionIsAlreadyAnsweredException.class
     })
     public ResponseEntity<String> handleAllAlreadyExistExceptions(RuntimeException exception) {

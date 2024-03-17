@@ -18,29 +18,22 @@ const useStyles = makeStyles()({
             width: "8px",
         },
         "&::-webkit-scrollbar-thumb": {
-            backgroundColor: "silver",
-            borderRadius: "5px",
+            backgroundColor: "silver", borderRadius: "5px",
         },
         "&::-webkit-scrollbar-track": {
             backgroundColor: '#EFE5D5',
         }
-    },
-    answerContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-    },
-    missed: {
+    }, answerContainer: {
+        display: 'flex', flexDirection: 'row', justifyContent: 'space-around',
+    }, missed: {
         '& .MuiTypography-root, & .MuiCheckbox-root, & .MuiRadio-root': {
             color: 'darkorange'
         }
-    },
-    answeredWrong: {
+    }, answeredWrong: {
         '& .MuiTypography-root, & .MuiCheckbox-root, & .MuiRadio-root': {
             color: 'red'
         }
-    },
-    answeredRight: {
+    }, answeredRight: {
         '& .MuiTypography-root, & .MuiCheckbox-root, & .MuiRadio-root': {
             color: 'green'
         }
@@ -78,74 +71,54 @@ const Question = ({question, activeQuiz}) => {
             });
     }
 
-    return (
-        <div className={classes.container}>
-            <FormControl component="fieldset">
-                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                    <Typography
-                        style={{marginLeft: '20px', marginRight: '20px', marginBottom: '20px', fontSize: '18px'}}
-                        variant="body1">{question.text}</Typography>
-                </div>
-                <div className={classes.answerContainer}>
-                    <div style={{width: '50vw', display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>
-                        {question.isMultiAnswer ? (
-                            <FormGroup>
-                                {question.answers.map((answer) => (
-                                    <FormControlLabel
-                                        className={!activeQuiz && (
-                                            answer.selected ? (answer.rightAnswer ? classes.answeredRight : classes.answeredWrong) : (answer.rightAnswer ? classes.missed : '')
-                                        )}
-                                        key={answer.id}
-                                        style={{marginTop: '10px'}}
-                                        control={
-                                            <Checkbox
-                                                size="small"
-                                                checked={question.answers.filter(a => a.selected).map(a => a.id).includes(answer.id)}
-                                                onChange={(e) => handleAnswerSelection(answer.id, e.target.checked)}
-                                                name={`answer-${answer.id}`}
-                                            />
-                                        }
-                                        label={
-                                            <Typography variant="body1" style={{fontSize: '16px'}}>
-                                                {answer.text}
-                                            </Typography>
-                                        }
-                                    />
-                                ))}
-                            </FormGroup>
-                        ) : (
-                            <RadioGroup>
-                                {question.answers.map((answer) => (
+    return (<div className={classes.container}>
+        <FormControl component="fieldset">
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                <Typography
+                    style={{marginLeft: '20px', marginRight: '20px', marginBottom: '20px', fontSize: '18px'}}
+                    variant="body1">{question.text}</Typography>
+            </div>
+            <div className={classes.answerContainer}>
+                <div style={{width: '50vw', display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>
+                    {question.isMultiAnswer ? (<FormGroup>
+                        {question.answers.map((answer) => (<FormControlLabel
+                            className={!activeQuiz && (answer.selected ? (answer.rightAnswer ? classes.answeredRight : classes.answeredWrong) : (answer.rightAnswer ? classes.missed : ''))}
+                            key={answer.id}
+                            style={{marginTop: '10px'}}
+                            control={<Checkbox
+                                size="small"
+                                checked={question.answers.filter(a => a.selected).map(a => a.id).includes(answer.id)}
+                                onChange={(e) => handleAnswerSelection(answer.id, e.target.checked)}
+                                name={`answer-${answer.id}`}
+                                disabled={!activeQuiz}
+                            />}
+                            label={<Typography variant="body1" style={{fontSize: '16px'}}>
+                                {answer.text}
+                            </Typography>}
+                        />))}
+                    </FormGroup>) : (<RadioGroup>
+                        {question.answers.map((answer) => (
 
-                                    <FormControlLabel
-                                        className={!activeQuiz && (
-                                            answer.selected ? (answer.rightAnswer ? classes.answeredRight : classes.answeredWrong) : (answer.rightAnswer ? classes.missed : '')
-                                        )}
-                                        key={answer.id}
-                                        style={{marginTop: '10px'}}
-                                        control={
-                                            <Radio
-                                                size="small"
-                                                checked={question.answers.filter(a => a.selected).map(a => a.id).includes(answer.id)}
-                                                onChange={(e) => handleAnswerSelection(answer.id, e.target.checked)}
-                                                name={`answer-${answer.id}`}
-                                            />
-                                        }
-                                        label={
-                                            <Typography variant="body1" style={{fontSize: '16px'}}>
-                                                {answer.text}
-                                            </Typography>
-                                        }
-                                    />
-                                ))}
-                            </RadioGroup>
-                        )}
-                    </div>
+                            <FormControlLabel
+                                className={!activeQuiz && (answer.selected ? (answer.rightAnswer ? classes.answeredRight : classes.answeredWrong) : (answer.rightAnswer ? classes.missed : ''))}
+                                key={answer.id}
+                                style={{marginTop: '10px'}}
+                                control={<Radio
+                                    size="small"
+                                    checked={question.answers.filter(a => a.selected).map(a => a.id).includes(answer.id)}
+                                    onChange={(e) => handleAnswerSelection(answer.id, e.target.checked)}
+                                    name={`answer-${answer.id}`}
+                                    disabled={!activeQuiz}
+                                />}
+                                label={<Typography variant="body1" style={{fontSize: '16px'}}>
+                                    {answer.text}
+                                </Typography>}
+                            />))}
+                    </RadioGroup>)}
                 </div>
-            </FormControl>
-        </div>
-    )
-        ;
+            </div>
+        </FormControl>
+    </div>);
 };
 
 export default Question;

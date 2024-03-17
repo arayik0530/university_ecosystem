@@ -4,6 +4,7 @@ import com.polytech.quiz.entity.UpcomingQuizEntity;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
  @Setter
@@ -14,13 +15,13 @@ public class UpcomingQuizDto {
 
     private String topic;
 
-    private LocalDate deadline;
+    private LocalDateTime deadline;
 
     public static UpcomingQuizDto mapFromEntity(UpcomingQuizEntity upcomingQuizEntity) {
         UpcomingQuizDto upcomingQuizDto = new UpcomingQuizDto();
         upcomingQuizDto.setId(upcomingQuizEntity.getId());
         upcomingQuizDto.setTopic(upcomingQuizEntity.getTopic().getTitle());
-        upcomingQuizDto.setDeadline(upcomingQuizEntity.getDeadline().toLocalDate());
+        upcomingQuizDto.setDeadline(upcomingQuizEntity.getDeadline());
         return upcomingQuizDto;
     }
 

@@ -1,0 +1,17 @@
+.countdown-timer {
+    color: #707070;
+    animation: appearDisappear 2s ease-in-out infinite;
+}
+
+.timer {
+    display: inline-block;
+}
+
+@keyframes appearDisappear {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+}

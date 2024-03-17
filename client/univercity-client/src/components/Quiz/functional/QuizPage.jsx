@@ -7,6 +7,7 @@ import Question from "../Question/functional/Question";
 import {setQuiz} from "../../../redux/actions/quiz/quizActions";
 import {useNavigate} from "react-router-dom";
 import {QUIZ_TYPE_ACTIVE} from "../../../redux/constants/globalConstants";
+import CountDownTimer from "./CountDownTimer/CountDownTimer";
 
 const useStyles = makeStyles()({
     button: {
@@ -15,22 +16,12 @@ const useStyles = makeStyles()({
         boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
         transition: 'all 0.3s ease',
         '&:hover': {
-            backgroundColor: '#3f51b5',
-            color: '#fff',
-            boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.2)',
+            backgroundColor: '#3f51b5', color: '#fff', boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.2)',
         }
-    },
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    buttonContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%'
+    }, container: {
+        display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
+    }, buttonContainer: {
+        display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%'
     }
 });
 
@@ -44,7 +35,7 @@ const QuizPage = () => {
 
     useEffect(() => {
         if (quizInfo && quizInfo.quizId) {
-            if(quizInfo.quizType === QUIZ_TYPE_ACTIVE) {
+            if (quizInfo.quizType === QUIZ_TYPE_ACTIVE) {
                 setActiveQuiz(true);
                 API.get(`/quiz/start/${quizInfo.quizId}`)
                     .then(response => {
@@ -53,12 +44,13 @@ const QuizPage = () => {
                         localStorage.setItem('quiz_question_id', firstQuestion.quizQuestionId);
                     })
                     .catch(e => {
+                        navigate('/');
                     });
             } else {
-                setActiveQuiz(false);
                 API.get(`/quiz/get/${quizInfo.quizId}`)
                     .then(response => {
                         const question = response.data;
+                        setActiveQuiz(!question.quizFinished);
                         setQuizQuestion(question);
                         localStorage.setItem('quiz_question_id', question.quizQuestionId);
                     })
@@ -70,6 +62,7 @@ const QuizPage = () => {
             API.get(`/quiz/get/question/${localStorage.getItem('quiz_question_id')}`)
                 .then(response => {
                     const question = response.data;
+                    setActiveQuiz(!question.quizFinished);
                     setQuizQuestion(question);
                 })
                 .catch(e => {
@@ -81,6 +74,7 @@ const QuizPage = () => {
         API.get(`/quiz/previous-question?previousQuestionId=${quizQuestion.previousQuizQuestionId}`)
             .then(response => {
                 const previousQuestion = response.data;
+                setActiveQuiz(!previousQuestion.quizFinished);
                 setQuizQuestion(previousQuestion);
                 localStorage.setItem('quiz_question_id', previousQuestion.quizQuestionId);
             })
@@ -89,7 +83,7 @@ const QuizPage = () => {
     }
 
     function handleSubmit() {
-        if(activeQuiz) {
+        if (activeQuiz) {
             API.post(`/quiz/finish?quizId=${quizQuestion.quizId}`)
                 .then(response => {
                     localStorage.removeItem('quiz_question_id');
@@ -106,6 +100,7 @@ const QuizPage = () => {
         API.get(`/quiz/next-question?nextQuestionId=${quizQuestion.nextQuizQuestionId}`)
             .then(response => {
                 const nextQuestion = response.data;
+                setActiveQuiz(!nextQuestion.quizFinished);
                 setQuizQuestion(nextQuestion);
                 localStorage.setItem('quiz_question_id', nextQuestion.quizQuestionId);
             })
@@ -113,9 +108,10 @@ const QuizPage = () => {
             });
     }
 
-    return (
-        <div className={classes.container}>
-            {!console.log(quizQuestion) && quizQuestion.quizQuestionId && <Question question={quizQuestion} activeQuiz={activeQuiz}/>}
+    return (<div className={classes.container}>
+            {activeQuiz && <CountDownTimer futureDate={new Date(quizQuestion.expectedFinishTime)}/>}
+            {!console.log(quizQuestion) && quizQuestion.quizQuestionId &&
+                <Question question={quizQuestion} activeQuiz={activeQuiz}/>}
             <div className={classes.buttonContainer}>
                 <Button
                     style={{marginLeft: '20px', visibility: quizQuestion.previousQuizQuestionId ? 'visible' : 'hidden'}}
@@ -145,8 +141,7 @@ const QuizPage = () => {
                     Next &gt;
                 </Button>
             </div>
-        </div>
-    );
+        </div>);
 };
 
 export default QuizPage;

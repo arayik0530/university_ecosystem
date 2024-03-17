@@ -124,6 +124,9 @@ public class QuizServiceImpl implements QuizService {
                 .orElseThrow(() -> new UpcomingQuizNotFoundException(upComingQuizId));
 
 
+        if(upcomingQuizEntity.getDeadline().isBefore(LocalDateTime.now())){
+            throw new QuizDeadLinePassedException();
+        }
         Long userId = userService.getMe();
         if (!upcomingQuizEntity.getUser().getId().equals(userId)) {
             throw new IllegalArgumentException();
@@ -195,7 +198,8 @@ public class QuizServiceImpl implements QuizService {
                     .map(AnswerEntity::getId)
                     .collect(Collectors.toList()).contains(answer.getId()));
         }
-
+        questionDto.setQuizFinished(quizEntity.getIsFinished());
+        questionDto.setExpectedFinishTime(quizEntity.getStartTime().plusMinutes(quizEntity.getDuration()));
         return questionDto;
     }
 
@@ -239,7 +243,7 @@ public class QuizServiceImpl implements QuizService {
             upcomingQuizEntity.setUser(userEntity);
             upcomingQuizEntity.setTopic(topicEntity);
 
-            upcomingQuizEntity.setDeadline(quizCreationDto.getDeadline().atStartOfDay());
+            upcomingQuizEntity.setDeadline(quizCreationDto.getDeadline());
             upcomingQuizEntity.setCount(quizCreationDto.getQuestionCount());
             upcomingQuizEntity.setDurationInMinutes(quizCreationDto.getDurationInMinutes());
             upComingQuizRepository.save(upcomingQuizEntity);
@@ -262,7 +266,7 @@ public class QuizServiceImpl implements QuizService {
         executor.shutdown();
     }
 
-    private void sendEmails(List<UserEntity> userEntityList, TopicEntity topicEntity, LocalDate deadline)
+    private void sendEmails(List<UserEntity> userEntityList, TopicEntity topicEntity, LocalDateTime deadline)
             throws MessagingException, UnsupportedEncodingException {
         for (UserEntity user : userEntityList) {
             MimeMessage message = javaMailSender.createMimeMessage();
@@ -305,6 +309,8 @@ public class QuizServiceImpl implements QuizService {
                     .map(AnswerEntity::getId)
                     .collect(Collectors.toList()).contains(answer.getId()));
         }
+        questionDto.setQuizFinished(quizQuestionEntity.getQuiz().getIsFinished());
+        questionDto.setExpectedFinishTime(quizQuestionEntity.getQuiz().getStartTime().plusMinutes(quizQuestionEntity.getQuiz().getDuration()));
         return questionDto;
     }
 
@@ -324,6 +330,8 @@ public class QuizServiceImpl implements QuizService {
                         .map(AnswerEntity::getId)
                         .collect(Collectors.toList()).contains(answer.getId()));
             }
+            questionDto.setQuizFinished(quizQuestionEntity.getQuiz().getIsFinished());
+            questionDto.setExpectedFinishTime(quizQuestionEntity.getQuiz().getStartTime().plusMinutes(quizQuestionEntity.getQuiz().getDuration()));
             return questionDto;
         }
         return null;
@@ -383,6 +391,7 @@ public class QuizServiceImpl implements QuizService {
         quizEntity.setUser(userEntity);
         quizEntity.setDuration(upcomingQuizEntity.getDurationInMinutes());
         quizEntity.setTopic(upcomingQuizEntity.getTopic());
+        quizEntity.setSuccessPercent(0.0);
 
         QuizEntity savedQuiz = quizRepository.save(quizEntity);
         finishQuiz(savedQuiz.getId());
@@ -400,6 +409,13 @@ public class QuizServiceImpl implements QuizService {
             QuizEntity quiz = quizQuestion.getQuiz();
             if (Boolean.TRUE.equals(quiz.getIsFinished())) {
                 throw new QuizFinishedException();
+            } else {
+                LocalDateTime expectedFinishTime =
+                        quiz.getStartTime().plusMinutes(quiz.getDuration());
+                if (LocalDateTime.now().isAfter(expectedFinishTime)) {
+                    finishQuiz(quiz.getId());
+                    throw new QuizFinishedException();
+                }
             }
 //            if (!quizQuestion.getGivenAnswers().isEmpty()) {//TODO
 //                throw new QuestionIsAlreadyAnsweredException();
@@ -446,6 +462,8 @@ public class QuizServiceImpl implements QuizService {
                     .map(AnswerEntity::getId)
                     .collect(Collectors.toList()).contains(answer.getId()));
         }
+        questionDto.setQuizFinished(quizQuestionEntity.getQuiz().getIsFinished());
+        questionDto.setExpectedFinishTime(quizQuestionEntity.getQuiz().getStartTime().plusMinutes(quizQuestionEntity.getQuiz().getDuration()));
         return questionDto;
     }
 }

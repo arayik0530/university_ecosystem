@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {makeStyles} from "tss-react/mui";
 import {Typography} from "@mui/material";
+import {format} from 'date-fns';
 import API from "../../API";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
@@ -93,7 +94,7 @@ const UserContent = () => {
                     <div className={classes.box} key={quiz.id} onClick={() => handleQuizClick(quiz.id, true)}>
                         <div>
                             <p className={classes.box_title}>{quiz.topic}</p>
-                            <p className={classes.box_title}>Deadline: {quiz.deadline}</p>
+                            <p className={classes.box_title}>Deadline: {format(new Date(quiz.deadline), 'dd-MM-yyyy')}</p>
                             <div className={classes.box_text}>Pass the Quiz</div>
                         </div>
                     </div>
@@ -107,7 +108,7 @@ const UserContent = () => {
                         <div className={classes.box} key={quiz.id} onClick={() => handleQuizClick(quiz.id, false)}>
                             <div style={{color: "grey"}}>
                                 <p className={`${classes.box_title} ${classes.passed_text}`}>{quiz.topic}</p>
-                                <p className={`${classes.box_title} ${classes.passed_text}`}>{quiz.endTime && quiz.endTime.split('T')[0]}</p>
+                                <p className={`${classes.box_title} ${classes.passed_text}`}>{quiz.endTime && format(new Date(quiz.endTime), 'dd-MM-yyyy')}</p>
                                 <div className={`${classes.box_text} ${classes.passed_text}`}>{quiz.successPercent ? parseFloat(quiz.successPercent).toFixed(2) : 0}%</div>
                             </div>
                         </div>

@@ -12,7 +12,7 @@ import java.util.Objects;
 @Getter
  @Setter
  @RequiredArgsConstructor
-// @EqualsAndHashCode
+ @EqualsAndHashCode
 public class AnswerEntity {
 
     @Id
@@ -30,16 +30,16 @@ public class AnswerEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private QuestionEntity question;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof AnswerEntity)) return false;
-        AnswerEntity that = (AnswerEntity) o;
-        return Objects.equals(getId(), that.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (!(o instanceof AnswerEntity)) return false;
+//        AnswerEntity that = (AnswerEntity) o;
+//        return Objects.equals(getId(), that.getId());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(getId());
+//    }
 }

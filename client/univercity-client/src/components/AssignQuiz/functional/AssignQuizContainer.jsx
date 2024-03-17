@@ -3,6 +3,7 @@ import API from "../../../API";
 import {useDispatch} from "react-redux";
 import {setMessage} from '../../../redux/actions/message/messageActions';
 import AssignQuizUi from "../ui/AssignQuizUi";
+import dayjs from "dayjs";
 
 const AssignQuizContainer = () => {
     const dispatch = useDispatch();
@@ -69,7 +70,7 @@ const AssignQuizContainer = () => {
 
     const handleSubmit = () => {
         const data = {
-            deadline,
+            deadline: dayjs(deadline.$d).format('YYYY-MM-DDTHH:mm:ss'),
             durationInMinutes,
             questionCount,
             topicId: selectedTopic.id,

@@ -3,6 +3,7 @@ package com.polytech.quiz.dto.quiz;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -14,7 +15,7 @@ public class UpcomingQuizCreationDto {
 
     private Long topicId;
 
-    private LocalDate deadline;
+    private LocalDateTime deadline;
 
     private Integer durationInMinutes;
 

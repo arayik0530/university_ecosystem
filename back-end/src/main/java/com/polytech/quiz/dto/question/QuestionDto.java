@@ -5,6 +5,7 @@ import com.polytech.quiz.entity.AnswerEntity;
 import com.polytech.quiz.entity.QuestionEntity;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,10 @@ public class QuestionDto {
     private Long quizId;
 
     private Boolean isUsedInQuizzes;
+
+    private Boolean quizFinished;
+
+    private LocalDateTime expectedFinishTime;
     public QuestionEntity toEntity() {
 
         QuestionEntity question = new QuestionEntity();
