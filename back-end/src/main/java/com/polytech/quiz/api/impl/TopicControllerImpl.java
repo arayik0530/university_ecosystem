@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class TopicControllerImpl implements TopicController {
 
     @Override
     @PostMapping("create")
-   // @PreAuthorize(value = "hasAuthority('ADMIN')")
+    @PreAuthorize(value = "hasAuthority('ADMIN')")
     public void create(@RequestBody TopicOnlyTitleDto topicDto) {
         topicService.create(topicDto);
     }
@@ -51,7 +52,7 @@ public class TopicControllerImpl implements TopicController {
 
     @Override
     @DeleteMapping("{id}")
-   // @PreAuthorize(value = "hasAuthority('ADMIN')")
+    @PreAuthorize(value = "hasAuthority('ADMIN')")
     public void remove(@PathVariable Long id) {
         topicService.remove(id);
     }

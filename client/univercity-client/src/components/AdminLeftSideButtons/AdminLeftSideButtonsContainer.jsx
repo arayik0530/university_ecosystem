@@ -33,6 +33,11 @@ const AdminLeftSideButtonsContainer = ({ selectedPart, selectPart }) => {
             >
                 Topics
             </Button>
+            <Button className={selectedPart === adminConstants.GROUPS ? classes.selectedButton : classes.button} variant="contained" color="primary"
+                    onClick={() => {selectPart(adminConstants.GROUPS)}}
+            >
+                Groups
+            </Button>
             <Button className={selectedPart === adminConstants.QUESTIONS ? classes.selectedButton : classes.button} variant="contained" color="primary"
                     onClick={() => {selectPart(adminConstants.QUESTIONS)}}
             >

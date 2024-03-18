@@ -4,11 +4,13 @@ import AddEditTopicsContainer from "../../AddEdiTopics/functional/AddEditTopicsC
 import AddEditQuestionsContainer from "../../AddEditQuestions/functional/AddEditQuestionsContainer";
 import {adminConstants} from "../../../redux/constants/admin/adminConstants";
 import AssignQuizContainer from "../../AssignQuiz/functional/AssignQuizContainer";
+import AddEditGroupsContainer from "../../AddEditGroups/functional/AddEditGroupsContainer";
 
 export const AdminUi = ({selectedPart, selectPart}) => {
     return (
         <>
             <AdminLeftSideButtonsContainer selectedPart={selectedPart} selectPart={selectPart}/>
+            {selectedPart === adminConstants.GROUPS && <AddEditGroupsContainer/>}
             {selectedPart === adminConstants.TOPICS && <AddEditTopicsContainer/>}
             {selectedPart === adminConstants.QUESTIONS && <AddEditQuestionsContainer/>}
             {selectedPart === adminConstants.QUIZ && <AssignQuizContainer/>}

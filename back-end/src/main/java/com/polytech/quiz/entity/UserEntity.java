@@ -2,6 +2,8 @@ package com.polytech.quiz.entity;
 
 import com.polytech.quiz.entity.enums.UserRole;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -49,6 +51,12 @@ public class UserEntity {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "group_users",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "group_id")})
+    private Set<GroupEntity> groups;
 
     @OneToOne(fetch = FetchType.LAZY)
     private ImageEntity profileImage;

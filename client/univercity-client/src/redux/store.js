@@ -8,12 +8,14 @@ import adminReducer from "./reducers/admin/adminReducer";
 import questionsReducer from "./reducers/questions/questionsReducer";
 import messageReducer from "./reducers/message/messageReducer";
 import quizReducer from "./reducers/quiz/quizReducer";
+import groupReducer from "./reducers/group/groupReducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const reducers = combineReducers({
     user: userReducer,
     topic: topicReducer,
+    group: groupReducer,
     admin: adminReducer,
     questions: questionsReducer,
     message: messageReducer,

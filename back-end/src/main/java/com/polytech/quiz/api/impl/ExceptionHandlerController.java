@@ -47,6 +47,7 @@ public class ExceptionHandlerController {
             UserNotFoundException.class,
             UsernameNotFoundException.class,
             TopicNotFoundException.class,
+            GroupNotFoundException.class,
             QuestionNotFoundException.class,
             QuizNotFoundException.class,
             UpcomingQuizNotFoundException.class,
@@ -61,6 +62,7 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler({UserAlreadyExistsException.class,
             TopicAlreadyExistException.class,
+            GroupAlreadyExistException.class,
             QuestionAlreadyExistException.class,
             QuizFinishedException.class,
             QuizDeadLinePassedException.class,

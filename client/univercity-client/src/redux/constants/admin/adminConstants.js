@@ -3,5 +3,6 @@ export const adminConstants = {
      SET_TOKEN:'SET_TOKEN',
      TOPICS: 'TOPICS',
      QUESTIONS: 'QUESTIONS',
-     QUIZ: 'QUIZ'
+     QUIZ: 'QUIZ',
+     GROUPS: 'GROUPS'
 }
