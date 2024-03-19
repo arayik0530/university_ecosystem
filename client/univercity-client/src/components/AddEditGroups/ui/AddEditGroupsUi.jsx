@@ -233,7 +233,7 @@ const AddEditGroupsUi = ({
                     />
                 </div>
                 <div>
-                    <label className={classes.rightSidebarLabel}>{"Filter by Topic"}</label>
+                    <label className={classes.rightSidebarLabel}>{"Filter by Group"}</label>
                     <input
                         className={classes.rightSidebarInput}
                         type="text"

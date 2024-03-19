@@ -13,6 +13,7 @@ public interface GroupRepository extends JpaRepository<GroupEntity, Long> {
     @Query(value = "from GroupEntity as groupEntity where groupEntity.name like %?1%")
     Page<GroupEntity> searchByName(String name, Pageable pageable);
 
+    @Query("SELECT g FROM GroupEntity g WHERE LOWER(g.name) LIKE LOWER(CONCAT('%', ?1, '%'))")
     Page<GroupEntity> findByNameContaining(String name, Pageable pageable);
 
     Optional<GroupEntity> findByName(String name);

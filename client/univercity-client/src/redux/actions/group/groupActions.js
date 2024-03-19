@@ -29,6 +29,7 @@ export const getGroups = (groups, totalCount) => ({
 });
 
 export const getExistingGroups = (selectedPageIndex, elementsPerPage, name) => (dispatch) => {
+    // alert('dispatch')
     API.get(`/group/all?page=${selectedPageIndex}&size=${elementsPerPage}&name=${name}`)
         .then(data => {
             const payload = data.data;
@@ -75,6 +76,6 @@ export const setPageElementCount = (elementsPerPage) => ({
 
 export const setNameForFilter = (nameForFilter) => ({
     type: SET_NAME_FOR_FILTER,
-    payload: {titleForFilter: nameForFilter}
+    payload: {nameForFilter: nameForFilter}
 });
 
