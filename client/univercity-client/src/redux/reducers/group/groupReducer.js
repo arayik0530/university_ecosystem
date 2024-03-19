@@ -53,7 +53,7 @@ const groupReducer = (state = initialState, action) => {
         case SET_NAME_FOR_FILTER:
             return {
                 ...state,
-                titleForFilter: action.payload.titleForFilter
+                nameForFilter: action.payload.nameForFilter
             };
         default:
             return state;
