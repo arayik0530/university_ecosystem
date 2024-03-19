@@ -48,8 +48,8 @@ public class GroupControllerImpl implements GroupController {
 
     @Override
     @GetMapping("all")
-    public Page<GroupInfoDto> getAllGroupsContaining(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, String name) {
-        return groupService.getAllGroupsContaining(pageable, name);
+    public Page<GroupInfoDto> getAllGroupsContaining(@PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, String name, String username) {
+        return groupService.getAllGroupsContaining(pageable, name, username);
     }
 
     @Override

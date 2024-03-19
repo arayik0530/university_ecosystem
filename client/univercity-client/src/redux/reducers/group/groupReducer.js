@@ -3,7 +3,7 @@ import {
     EDIT_GROUP,
     GET_GROUPS,
     SET_PAGE_ELEMENT_COUNT,
-    SET_SELECTED_PAGE_INDEX, SET_NAME_FOR_FILTER
+    SET_SELECTED_PAGE_INDEX, SET_NAME_FOR_FILTER, SET_NAME_FOR_USER_FILTER
 } from "../../actions/actionTypes/groupActionTypes";
 
 const initialState = {
@@ -16,6 +16,9 @@ const initialState = {
         count: 10
     },
     nameForFilter: {
+        text: ""
+    },
+    nameForUserFilter: {
         text: ""
     }
 };
@@ -55,6 +58,12 @@ const groupReducer = (state = initialState, action) => {
                 ...state,
                 nameForFilter: action.payload.nameForFilter
             };
+        case SET_NAME_FOR_USER_FILTER: {
+            return {
+                ...state,
+                nameForUserFilter: action.payload.nameForUserFilter
+            };
+        }
         default:
             return state;
     }

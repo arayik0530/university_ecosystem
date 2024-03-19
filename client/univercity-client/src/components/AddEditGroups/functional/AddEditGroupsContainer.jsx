@@ -4,7 +4,7 @@ import {
     createGroup,
     getExistingGroups,
     removeGroup,
-    setNameForFilter,
+    setNameForFilter, setNameForUserFilter,
     setPageElementCount,
     setSelectedPageIndex,
     updateGroup,
@@ -17,9 +17,10 @@ const AddEditGroupsContainer = () => {
     const selectedPageIndex = groupsContainer.selectedPageIndex;
     const elementsPerPage = groupsContainer.elementsPerPage;
     const nameForFilter = groupsContainer.nameForFilter;
+    const nameForUserFilter = groupsContainer.nameForUserFilter;
     useEffect(() => {
-        dispatch(getExistingGroups(selectedPageIndex.index, elementsPerPage.count, nameForFilter.text));
-    }, [selectedPageIndex, elementsPerPage, nameForFilter]);
+        dispatch(getExistingGroups(selectedPageIndex.index, elementsPerPage.count, nameForFilter.text, nameForUserFilter.text));
+    }, [selectedPageIndex, elementsPerPage, nameForFilter, nameForUserFilter]);
     const groups = groupsContainer.groups;
     const totalCount = groupsContainer.totalCount;
     const [isAddDialogOpen, setAddDialogOpen] = useState(false);
@@ -27,6 +28,7 @@ const AddEditGroupsContainer = () => {
     const [newItem, setNewItem] = useState({name: ""});
     const [elementsPerPageCount, setElementsPerPageCount] = useState(elementsPerPage.count);
     const [filterName, setFilterName] = useState(nameForFilter.text);
+    const [filterUserName, setFilterUserName] = useState(nameForUserFilter.text);
 
     const setPageElementsCount = (count) => {
         if (count !== elementsPerPage.count) {
@@ -44,6 +46,14 @@ const AddEditGroupsContainer = () => {
         }
     };
 
+    const filterByUserName = (text) => {
+        if (text !== nameForUserFilter.text) {
+            dispatch(setNameForUserFilter({
+                text: text
+            }));
+        }
+    };
+
 
     const handleEdit = (index) => {
         setEditIndex(index);
@@ -56,7 +66,7 @@ const AddEditGroupsContainer = () => {
         if (selectedPageIndex > 0 && groups.length === 1) {
             pagIndex--;
         }
-        dispatch(removeGroup(groups[index], pagIndex, elementsPerPage.count, nameForFilter.text));
+        dispatch(removeGroup(groups[index], pagIndex, elementsPerPage.count, nameForFilter.text, nameForUserFilter.text));
     };
 
     const handleAdd = () => {
@@ -83,7 +93,7 @@ const AddEditGroupsContainer = () => {
                 dispatch(updateGroup({...groups[editIndex], name: newItem.name}));
             }
         } else {
-            dispatch(createGroup({name: newItem.name}, 0, elementsPerPage.count, nameForFilter.text));
+            dispatch(createGroup({name: newItem.name}, 0, elementsPerPage.count, nameForFilter.text, nameForUserFilter.text));
         }
         setEditIndex(null);
         setNewItem({name: ""});
@@ -110,6 +120,9 @@ const AddEditGroupsContainer = () => {
             filterName={filterName}
             setFilterName={setFilterName}
             filterByName={filterByName}
+            filterByUserName={filterByUserName}
+            setFilterUserName={setFilterUserName}
+            filterUserName={filterUserName}
         />);
 };
 export default AddEditGroupsContainer;

@@ -17,7 +17,7 @@ public interface GroupController {
 
     Page<GroupInfoDto> searchByName(String name, Pageable pageable);
 
-    Page<GroupInfoDto> getAllGroupsContaining(Pageable pageable, String name);
+    Page<GroupInfoDto> getAllGroupsContaining(Pageable pageable, String name, String username);
 
     void remove(Long id);
 

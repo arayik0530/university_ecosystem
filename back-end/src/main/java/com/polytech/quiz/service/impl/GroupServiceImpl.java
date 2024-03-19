@@ -1,10 +1,7 @@
 package com.polytech.quiz.service.impl;
 
 import com.polytech.quiz.dto.group.GroupInfoDto;
-import com.polytech.quiz.dto.topic.TopicDto;
-import com.polytech.quiz.dto.topic.TopicOnlyTitleDto;
 import com.polytech.quiz.entity.GroupEntity;
-import com.polytech.quiz.entity.TopicEntity;
 import com.polytech.quiz.entity.UserEntity;
 import com.polytech.quiz.repository.GroupRepository;
 import com.polytech.quiz.service.GroupService;
@@ -52,12 +49,12 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Page<GroupInfoDto> getAllGroupsContaining(Pageable pageable, String name) {
+    public Page<GroupInfoDto> getAllGroupsContaining(Pageable pageable, String name, String username) {
         Page<GroupEntity> groupEntities;
-        if (StringUtils.isBlank(name)) {
+        if (StringUtils.isBlank(name) && StringUtils.isBlank(username)) {
             groupEntities = groupRepository.findAll(pageable);
         } else {
-            groupEntities = groupRepository.findByNameContaining(name, pageable);
+            groupEntities = groupRepository.findByNameContaining(name, username, pageable);
         }
         return groupEntities.map(GroupInfoDto::mapFromEntity);
     }

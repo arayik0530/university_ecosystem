@@ -3,7 +3,7 @@ import {
     ADD_GROUP,
     DELETE_GROUP,
     EDIT_GROUP,
-    GET_GROUPS, SET_NAME_FOR_FILTER,
+    GET_GROUPS, SET_NAME_FOR_FILTER, SET_NAME_FOR_USER_FILTER,
     SET_PAGE_ELEMENT_COUNT,
     SET_SELECTED_PAGE_INDEX
 } from "../actionTypes/groupActionTypes";
@@ -28,9 +28,9 @@ export const getGroups = (groups, totalCount) => ({
     payload: {groups: groups, totalCount}
 });
 
-export const getExistingGroups = (selectedPageIndex, elementsPerPage, name) => (dispatch) => {
+export const getExistingGroups = (selectedPageIndex, elementsPerPage, name, username) => (dispatch) => {
     // alert('dispatch')
-    API.get(`/group/all?page=${selectedPageIndex}&size=${elementsPerPage}&name=${name}`)
+    API.get(`/group/all?page=${selectedPageIndex}&size=${elementsPerPage}&name=${name}&username=${username}`)
         .then(data => {
             const payload = data.data;
             dispatch(getGroups(payload.content, payload.totalElements));
@@ -46,19 +46,19 @@ export const updateGroup = (group) => (dispatch) => {
     });
 }
 
-export const removeGroup = (group, selectedPageIndex, elementsPerPage, name) => (dispatch) => {
+export const removeGroup = (group, selectedPageIndex, elementsPerPage, name, username) => (dispatch) => {
     API.delete(`/group/${group.id}`)
         .then(() => {
-            dispatch(getExistingGroups(selectedPageIndex, elementsPerPage, name))
+            dispatch(getExistingGroups(selectedPageIndex, elementsPerPage, name, username))
         })
         .catch(() => {
         });
 }
 
-export const createGroup = (group, selectedPageIndex, elementsPerPage, name) => (dispatch) => {
+export const createGroup = (group, selectedPageIndex, elementsPerPage, name, username) => (dispatch) => {
     API.post('/group/create', group)
         .then(() => {
-            dispatch(getExistingGroups(selectedPageIndex, elementsPerPage, name))
+            dispatch(getExistingGroups(selectedPageIndex, elementsPerPage, name, username))
         })
         .catch(() => {
         });
@@ -77,5 +77,10 @@ export const setPageElementCount = (elementsPerPage) => ({
 export const setNameForFilter = (nameForFilter) => ({
     type: SET_NAME_FOR_FILTER,
     payload: {nameForFilter: nameForFilter}
+});
+
+export const setNameForUserFilter = (nameForUserFilter) => ({
+    type: SET_NAME_FOR_USER_FILTER,
+    payload: {nameForUserFilter: nameForUserFilter}
 });
 

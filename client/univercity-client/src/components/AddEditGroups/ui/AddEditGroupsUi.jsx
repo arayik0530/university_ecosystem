@@ -103,7 +103,10 @@ const AddEditGroupsUi = ({
                              setPageElementsCount,
                              filterName,
                              setFilterName,
-                             filterByName
+                             filterByName,
+                             filterByUserName,
+                             setFilterUserName,
+                             filterUserName
                          }) => {
     const {classes} = useStyles();
 
@@ -250,6 +253,29 @@ const AddEditGroupsUi = ({
                             if (e.key === "Enter") {
                                 e.preventDefault();
                                 filterByName(e.target.value);
+                            }
+                        }}
+                        inputMode="text"
+                    />
+                </div>
+                <div>
+                    <label className={classes.rightSidebarLabel}>{"Filter by User"}</label>
+                    <input
+                        className={classes.rightSidebarInput}
+                        type="text"
+                        value={filterUserName}
+                        onChange={e => {
+                            setFilterUserName(e.target.value);
+                        }}
+                        onBlur={
+                            e => {
+                                filterByUserName(e.target.value);
+                            }
+                        }
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                e.preventDefault();
+                                filterByUserName(e.target.value);
                             }
                         }}
                         inputMode="text"
