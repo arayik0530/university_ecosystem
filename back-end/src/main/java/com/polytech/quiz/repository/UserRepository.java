@@ -23,7 +23,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByEmail(String email);
 
-    @Query("SELECT new UserEntity(u.id, u.firstName, u.lastName) FROM UserEntity u WHERE :role MEMBER OF u.roles")
+    @Query("FROM UserEntity u WHERE :role MEMBER OF u.roles")
     List<UserEntity> findAllLiteByRole(@Param("role") UserRole role);
 
     @Query(value = "from UserEntity as user where user.id IN :idList")

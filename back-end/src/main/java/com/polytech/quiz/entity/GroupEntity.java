@@ -1,7 +1,6 @@
 package com.polytech.quiz.entity;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -29,6 +28,6 @@ public class GroupEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "groups")
+    @ManyToMany(mappedBy = "userGroups")
     private Set<UserEntity> users = new HashSet<>();
 }

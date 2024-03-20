@@ -1,8 +1,12 @@
 package com.polytech.quiz.dto.user;
 
+import com.polytech.quiz.entity.GroupEntity;
 import com.polytech.quiz.entity.UserEntity;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Getter
@@ -26,6 +30,8 @@ public class UserInfoDto {
 
     private String password;
 
+    private List<Long> groupIdLIst = new ArrayList<>();
+
 
     public static UserInfoDto mapFromEntity(UserEntity userEntity) {
         UserInfoDto userInfoDto = new UserInfoDto();
@@ -39,6 +45,16 @@ public class UserInfoDto {
                 .map(Object::toString).toArray(String[]::new);
 
         userInfoDto.imageId = (userEntity.getProfileImage()!= null) ? userEntity.getProfileImage().getId() : null;
+        return userInfoDto;
+    }
+
+    public static UserInfoDto mapFromEntityLight(UserEntity userEntity) {
+        UserInfoDto userInfoDto = new UserInfoDto();
+        userInfoDto.id = userEntity.getId();
+        userInfoDto.lastName = userEntity.getLastName();
+        userInfoDto.firstName = userEntity.getFirstName();
+
+        userInfoDto.setGroupIdLIst(userEntity.getUserGroups().stream().map(GroupEntity::getId).collect(Collectors.toList()));
         return userInfoDto;
     }
 

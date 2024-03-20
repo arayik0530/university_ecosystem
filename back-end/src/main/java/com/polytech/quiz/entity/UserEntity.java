@@ -2,14 +2,9 @@ package com.polytech.quiz.entity;
 
 import com.polytech.quiz.entity.enums.UserRole;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -22,15 +17,6 @@ import java.util.Set;
         @Index(name = "users_email_IDX", columnList = "e_mail", unique = true)
 })
 public class UserEntity {
-
-    public UserEntity() {
-    }
-
-    public UserEntity(Long id, String firstName, String lastName) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,7 +42,7 @@ public class UserEntity {
     @JoinTable(name = "group_users",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "group_id")})
-    private Set<GroupEntity> groups;
+    private Set<GroupEntity> userGroups;
 
     @OneToOne(fetch = FetchType.LAZY)
     private ImageEntity profileImage;

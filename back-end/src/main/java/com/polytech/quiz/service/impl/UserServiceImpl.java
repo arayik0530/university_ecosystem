@@ -203,7 +203,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserInfoDto> getAllLiteUsers() {
         List<UserEntity> users = userRepository.findAllLiteByRole(UserRole.USER);
-        return users.stream().map(UserInfoDto::mapFromEntity).collect(Collectors.toList());
+        return users.stream().map(UserInfoDto::mapFromEntityLight).collect(Collectors.toList());
     }
 
     @Override

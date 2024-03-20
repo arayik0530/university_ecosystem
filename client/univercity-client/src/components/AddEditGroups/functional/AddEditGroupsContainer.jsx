@@ -10,6 +10,7 @@ import {
     updateGroup,
 } from "../../../redux/actions/group/groupActions";
 import AddEditGroupsUi from "../ui/AddEditGroupsUi";
+import API from "../../../API";
 
 const AddEditGroupsContainer = () => {
     const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const AddEditGroupsContainer = () => {
     const [elementsPerPageCount, setElementsPerPageCount] = useState(elementsPerPage.count);
     const [filterName, setFilterName] = useState(nameForFilter.text);
     const [filterUserName, setFilterUserName] = useState(nameForUserFilter.text);
+    const [allUsers, setAllUsers] = useState([]);
 
     const setPageElementsCount = (count) => {
         if (count !== elementsPerPage.count) {
@@ -37,6 +39,15 @@ const AddEditGroupsContainer = () => {
             }));
         }
     };
+
+    useEffect(() => {
+        API.get('/user/all/lite')
+            .then(users => {
+                setAllUsers(users.data);
+            })
+            .catch(e => {
+            });
+    }, []);
 
     const filterByName = (text) => {
         if (text !== nameForFilter.text) {
@@ -123,6 +134,7 @@ const AddEditGroupsContainer = () => {
             filterByUserName={filterByUserName}
             setFilterUserName={setFilterUserName}
             filterUserName={filterUserName}
+            allUsers={allUsers}
         />);
 };
 export default AddEditGroupsContainer;

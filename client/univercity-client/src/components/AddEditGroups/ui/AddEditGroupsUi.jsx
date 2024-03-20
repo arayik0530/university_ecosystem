@@ -1,6 +1,6 @@
 import {makeStyles} from "tss-react/mui";
 import {
-    Button,
+    Button, Checkbox,
     Dialog,
     DialogActions,
     DialogContent,
@@ -10,11 +10,12 @@ import {
     ListItem,
     ListItemSecondaryAction,
     ListItemText,
-    TextField,
+    TextField, Typography,
 } from "@mui/material";
 import {Add, Delete, Edit} from "@mui/icons-material";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import React from "react";
 
 const useStyles = makeStyles()({
     root: {
@@ -80,7 +81,25 @@ const useStyles = makeStyles()({
         fontSize: "12px"
     },
     rightSidebarInput: {
-        width: "100%"
+        width: "100%",
+    },
+    userContainer: {
+        marginTop: "20px",
+    },
+    users: {
+        // marginTop: "20px",
+        overflowY: 'auto',
+        height: "300px",
+        "&::-webkit-scrollbar": {
+            width: "8px",
+        },
+        "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "silver",
+            borderRadius: "5px",
+        },
+        "&::-webkit-scrollbar-track": {
+            backgroundColor: '#EFE5D5',
+        }
     }
 });
 
@@ -106,10 +125,35 @@ const AddEditGroupsUi = ({
                              filterByName,
                              filterByUserName,
                              setFilterUserName,
-                             filterUserName
+                             filterUserName,
+                             allUsers
                          }) => {
     const {classes} = useStyles();
 
+    console.log(allUsers)
+
+    // const users = [
+    //     {id: 1, userName: "John", userLastName: "Doe"},
+    //     {id: 2, userName: "Jane", userLastName: "Smith"},
+    //     {id: 3, userName: "Alice", userLastName: "Johnson"},
+    //     {id: 4, userName: "Michael", userLastName: "Brown"},
+    //     {id: 5, userName: "Emily", userLastName: "Wilson"},
+    //     {id: 6, userName: "William", userLastName: "Taylor"},
+    //     {id: 7, userName: "Olivia", userLastName: "Martinez"},
+    //     {id: 8, userName: "James", userLastName: "Anderson"},
+    //     {id: 9, userName: "Sophia", userLastName: "Thomas"},
+    //     {id: 10, userName: "Daniel", userLastName: "Hernandez"},
+    //     {id: 11, userName: "Mia", userLastName: "Young"},
+    //     {id: 12, userName: "Alexander", userLastName: "Lee"},
+    //     {id: 13, userName: "Emma", userLastName: "Garcia"},
+    //     {id: 14, userName: "Matthew", userLastName: "Brown"},
+    //     {id: 15, userName: "Charlotte", userLastName: "Clark"},
+    //     {id: 16, userName: "Liam", userLastName: "Lewis"},
+    //     {id: 17, userName: "Amelia", userLastName: "Allen"},
+    //     {id: 18, userName: "Ethan", userLastName: "White"},
+    //     {id: 19, userName: "Ava", userLastName: "Moore"},
+    //     {id: 20, userName: "Benjamin", userLastName: "King"}
+    // ];
     return (
         <div className={classes.root}>
             <div className={classes.content}>
@@ -193,7 +237,29 @@ const AddEditGroupsUi = ({
                             }}
                             inputProps={{maxLength: 255}}
                         />
+                        <div className={classes.userContainer}>
+                            <Typography variant="h6">Group Users</Typography>
+                            <div className={classes.users}>
+                                {allUsers.map((user, index) => (
+                                    <div key={index}>
+                                        <Checkbox
+                                            style={{
+                                                transform: "scale(0.6)",
+                                            }}
+                                            // Handle checkbox state here
+                                            // checked={true}
+                                            // Handle checkbox change here
+                                            // onChange={/* Pass onChange handler */}
+                                        />
+                                        <span style={{fontSize: "0.9rem"}}>
+                                            {user.firstName}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{user.lastName}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     </DialogContent>
+
                     <DialogActions>
                         <Button
                             onClick={handleSave}
