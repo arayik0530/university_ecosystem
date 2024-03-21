@@ -4,6 +4,7 @@ import com.polytech.quiz.dto.group.GroupInfoDto;
 import com.polytech.quiz.entity.GroupEntity;
 import com.polytech.quiz.entity.UserEntity;
 import com.polytech.quiz.repository.GroupRepository;
+import com.polytech.quiz.repository.UserRepository;
 import com.polytech.quiz.service.GroupService;
 import com.polytech.quiz.service.util.exception.*;
 import org.apache.commons.lang3.StringUtils;
@@ -27,9 +28,11 @@ public class GroupServiceImpl implements GroupService {
     String notAllowedAction;
 
     private final GroupRepository groupRepository;
+    private final UserRepository userRepository;
 
-    public GroupServiceImpl(GroupRepository groupRepository) {
+    public GroupServiceImpl(GroupRepository groupRepository, UserRepository userRepository) {
         this.groupRepository = groupRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -87,8 +90,17 @@ public class GroupServiceImpl implements GroupService {
     public void update(GroupInfoDto groupInfoDto) {
         GroupEntity groupEntity = groupRepository.findById(groupInfoDto.getId())
                 .orElseThrow(() -> new GroupNotFoundException(groupInfoDto.getId()));
+        groupEntity.getUsers().forEach(userEntity -> {
+            userEntity.getUserGroups().removeIf(g -> g.getId().equals(groupEntity.getId()));
+        });
+        groupEntity.getUsers().clear();
 
         groupEntity.setName(groupInfoDto.getName());
+        groupInfoDto.getUserIdList().forEach(userId -> {
+            UserEntity byId = userRepository.getById(userId);
+            byId.getUserGroups().add(groupEntity);
+            groupEntity.getUsers().add(byId);
+        });
         groupRepository.save(groupEntity);
     }
 
@@ -103,6 +115,12 @@ public class GroupServiceImpl implements GroupService {
         if (byName.isPresent()) {
             throw new GroupAlreadyExistException(group.getName());
         }
+
+        groupInfoDto.getUserIdList().forEach(userId -> {
+            UserEntity byId = userRepository.getById(userId);
+            byId.getUserGroups().add(group);
+            group.getUsers().add(byId);
+        });
 
         groupRepository.save(group);
     }
