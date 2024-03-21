@@ -29,7 +29,7 @@ const groupReducer = (state = initialState, action) => {
             return {
                 ...state,
                 groups: state.groups.map(group =>
-                    group.id === action.payload.group.id ? {...group, name: action.payload.group.name} : group
+                    group.id === action.payload.group.id ? {...group, name: action.payload.group.name, userIdList: action.payload.group.userIdList} : group
                 )
             };
         case DELETE_GROUP:

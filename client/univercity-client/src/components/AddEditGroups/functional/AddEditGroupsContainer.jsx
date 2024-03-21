@@ -4,7 +4,8 @@ import {
     createGroup,
     getExistingGroups,
     removeGroup,
-    setNameForFilter, setNameForUserFilter,
+    setNameForFilter,
+    setNameForUserFilter,
     setPageElementCount,
     setSelectedPageIndex,
     updateGroup,
@@ -26,7 +27,7 @@ const AddEditGroupsContainer = () => {
     const totalCount = groupsContainer.totalCount;
     const [isAddDialogOpen, setAddDialogOpen] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
-    const [newItem, setNewItem] = useState({name: ""});
+    const [newItem, setNewItem] = useState({name: "", id: null, userIdList: []});
     const [elementsPerPageCount, setElementsPerPageCount] = useState(elementsPerPage.count);
     const [filterName, setFilterName] = useState(nameForFilter.text);
     const [filterUserName, setFilterUserName] = useState(nameForUserFilter.text);
@@ -68,7 +69,7 @@ const AddEditGroupsContainer = () => {
 
     const handleEdit = (index) => {
         setEditIndex(index);
-        setNewItem({name: groups[index].name});
+        setNewItem({name: groups[index].name, id: groups[index].id, userIdList: groups[index].userIdList});
         setAddDialogOpen(true);
     };
 
@@ -82,7 +83,7 @@ const AddEditGroupsContainer = () => {
 
     const handleAdd = () => {
         setEditIndex(null);
-        setNewItem({name: ""});
+        setNewItem({name: "", id: null, userIdList: []});
         setAddDialogOpen(true);
     };
 
@@ -100,41 +101,58 @@ const AddEditGroupsContainer = () => {
 
     const handleSave = () => {
         if (editIndex !== null) {
-            if (newItem.name !== groups[editIndex].name) {
-                dispatch(updateGroup({...groups[editIndex], name: newItem.name}));
+            if (newItem.name !== groups[editIndex].name || !arraysAreEqual(groups[editIndex].userIdList, newItem.userIdList)) {
+                dispatch(updateGroup({...groups[editIndex], name: newItem.name, userIdList: newItem.userIdList}));
             }
         } else {
-            dispatch(createGroup({name: newItem.name}, 0, elementsPerPage.count, nameForFilter.text, nameForUserFilter.text));
+            dispatch(createGroup({
+                name: newItem.name,
+                userIdList: newItem.userIdList
+            }, 0, elementsPerPage.count, nameForFilter.text, nameForUserFilter.text));
         }
         setEditIndex(null);
-        setNewItem({name: ""});
+        setNewItem({name: "", id: null, userIdList: []});
         handleCloseDialog();
     };
     const pageCount = Math.ceil(totalCount / elementsPerPage.count);
     return (<AddEditGroupsUi
-            groups={groups}
-            handleEdit={handleEdit}
-            handleRemove={handleRemove}
-            pageCount={pageCount}
-            selectedPageIndex={selectedPageIndex}
-            handlePageChange={handlePageChange}
-            handleAdd={handleAdd}
-            isAddDialogOpen={isAddDialogOpen}
-            handleCloseDialog={handleCloseDialog}
-            editIndex={editIndex}
-            newItem={newItem}
-            setNewItem={setNewItem}
-            handleSave={handleSave}
-            setElementsPerPageCount={setElementsPerPageCount}
-            elementsPerPageCount={elementsPerPageCount}
-            setPageElementsCount={setPageElementsCount}
-            filterName={filterName}
-            setFilterName={setFilterName}
-            filterByName={filterByName}
-            filterByUserName={filterByUserName}
-            setFilterUserName={setFilterUserName}
-            filterUserName={filterUserName}
-            allUsers={allUsers}
-        />);
+        groups={groups}
+        handleEdit={handleEdit}
+        handleRemove={handleRemove}
+        pageCount={pageCount}
+        selectedPageIndex={selectedPageIndex}
+        handlePageChange={handlePageChange}
+        handleAdd={handleAdd}
+        isAddDialogOpen={isAddDialogOpen}
+        handleCloseDialog={handleCloseDialog}
+        editIndex={editIndex}
+        newItem={newItem}
+        setNewItem={setNewItem}
+        handleSave={handleSave}
+        setElementsPerPageCount={setElementsPerPageCount}
+        elementsPerPageCount={elementsPerPageCount}
+        setPageElementsCount={setPageElementsCount}
+        filterName={filterName}
+        setFilterName={setFilterName}
+        filterByName={filterByName}
+        filterByUserName={filterByUserName}
+        setFilterUserName={setFilterUserName}
+        filterUserName={filterUserName}
+        allUsers={allUsers}
+        arraysAreEqual={arraysAreEqual}
+    />);
 };
+
+function arraysAreEqual(array1, array2) {
+    if (array1.length !== array2.length) {
+        return false;
+    }
+    for (let i = 0; i < array1.length; i++) {
+        if (array1[i] !== array2[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 export default AddEditGroupsContainer;
