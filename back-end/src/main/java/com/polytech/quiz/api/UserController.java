@@ -16,7 +16,7 @@ public interface UserController {
     List<UserInfoDto> findAllUsers();
     UserInfoDto getById(Long id);
 
-    List<UserInfoDto> getAllLiteUsers();
+    List<UserInfoDto> getAllLiteUsers(@RequestParam Long groupId);
     Page<UserInfoDto> search(String text, Pageable pageable);
 
     Page<UserInfoDto> getAllUsers(Pageable pageable);

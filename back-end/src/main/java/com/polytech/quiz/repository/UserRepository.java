@@ -26,6 +26,10 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Query("FROM UserEntity u WHERE :role MEMBER OF u.roles")
     List<UserEntity> findAllLiteByRole(@Param("role") UserRole role);
 
+    @Query("SELECT DISTINCT u FROM UserEntity u JOIN u.userGroups g WHERE :role MEMBER OF u.roles AND g.id = :groupId")
+    List<UserEntity> findAllLiteByRoleAndGroup(@Param("role") UserRole role, @Param("groupId") Long groupId);
+
+
     @Query(value = "from UserEntity as user where user.id IN :idList")
     List<UserEntity> findAllByIdList(@Param("idList") List<Long> idList);
 }

@@ -201,8 +201,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserInfoDto> getAllLiteUsers() {
-        List<UserEntity> users = userRepository.findAllLiteByRole(UserRole.USER);
+    public List<UserInfoDto> getAllLiteUsers(Long groupId) {
+        List<UserEntity> users;
+        if(groupId == null) {
+            users = userRepository.findAllLiteByRole(UserRole.USER);
+        } else {
+            users = userRepository.findAllLiteByRoleAndGroup(UserRole.USER, groupId);
+        }
         return users.stream().map(UserInfoDto::mapFromEntityLight).collect(Collectors.toList());
     }
 

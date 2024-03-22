@@ -17,17 +17,29 @@ const AssignQuizContainer = () => {
     const [searchTextTopics, setSearchTextTopics] = useState('');
     const [allUsers, setAllUsers] = useState([]);
     const [allTopics, setAllTopics] = useState([]);
+    const [allGroups, setAllGroups] = useState([]);
+    const [selectedGroup, setSelectedGroup] = useState(null);
+
     useEffect(() => {
-        API.get('/user/all/lite')
+        API.get('/user/all/lite' + (selectedGroup != null ? ('?groupId=' + selectedGroup.id) : ''))
             .then(users => {
                 setAllUsers(users.data);
                 return users.data;
             })
             .catch(e => {
             });
+    }, [selectedGroup]);
+
+    useEffect(() => {
         API.get('/topic/all/lite')
             .then(topics => {
                 setAllTopics(topics.data);
+            })
+            .catch(e => {
+            });
+        API.get('/group/all/lite')
+            .then(groups => {
+                setAllGroups(groups.data);
             })
             .catch(e => {
             });
@@ -113,6 +125,10 @@ const AssignQuizContainer = () => {
             selectedTopic={selectedTopic}
             handleSubmit={handleSubmit}
             isDisabled={isDisabled}
+            allGroups={allGroups}
+            selectedGroup={selectedGroup}
+            setSelectedGroup={setSelectedGroup}
+            setSelectedUsers={setSelectedUsers}
         />
     )
 };

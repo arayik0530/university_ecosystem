@@ -40,7 +40,7 @@ public interface UserService {
 
     void saveImage(MultipartFile image,Long userId);
 
-    List<UserInfoDto> getAllLiteUsers();
+    List<UserInfoDto> getAllLiteUsers(Long groupId);
 
     boolean existsEmail(String email, Long userId);
 }

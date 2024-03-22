@@ -41,8 +41,8 @@ public class UserControllerImpl implements UserController {
     @Override
     @GetMapping("all/lite")
     @PreAuthorize(value = "hasAuthority('ADMIN')")
-    public List<UserInfoDto> getAllLiteUsers() {
-        return userService.getAllLiteUsers();
+    public List<UserInfoDto> getAllLiteUsers(@RequestParam(required = false) Long groupId) {
+        return userService.getAllLiteUsers(groupId);
     }
 
     @Override

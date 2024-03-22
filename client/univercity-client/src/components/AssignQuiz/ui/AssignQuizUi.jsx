@@ -59,7 +59,8 @@ const useStyles = makeStyles()({
         borderRadius: '5px',
         padding: '10px',
         height: '350px',
-        width: '45%'
+        width: '45%',
+        paddingTop: '5px'
     },
     d_flex: {
         display: 'flex',
@@ -121,7 +122,11 @@ const AssignQuizUi = ({
                           setSelectedTopic,
                           selectedTopic,
                           handleSubmit,
-                          isDisabled
+                          isDisabled,
+                          allGroups,
+                          selectedGroup,
+                          setSelectedGroup,
+                          setSelectedUsers
                       }) => {
 
     const {classes} = useStyles();
@@ -180,7 +185,30 @@ const AssignQuizUi = ({
                 }}>
                     <div className={`${classes.d_flex} ${classes.flex_row} ${classes.space_around}`}>
                         <div className={classes.listBlock}>
-                            <Typography variant="subtitle1">Select Users</Typography>
+                            <div className={`${classes.d_flex} ${classes.flex_row} ${classes.align_items_center} ${classes.space_between}`}>
+                                <Typography variant="subtitle1">Select Users</Typography>
+                                <div className={`${classes.d_flex} ${classes.flex_column} ${classes.flex_start}`}
+                                    style={{marginBottom: '5px'}}
+                                >
+                                    <label>
+                                        {"Group"}
+                                    </label>
+                                    <select
+                                        style={{width: '200px'}}
+                                        onChange={(e) => {
+                                            setSelectedUsers([]);
+                                            setSelectedGroup(e.target.value === "0" ? null : allGroups.filter(g => parseInt(e.target.value) === g.id)[0]);
+                                        }}
+                                    >
+                                        <option value="0">Select Group</option>
+                                        {allGroups.map(group => (
+                                            <option key={group.id} value={group.id}>
+                                                {group.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
                             <OutlinedInput
                                 className={classes.formControl}
                                 placeholder="Filter Users"
