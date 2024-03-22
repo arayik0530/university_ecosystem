@@ -48,6 +48,11 @@ const AdminLeftSideButtonsContainer = ({ selectedPart, selectPart }) => {
             >
                 Quiz
             </Button>
+            <Button className={selectedPart === adminConstants.REPORT ? classes.selectedButton : classes.button} variant="contained" color="primary"
+                    onClick={() => {selectPart(adminConstants.REPORT)}}
+            >
+                REPORT
+            </Button>
         </div>
     );
 };

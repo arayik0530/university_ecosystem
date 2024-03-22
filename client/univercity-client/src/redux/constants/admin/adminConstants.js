@@ -4,5 +4,6 @@ export const adminConstants = {
      TOPICS: 'TOPICS',
      QUESTIONS: 'QUESTIONS',
      QUIZ: 'QUIZ',
-     GROUPS: 'GROUPS'
+     GROUPS: 'GROUPS',
+     REPORT: 'REPORT'
 }
