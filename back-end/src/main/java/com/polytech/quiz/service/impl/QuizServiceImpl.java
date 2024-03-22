@@ -238,32 +238,35 @@ public class QuizServiceImpl implements QuizService {
         TopicEntity topicEntity = topicRepository.findById(quizCreationDto.getTopicId())
                 .orElseThrow(() -> new TopicNotFoundException(quizCreationDto.getTopicId()));
 
-        for (UserEntity userEntity : userEntityList) {
-            UpcomingQuizEntity upcomingQuizEntity = new UpcomingQuizEntity();
-            upcomingQuizEntity.setUser(userEntity);
-            upcomingQuizEntity.setTopic(topicEntity);
+        if(!topicEntity.getQuestions().isEmpty()) {
 
-            upcomingQuizEntity.setDeadline(quizCreationDto.getDeadline());
-            upcomingQuizEntity.setCount(quizCreationDto.getQuestionCount());
-            upcomingQuizEntity.setDurationInMinutes(quizCreationDto.getDurationInMinutes());
-            upComingQuizRepository.save(upcomingQuizEntity);
+            for (UserEntity userEntity : userEntityList) {
+                UpcomingQuizEntity upcomingQuizEntity = new UpcomingQuizEntity();
+                upcomingQuizEntity.setUser(userEntity);
+                upcomingQuizEntity.setTopic(topicEntity);
 
-            userEntity.getUpcomingQuizes().add(upcomingQuizEntity);
-            userRepository.save(userEntity);
-        }
+                upcomingQuizEntity.setDeadline(quizCreationDto.getDeadline());
+                upcomingQuizEntity.setCount(quizCreationDto.getQuestionCount());
+                upcomingQuizEntity.setDurationInMinutes(quizCreationDto.getDurationInMinutes());
+                upComingQuizRepository.save(upcomingQuizEntity);
 
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Runnable sendEmailTask = () -> {
-            try {
-                sendEmails(userEntityList, topicEntity, quizCreationDto.getDeadline());
-            } catch (MessagingException e) {
-                throw new RuntimeException(e);
-            } catch (UnsupportedEncodingException e) {
-                throw new RuntimeException(e);
+                userEntity.getUpcomingQuizes().add(upcomingQuizEntity);
+                userRepository.save(userEntity);
             }
-        };
-        executor.submit(sendEmailTask);
-        executor.shutdown();
+
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            Runnable sendEmailTask = () -> {
+                try {
+                    sendEmails(userEntityList, topicEntity, quizCreationDto.getDeadline());
+                } catch (MessagingException e) {
+                    throw new RuntimeException(e);
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
+            };
+            executor.submit(sendEmailTask);
+            executor.shutdown();
+        }
     }
 
     private void sendEmails(List<UserEntity> userEntityList, TopicEntity topicEntity, LocalDateTime deadline)
