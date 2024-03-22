@@ -1,9 +1,11 @@
 package com.polytech.quiz.api;
 
+import com.polytech.quiz.dto.question.LiteQuestionDto;
 import com.polytech.quiz.dto.topic.TopicDto;
 import com.polytech.quiz.dto.topic.TopicOnlyTitleDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -23,4 +25,6 @@ public interface TopicController {
     void update(TopicDto topic);
 
    List<TopicDto> getAllLiteTopics();
+
+    List<LiteQuestionDto> getAllLiteQuestionsByTopics(Long topicId);
 }

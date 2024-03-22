@@ -44,7 +44,7 @@ public class QuizServiceImpl implements QuizService {
                            AnswerRepository answerRepository, JavaMailSender javaMailSender,
                            @Value("${client.base.url}") String clientBaseUrl,
                            @Value("${spring.mail.username}") String mailSendFrom,
-                           @Value("${mail.sender}") String mailSender) {
+                           @Value("${mail.sender}") String mailSender, QuestionRepository questionRepository) {
         this.userService = userService;
         this.quizRepository = quizRepository;
         this.questionService = questionService;
@@ -58,6 +58,7 @@ public class QuizServiceImpl implements QuizService {
         this.clientBaseUrl = clientBaseUrl;
         this.mailSender = mailSender;
         this.mailSendFrom = mailSendFrom;
+        this.questionRepository = questionRepository;
     }
 
 
@@ -77,6 +78,7 @@ public class QuizServiceImpl implements QuizService {
     private UpComingQuizRepository upComingQuizRepository;
     private UserRepository userRepository;
     private QuizQuestionRepository quizQuestionRepository;
+    private QuestionRepository questionRepository;
     private QuizDurationChecker quizDurationChecker;
     private AnswerRepository answerRepository;
     private JavaMailSender javaMailSender;
@@ -144,14 +146,20 @@ public class QuizServiceImpl implements QuizService {
 
         attachQuestions(upcomingQuizEntity, quizEntity);
         QuizEntity savedQuizEntity = quizRepository.save(quizEntity);
+        upcomingQuizEntity.getQuestions().clear();
         upComingQuizRepository.delete(upcomingQuizEntity);
         return savedQuizEntity.getId();
     }
 
     @Transactional
     public void attachQuestions(UpcomingQuizEntity upcomingQuizEntity, QuizEntity quizEntity) {
-        List<QuestionEntity> questionEntities = questionService
-                .generateQuestions(upcomingQuizEntity.getTopic().getId(), upcomingQuizEntity.getCount());
+        List<QuestionEntity> questionEntities;
+        if(upcomingQuizEntity.getRandomQuestions()) {
+        questionEntities = questionService
+                    .generateQuestions(upcomingQuizEntity.getTopic().getId(), upcomingQuizEntity.getCount());
+        } else {
+            questionEntities = upcomingQuizEntity.getQuestions();
+        }
 
         List<QuizQuestionEntity> quizQuestionEntities = quizEntity.getQuizQuestions();
         for (QuestionEntity questionEntity : questionEntities) {
@@ -242,6 +250,8 @@ public class QuizServiceImpl implements QuizService {
 
             for (UserEntity userEntity : userEntityList) {
                 UpcomingQuizEntity upcomingQuizEntity = new UpcomingQuizEntity();
+                upcomingQuizEntity.setRandomQuestions(quizCreationDto.getRandomQuestions());
+                upcomingQuizEntity.setQuestions(quizCreationDto.getQuestionIdLIst().stream().map(id -> questionRepository.getById(id)).collect(Collectors.toList()));
                 upcomingQuizEntity.setUser(userEntity);
                 upcomingQuizEntity.setTopic(topicEntity);
 

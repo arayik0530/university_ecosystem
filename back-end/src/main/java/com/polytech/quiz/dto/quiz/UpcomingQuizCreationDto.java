@@ -20,4 +20,8 @@ public class UpcomingQuizCreationDto {
     private Integer durationInMinutes;
 
     private Long questionCount;
+
+    private List<Long> questionIdLIst;
+
+    private Boolean randomQuestions;
 }

@@ -6,6 +6,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
  @Setter
@@ -35,8 +37,16 @@ public class UpcomingQuizEntity {
     @Column(name = "deadline")
     private LocalDateTime deadline;
 
-    @Column(name = "count", nullable = false)
+    @Column(name = "count", nullable = true)
     private Long count;
+
+    @Column(name = "random_questions")
+    private Boolean randomQuestions;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<QuestionEntity> questions = new ArrayList<>();
 
     @Override
     public String toString() {

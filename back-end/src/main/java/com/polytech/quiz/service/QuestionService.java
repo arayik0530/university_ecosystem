@@ -1,7 +1,9 @@
 package com.polytech.quiz.service;
 
 import com.polytech.quiz.dto.question.CreateQuestionDto;
+import com.polytech.quiz.dto.question.LiteQuestionDto;
 import com.polytech.quiz.dto.question.QuestionDto;
+import com.polytech.quiz.dto.topic.TopicDto;
 import com.polytech.quiz.entity.QuestionEntity;
 import com.polytech.quiz.entity.TopicEntity;
 import org.springframework.data.domain.Page;
@@ -26,4 +28,6 @@ public interface QuestionService {
     List<QuestionEntity> generateQuestions(Long topicId, Long count);
 
     void create(QuestionDto question);
+
+    List<LiteQuestionDto> getAllLiteQuestionsByTopic(Long topicId);
 }

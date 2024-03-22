@@ -1,7 +1,9 @@
 package com.polytech.quiz.service.impl;
 
 import com.polytech.quiz.dto.answer.AnswerDto;
+import com.polytech.quiz.dto.question.LiteQuestionDto;
 import com.polytech.quiz.dto.question.QuestionDto;
+import com.polytech.quiz.dto.topic.TopicDto;
 import com.polytech.quiz.entity.AnswerEntity;
 import com.polytech.quiz.entity.QuestionEntity;
 import com.polytech.quiz.entity.QuizQuestionEntity;
@@ -170,5 +172,12 @@ public class QuestionServiceImpl implements QuestionService {
         }
 
         questionRepository.save(questionEntity);
+    }
+
+    @Override
+    public List<LiteQuestionDto> getAllLiteQuestionsByTopic(Long topicId) {
+        return topicRepository.getById(topicId).getQuestions().stream()
+                .map(q -> new LiteQuestionDto(q.getId(), q.getText()))
+                .collect(Collectors.toList());
     }
 }
