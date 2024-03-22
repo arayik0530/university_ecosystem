@@ -144,7 +144,7 @@ public class UserServiceImplUT {
     public void test_update_success() {
         when(userRepositoryMock.findById(1L)).thenReturn(Optional.of(getUserEntity()));
 
-        final UserInfoDto userInfoDto = UserInfoDto.mapFromEntity(getUserEntity(), false);
+        final UserInfoDto userInfoDto = UserInfoDto.mapFromEntity(getUserEntity());
         userService.update(userInfoDto);
         verify(userRepositoryMock, atLeastOnce()).save(any());
     }

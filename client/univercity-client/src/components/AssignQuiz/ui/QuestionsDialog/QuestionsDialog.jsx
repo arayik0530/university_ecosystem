@@ -8,12 +8,12 @@ const useStyles = makeStyles()({
 
     questionsContainer: {
         marginTop: "20px",
-        width: '1250px'
+        width: '1100px'
     },
     questions: {
         marginTop: "20px",
         overflowY: 'auto',
-        height: "400px",
+        height: "320px",
         "&::-webkit-scrollbar": {
             width: "8px",
         },
@@ -78,9 +78,8 @@ const QuestionsDialog = ({
             fullWidth
             PaperProps={{
                 style: {
-                    maxHeight: "calc(100% - 64px * 2)",
-                    height: "calc(100% - 64px * 4)",
-                    width: "calc(100% - 64px * 8)"
+                    height: "90vh",
+                    width: "90vw"
                 },
             }}
         >
