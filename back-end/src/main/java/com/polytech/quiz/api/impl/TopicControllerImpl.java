@@ -1,8 +1,10 @@
 package com.polytech.quiz.api.impl;
 
 import com.polytech.quiz.api.TopicController;
+import com.polytech.quiz.dto.question.LiteQuestionDto;
 import com.polytech.quiz.dto.topic.TopicDto;
 import com.polytech.quiz.dto.topic.TopicOnlyTitleDto;
+import com.polytech.quiz.service.QuestionService;
 import com.polytech.quiz.service.TopicService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,8 +23,11 @@ public class TopicControllerImpl implements TopicController {
 
     private TopicService topicService;
 
-    public TopicControllerImpl(TopicService topicService) {
+    private QuestionService questionService;
+
+    public TopicControllerImpl(TopicService topicService, QuestionService questionService) {
         this.topicService = topicService;
+        this.questionService = questionService;
     }
 
     @Override
@@ -67,5 +72,11 @@ public class TopicControllerImpl implements TopicController {
     @GetMapping("all/lite")
     public List<TopicDto> getAllLiteTopics() {
         return topicService.getAllLiteTopics();
+    }
+
+    @Override
+    @GetMapping("/all-questions/lite")
+    public List<LiteQuestionDto> getAllLiteQuestionsByTopics(@RequestParam Long topicId) {
+        return questionService.getAllLiteQuestionsByTopic(topicId);
     }
 }

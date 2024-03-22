@@ -17,6 +17,7 @@ import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import {UserIcon} from "./UserIcon";
+import QuestionsDialog from "./QuestionsDialog/QuestionsDialog";
 
 const useStyles = makeStyles()({
     formControl: {
@@ -126,7 +127,16 @@ const AssignQuizUi = ({
                           allGroups,
                           selectedGroup,
                           setSelectedGroup,
-                          setSelectedUsers
+                          setSelectedUsers,
+                          selectedQuestions,
+                          setSelectedQuestions,
+                          randomQuestions,
+                          setRandomQuestions,
+                          questionsDialogOpen,
+                          setQuestionsDialogOpen,
+                          setQuestionCount,
+                          questionCountFieldDisabled,
+                          setQuestionCountFieldDisabled
                       }) => {
 
     const {classes} = useStyles();
@@ -162,6 +172,7 @@ const AssignQuizUi = ({
                         </DemoContainer>
                     </LocalizationProvider>
                     <TextField
+                        disabled={questionCountFieldDisabled}
                         label="Question Count"
                         value={questionCount}
                         onChange={handleQuestionCountChange}
@@ -185,10 +196,11 @@ const AssignQuizUi = ({
                 }}>
                     <div className={`${classes.d_flex} ${classes.flex_row} ${classes.space_around}`}>
                         <div className={classes.listBlock}>
-                            <div className={`${classes.d_flex} ${classes.flex_row} ${classes.align_items_center} ${classes.space_between}`}>
+                            <div
+                                className={`${classes.d_flex} ${classes.flex_row} ${classes.align_items_center} ${classes.space_between}`}>
                                 <Typography variant="subtitle1">Select Users</Typography>
                                 <div className={`${classes.d_flex} ${classes.flex_column} ${classes.flex_start}`}
-                                    style={{marginBottom: '5px'}}
+                                     style={{marginBottom: '5px'}}
                                 >
                                     <label>
                                         {"Group"}
@@ -263,7 +275,12 @@ const AssignQuizUi = ({
                                         .filter((topic) => topic.title.toLowerCase().includes(searchTextTopics.toLowerCase()))
                                         .map((topic) => (
                                             <ListItem key={topic.id} dense button onClick={() => {
+                                                if (!selectedTopic || topic.id !== selectedTopic.id) {
+                                                    setSelectedQuestions([]);
+                                                    setRandomQuestions(true);
+                                                }
                                                 setSelectedTopic(topic);
+                                                setQuestionsDialogOpen(true);
                                             }}>
                                                 <ListItemIcon>
                                                     <Radio
@@ -301,6 +318,18 @@ const AssignQuizUi = ({
                     Assign
                 </Button>
             </div>
+            {questionsDialogOpen && <QuestionsDialog
+                topic={selectedTopic}
+                selectedQuestions={selectedQuestions}
+                setSelectedQuestions={setSelectedQuestions}
+                randomQuestions={randomQuestions}
+                setRandomQuestions={setRandomQuestions}
+                questionsDialogOpen={questionsDialogOpen}
+                setQuestionsDialogOpen={setQuestionsDialogOpen}
+                setQuestionCount={setQuestionCount}
+                setQuestionCountFieldDisabled={setQuestionCountFieldDisabled}
+            />
+            }
         </div>
     );
 };

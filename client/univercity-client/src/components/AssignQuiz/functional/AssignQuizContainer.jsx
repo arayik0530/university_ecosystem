@@ -19,6 +19,10 @@ const AssignQuizContainer = () => {
     const [allTopics, setAllTopics] = useState([]);
     const [allGroups, setAllGroups] = useState([]);
     const [selectedGroup, setSelectedGroup] = useState(null);
+    const [selectedQuestions, setSelectedQuestions] = useState([]);
+    const [randomQuestions, setRandomQuestions] = useState(true);
+    const [questionsDialogOpen, setQuestionsDialogOpen] = useState(false);
+    const[questionCountFieldDisabled, setQuestionCountFieldDisabled] = useState(false);
 
     useEffect(() => {
         API.get('/user/all/lite' + (selectedGroup != null ? ('?groupId=' + selectedGroup.id) : ''))
@@ -87,6 +91,8 @@ const AssignQuizContainer = () => {
             questionCount,
             topicId: selectedTopic.id,
             userIdList: selectedUsers.map(user => user.id),
+            questionIdLIst: selectedQuestions.map(q => q.id),
+            randomQuestions: randomQuestions
         };
         API.post('/quiz/create-upcoming-quiz', data)
             .then(r => {
@@ -103,7 +109,7 @@ const AssignQuizContainer = () => {
             });
     };
 
-    const isDisabled = !selectedUsers.length || !selectedTopic || !deadline || !questionCount || !durationInMinutes;
+    const isDisabled = !selectedUsers.length || !selectedTopic || !deadline || (!questionCount && !selectedQuestions.length) || !durationInMinutes;
 
     return (
         <AssignQuizUi
@@ -129,6 +135,15 @@ const AssignQuizContainer = () => {
             selectedGroup={selectedGroup}
             setSelectedGroup={setSelectedGroup}
             setSelectedUsers={setSelectedUsers}
+            selectedQuestions={selectedQuestions}
+            setSelectedQuestions={setSelectedQuestions}
+            randomQuestions={randomQuestions}
+            setRandomQuestions={setRandomQuestions}
+            questionsDialogOpen={questionsDialogOpen}
+            setQuestionsDialogOpen={setQuestionsDialogOpen}
+            setQuestionCount={setQuestionCount}
+            questionCountFieldDisabled={questionCountFieldDisabled}
+            setQuestionCountFieldDisabled={setQuestionCountFieldDisabled}
         />
     )
 };
