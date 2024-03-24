@@ -21,6 +21,17 @@ public class QuizDtoShortInfo {
 
     private Double successPercent;
 
+    private String userName;
+
+    public QuizDtoShortInfo(Long id, String topic, LocalDateTime startTime, LocalDateTime endTime,
+                            double successPercent, String firstName, String lastName) {
+        this.id = id;
+        this.topic = topic;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.successPercent = successPercent;
+        this.userName = firstName + " " + lastName;
+    }
 
     public static QuizDtoShortInfo mapFromEntity(QuizEntity quiz) {
         QuizDtoShortInfo quizDtoShortInfo = new QuizDtoShortInfo();

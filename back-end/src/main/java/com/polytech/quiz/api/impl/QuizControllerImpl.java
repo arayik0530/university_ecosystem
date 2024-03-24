@@ -133,4 +133,11 @@ public class QuizControllerImpl implements QuizController {
     public void createUpcomingQuizForUser(@RequestBody UpcomingQuizCreationDto upcomingQuizCreationDto) {
         quizService.createUpcomingQuiz(upcomingQuizCreationDto);
     }
+
+    @Override
+    @PostMapping("generate/report")
+    @PreAuthorize(value = "hasAnyAuthority('ADMIN','OBSERVER')")
+    public List<QuizDtoShortInfo> generateReport(@RequestBody QuizReportCriteria reportCriteria) {
+        return quizService.generateReport(reportCriteria);
+    }
 }

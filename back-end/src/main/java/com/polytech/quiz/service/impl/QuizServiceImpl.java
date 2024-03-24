@@ -479,4 +479,9 @@ public class QuizServiceImpl implements QuizService {
         questionDto.setExpectedFinishTime(quizQuestionEntity.getQuiz().getStartTime().plusMinutes(quizQuestionEntity.getQuiz().getDuration()));
         return questionDto;
     }
+
+    @Override
+    public List<QuizDtoShortInfo> generateReport(QuizReportCriteria reportCriteria) {
+        return quizRepository.findAllByCriteria(reportCriteria);
+    }
 }

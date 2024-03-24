@@ -44,7 +44,7 @@ const QuizPage = () => {
                         localStorage.setItem('quiz_question_id', firstQuestion.quizQuestionId);
                     })
                     .catch(e => {
-                        navigate('/');
+                        // navigate('/');
                     });
             } else {
                 API.get(`/quiz/get/${quizInfo.quizId}`)
