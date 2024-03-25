@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select} from '@mui/material';
-import {BarChart, PieChart} from "@mui/x-charts";
+import {axisClasses, BarChart, PieChart} from "@mui/x-charts";
 import {makeStyles} from "tss-react/mui";
 import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
 import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
 import {DatePicker} from '@mui/x-date-pickers/DatePicker';
+import {format} from "date-fns";
 
 const useStyles = makeStyles()({
     paper: {
@@ -17,7 +18,7 @@ const useStyles = makeStyles()({
     container: {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         height: '550px',
     },
     headerElement: {
@@ -59,48 +60,64 @@ const ChartComponent = ({
         setChartType(event.target.value);
     };
 
-    const generateChartData = () => {
+    const generateBarChartData = () => {
         return quizzes.map((quiz, index) => ({
-            name: quiz.userName,
-            value: quiz.percentage,
-            label: quiz.userName
+            successPercent: quiz.successPercent,
+            Quiz: (quiz.userName + '\n' + (!!quiz.endTime && format(new Date(quiz.endTime), 'dd-MM-yyyy-HH:mm:ss')))
+        }));
+    };
+
+    const generatePieChartData = () => {
+        return quizzes.map((quiz, index) => ({
+            id: index,
+            value: quiz.successPercent,
+            label: quiz.userName + ' ' +quiz.successPercent + '%'
         }));
     };
 
     const renderChart = () => {
-        const chartData = generateChartData();
-
         switch (chartType) {
-            case 'pie':
+            case 'pie': {
                 return <PieChart
                     series={[
                         {
-                            data: chartData
-                        },
+                             data: generatePieChartData()
+                        }
                     ]}
                     width={1000}
                     height={300}
                 />
-
-            case 'bar':
+            }
+            case 'bar': {
+                const chartSetting = {
+                    yAxis: [
+                        {
+                            label: '%',
+                            max: 100
+                        },
+                    ],
+                    width: 1000,
+                    height: 300,
+                    sx: {
+                        [`.${axisClasses.left} .${axisClasses.label}`]: {
+                            transform: 'translate(-10px, 0)',
+                        },
+                    }
+                };
+                const chartData = generateBarChartData();
                 return <BarChart
-                    xAxis={[
-                        {
-                            id: 'barCategories',
-                            data: chartData.map(q => q.name),
-                            scaleType: 'band',
-                        },
-                    ]}
+                    dataset={chartData}
+                    xAxis={[{
+                        scaleType: 'band',
+                        dataKey: 'Quiz',
+                    }]}
                     series={[
-                        {
-                            data: chartData.map(q => q.value),
-                            color: chartData.map((q, index) => `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.9)`)
-                        },
+                        { dataKey: 'successPercent'}
                     ]}
-                    width={1000}
-                    height={300}
+                    {...chartSetting}
+
                 />
-            // Add more cases for other chart types if needed
+            }
             default:
                 return null;
         }
@@ -113,7 +130,7 @@ const ChartComponent = ({
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DemoContainer components={['DatePicker']}>
                             <DatePicker className={classes.datePicker}
-                                // onChange={handleFromDateChange}
+                                onChange={(val)=> setFromDate(val)}
                                         label="From"
                                         sx={{
                                             '& .MuiInputBase-root': {
@@ -122,7 +139,7 @@ const ChartComponent = ({
                                         }}
                                         format="DD/MM/YYYY"
                                         slotProps={{textField: {size: 'small', readOnly: true}}}
-                                // value={fromDate}
+                                value={fromDate}
                             />
                         </DemoContainer>
                     </LocalizationProvider>
@@ -131,7 +148,7 @@ const ChartComponent = ({
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DemoContainer components={['DatePicker']}>
                             <DatePicker className={classes.datePicker}
-                                // onChange={handleToDateChange}
+                                        onChange={(val)=> setToDate(val)}
                                         label="To"
                                         sx={{
                                             '& .MuiInputBase-root': {
@@ -140,7 +157,7 @@ const ChartComponent = ({
                                         }}
                                         format="DD/MM/YYYY"
                                         slotProps={{textField: {size: 'small', readOnly: true}}}
-                                // value={toDate}
+                                value={toDate}
                             />
                         </DemoContainer>
                     </LocalizationProvider>
@@ -227,9 +244,9 @@ const ChartComponent = ({
                     </FormControl>
                 </div>
             </div>
-            <Paper className={classes.paper}>
+            {!!quizzes.length && !!chartType && <Paper className={classes.paper}>
                 {renderChart()}
-            </Paper>
+            </Paper>}
         </div>
     );
 };

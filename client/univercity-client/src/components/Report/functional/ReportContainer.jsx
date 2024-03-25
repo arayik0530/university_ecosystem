@@ -6,9 +6,9 @@ import dayjs from "dayjs";
 const ReportContainer = () => {
     const [fromDate, setFromDate] = useState(null);
     const [toDate, setToDate] = useState(null);
-    const [group, setGroup] = useState(null);
-    const [user, setUser] = useState(null);
-    const [topic, setTopic] = useState(null);
+    const [group, setGroup] = useState('');
+    const [user, setUser] = useState('');
+    const [topic, setTopic] = useState('');
     const [allUsers, setAllUsers] = useState([]);
     const [allGroups, setAllGroups] = useState([]);
     const [allTopics, setAllTopics] = useState([]);

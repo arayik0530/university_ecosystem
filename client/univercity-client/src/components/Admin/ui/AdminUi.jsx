@@ -5,7 +5,7 @@ import AddEditQuestionsContainer from "../../AddEditQuestions/functional/AddEdit
 import {adminConstants} from "../../../redux/constants/admin/adminConstants";
 import AssignQuizContainer from "../../AssignQuiz/functional/AssignQuizContainer";
 import AddEditGroupsContainer from "../../AddEditGroups/functional/AddEditGroupsContainer";
-import ReportContainer from "../../report/functional/ReportContainer";
+import ReportContainer from "../../Report/functional/ReportContainer";
 
 export const AdminUi = ({selectedPart, selectPart}) => {
     return (

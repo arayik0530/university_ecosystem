@@ -2,16 +2,17 @@ package com.polytech.quiz.repository;
 
 import com.polytech.quiz.dto.quiz.QuizDtoShortInfo;
 import com.polytech.quiz.dto.quiz.QuizReportCriteria;
+import com.polytech.quiz.entity.GroupEntity;
 import com.polytech.quiz.entity.QuizEntity;
+import com.polytech.quiz.entity.TopicEntity;
+import com.polytech.quiz.entity.UserEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,22 +45,26 @@ public class QuizRepositoryCustomImpl implements QuizRepositoryCustom{
     }
 
     private Predicate getPredicate(CriteriaBuilder criteriaBuilder, Root<QuizEntity> root, QuizReportCriteria reportCriteria) {
-        Predicate predicate = criteriaBuilder.conjunction();
+        List<Predicate> predicates = new ArrayList<>();
         if (reportCriteria.getUserIdList() != null && !reportCriteria.getUserIdList().isEmpty()) {
-            predicate = criteriaBuilder.and(predicate, root.get("user").get("id").in(reportCriteria.getUserIdList()));
+            Join<QuizEntity, UserEntity> quizEntityUserEntityJoin = root.join("user", JoinType.LEFT);
+            predicates.add(quizEntityUserEntityJoin.get("id").in(reportCriteria.getUserIdList()));
         }
         if (reportCriteria.getGroupId() != null) {
-            predicate = criteriaBuilder.and(predicate, criteriaBuilder.isMember(reportCriteria.getGroupId(), root.get("user").get("userGroups").get("id")));
+            Join<QuizEntity, UserEntity> quizEntityUserEntityJoin = root.join("user", JoinType.LEFT);
+            Join<UserEntity, GroupEntity> userEntityGroupEntityJoin = quizEntityUserEntityJoin.join("userGroups", JoinType.LEFT);
+            predicates.add(criteriaBuilder.equal(userEntityGroupEntityJoin.get("id"), reportCriteria.getGroupId()));
         }
         if (reportCriteria.getTopicId() != null) {
-            predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(root.get("topic").get("id"), reportCriteria.getTopicId()));
+            Join<QuizEntity, TopicEntity> quizEntityTopicEntityJoin = root.join("topic", JoinType.LEFT);
+            predicates.add(criteriaBuilder.equal(quizEntityTopicEntityJoin.get("id"), reportCriteria.getTopicId()));
         }
         if (reportCriteria.getStartRange() != null) {
-            predicate = criteriaBuilder.and(predicate, criteriaBuilder.greaterThanOrEqualTo(root.get("endTime"), reportCriteria.getStartRange()));
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("endTime"), reportCriteria.getStartRange()));
         }
         if (reportCriteria.getEndRange() != null) {
-            predicate = criteriaBuilder.and(predicate, criteriaBuilder.lessThanOrEqualTo(root.get("endTime"), reportCriteria.getEndRange()));
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("endTime"), reportCriteria.getEndRange()));
         }
-        return predicate;
+        return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
     }
 }
