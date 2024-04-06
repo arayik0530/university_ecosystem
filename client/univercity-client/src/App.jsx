@@ -31,13 +31,6 @@ function App() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        //changing browser's tab icon and title
-        document.title = 'Quiz App';
-        const favicon = document.querySelector('link[rel="icon"]');
-        if (favicon) {
-            favicon.href = {logo};
-        }
-        window.asd=logo;
 
         const handleApiError = (errorMessage) => {
             dispatch(setMessage(errorMessage, 'error'))
