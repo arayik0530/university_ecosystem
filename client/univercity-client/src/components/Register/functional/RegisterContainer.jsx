@@ -92,15 +92,7 @@ export const RegisterContainer = () => {
         }
 
         if (valid) {
-            dispatch(register({email, firstName, lastName, password}))
-                .then(() =>
-                    dispatch(setMessage(
-                        'Registration was successful, please check your email for the confirmation link.',
-                        'success'
-                    )))
-                .catch((error) => {
-                    alert(error)
-                });
+            dispatch(register({email, firstName, lastName, password}));
         }
     };
 

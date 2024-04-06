@@ -2,6 +2,7 @@ import {adminConstants} from '../../constants/admin/adminConstants';
 import {API} from '../../../API/index';
 import {SET_USER_TYPE, USER_LOGIN_SUCCESS, USER_LOGOUT_SUCCESS} from "../actionTypes/userActionTypes";
 import {ADMIN, USER} from "../../constants/globalConstants";
+import {setMessage} from '../message/messageActions';
 
 export const userLoginSuccess = (token) => ({
     type: USER_LOGIN_SUCCESS,
@@ -30,7 +31,7 @@ export const setAdmin = (admin) => ({type: adminConstants.SET_ADMIN, payload: ad
 
 
 export const login = (credentials) => (dispatch) => {
-    return API.post('auth/login', credentials)
+    API.post('auth/login', credentials)
         .then(({data}) => {
             localStorage.setItem('token', data);
         })
@@ -40,7 +41,13 @@ export const login = (credentials) => (dispatch) => {
 }
 
 export const register = (credentials) => (dispatch) => {
-    return API.post('auth/register', credentials).catch(e => {
+    API.post('auth/register', credentials)
+        .then(() =>
+        dispatch(setMessage(
+            'Registration was successful, please check your email for the confirmation link.',
+            'success'
+        )))
+        .catch(e => {
     });
 }
 
