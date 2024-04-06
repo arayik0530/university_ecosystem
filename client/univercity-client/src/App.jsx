@@ -11,6 +11,7 @@ import {Backdrop, CircularProgress} from '@mui/material';
 import {useDispatch, useSelector} from "react-redux";
 import {setMessage} from './redux/actions/message/messageActions';
 import QuizPage from "./components/Quiz/functional/QuizPage";
+import logo from './assets/images/logo.webp';
 
 const LoadingComponent = ({isLoading}) => {
     return (
@@ -30,6 +31,14 @@ function App() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        //changing browser's tab icon and title
+        document.title = 'Quiz App';
+        const favicon = document.querySelector('link[rel="icon"]');
+        if (favicon) {
+            favicon.href = {logo};
+        }
+        window.asd=logo;
+
         const handleApiError = (errorMessage) => {
             dispatch(setMessage(errorMessage, 'error'))
         };

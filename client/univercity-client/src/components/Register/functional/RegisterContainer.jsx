@@ -1,15 +1,11 @@
-import React, { useRef, useState } from 'react';
-import { RegisterUi } from '../ui/RegisterUi';
+import React, {useRef, useState} from 'react';
+import {RegisterUi} from '../ui/RegisterUi';
 import {makeStyles} from "tss-react/mui";
-// import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { register } from '../../../redux/actions/user/userActions';
+import {useDispatch} from 'react-redux';
+import {register} from '../../../redux/actions/user/userActions';
 
 const useStyles = makeStyles()({
     root: {
-        // position: 'absolute',
-        // left: '50%',
-        // top: '40%',
         transform: 'translate(-50% , -50%)',
         border: '0.5px solid #1540AE',
         boxShadow: '0 0 7px #5984F2',
@@ -38,8 +34,7 @@ const useStyles = makeStyles()({
 
 
 export const RegisterContainer = () => {
-    const { classes } = useStyles();
-    // const navigate = useNavigate();
+    const {classes} = useStyles();
     const dispatch = useDispatch();
 
     const firstNameRef = useRef(null);
@@ -55,11 +50,11 @@ export const RegisterContainer = () => {
     };
 
     const isPasswordComplex = (password) => {
-        const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z]).{6,}$/; // Requires at least one letter, one number, and at least 6 characters
+        const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z]).{6,}$/; // Requires at least one letter, one number,
+                                                                        // and at least 6 characters
         return passwordRegex.test(password);
     };
 
-    // Helper function to check email format
     const isEmailValid = (email) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         return emailRegex.test(email);
@@ -93,10 +88,13 @@ export const RegisterContainer = () => {
         }
 
         if (valid) {
-            dispatch(register({ email, firstName, lastName, password }))
+            dispatch(register({email, firstName, lastName, password}))
                 // .then(() => navigate('/login'))
-                .then(() => setErrorMessage('Registration was successfully,please check your email for the confirmation link.'))
-                .catch((error) => console.log(error));
+                .then(() =>
+                    setErrorMessage(
+                        'Registration was successfully,please check your email for the confirmation link.'))
+                .catch((error) => {
+                });
         }
     };
 

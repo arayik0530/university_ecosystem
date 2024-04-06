@@ -4,6 +4,7 @@ import com.polytech.quiz.security.jwt.JwtAuthenticationException;
 import com.polytech.quiz.service.util.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -40,6 +41,13 @@ public class ExceptionHandlerController {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ResponseEntity handleInactiveUserException(InactiveUserException exception) {
         return new ResponseEntity<>("User with email " + exception.getMessage() + " is not activated.",
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {BadCredentialsException.class})
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ResponseEntity handleWrongPasswordException(BadCredentialsException exception) {
+        return new ResponseEntity<>("Invalid password",
                 HttpStatus.BAD_REQUEST);
     }
 

@@ -110,7 +110,7 @@ const QuizPage = () => {
 
     return (<div className={classes.container}>
             {activeQuiz && <CountDownTimer futureDate={new Date(quizQuestion.expectedFinishTime)}/>}
-            {!console.log(quizQuestion) && quizQuestion.quizQuestionId &&
+            {quizQuestion.quizQuestionId &&
                 <Question question={quizQuestion} activeQuiz={activeQuiz}/>}
             <div className={classes.buttonContainer}>
                 <Button

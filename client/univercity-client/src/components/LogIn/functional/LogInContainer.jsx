@@ -1,12 +1,10 @@
-import React, { useRef, useState } from 'react';
-import { LogInUi } from '../ui/LogInUi';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { login, userLoginSuccess } from '../../../redux/actions/user/userActions';
+import React, {useRef, useState} from 'react';
+import {LogInUi} from '../ui/LogInUi';
+import {useNavigate} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {login, userLoginSuccess} from '../../../redux/actions/user/userActions';
 import {makeStyles} from "tss-react/mui";
-// import * as theme from "@mui/system";
 
-// Define specific class names within the theme object
 const useStyles = makeStyles()({
     root: {
         transform: 'translate(-50% , -50%)',
@@ -36,7 +34,7 @@ const useStyles = makeStyles()({
 });
 
 export const LogInContainer = () => {
-    const { classes } = useStyles();
+    const {classes} = useStyles();
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -78,10 +76,10 @@ export const LogInContainer = () => {
         }
 
         if (valid) {
-            dispatch(login({ email, password }))
+            dispatch(login({email, password}))
                 .then(() => navigate('/'))
                 .then(() => dispatch(userLoginSuccess(localStorage.getItem('token'))))
-                .catch((error) => console.log(error));
+                .catch((error) => {});
         }
     };
     return (

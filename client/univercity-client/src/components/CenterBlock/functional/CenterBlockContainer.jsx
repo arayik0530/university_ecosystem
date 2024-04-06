@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getCurrentUser} from "../../../redux/actions/user/userActions";
 import {makeStyles} from "tss-react/mui";
 import {CenterBlockUi} from "../ui/CenterBlockUi";
+import {useNavigate} from "react-router-dom";
 
 const useStyles = makeStyles()({
     CenterBlockUi: {
@@ -15,10 +16,15 @@ const useStyles = makeStyles()({
 });
 
 const CenterBlockContainer = () => {
+    const navigate = useNavigate();
     const {classes} = useStyles();
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getCurrentUser());
+        if(!!localStorage.getItem('token')) {
+            dispatch(getCurrentUser());
+        } else {
+            navigate("/login");
+        }
     }, []);
     const userType = useSelector((state) => state.user.userType);
     return (

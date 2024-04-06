@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -104,7 +106,7 @@ public class AuthControllerImpl implements AuthController {
 
     @Override
     @PostMapping("login")
-    public String login(@RequestBody LoginRequestDto loginRequestDto) {
+    public String login(@RequestBody LoginRequestDto loginRequestDto, HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
         String email = loginRequestDto.getEmail();
         UserInfoDto userInfoDto = userService.findByEmail(email);
         UserEntity userEntity = userRepository.findByEmail(email)
