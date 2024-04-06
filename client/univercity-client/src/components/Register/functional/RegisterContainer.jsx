@@ -1,7 +1,8 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import {RegisterUi} from '../ui/RegisterUi';
 import {makeStyles} from "tss-react/mui";
 import {useDispatch} from 'react-redux';
+import {setMessage} from '../../../redux/actions/message/messageActions';
 import {register} from '../../../redux/actions/user/userActions';
 
 const useStyles = makeStyles()({
@@ -19,10 +20,10 @@ const useStyles = makeStyles()({
         left: '50%',
         display: 'flex',
         justifyContent: 'space-between',
-        height: '50vh',
+        height: '55vh',
 
         '& > *': {
-            marginBottom: '8px',
+            marginBottom: '10px !important',
             width: '25ch',
         },
     },
@@ -46,15 +47,13 @@ export const RegisterContainer = () => {
     const passwordRef = useRef(null);
     const confirmPasswordRef = useRef(null);
 
-    const [errorMessage, setErrorMessage] = useState('');
-
     const isPasswordMatch = (password, confirmPassword) => {
         return password === confirmPassword;
     };
 
     const isPasswordComplex = (password) => {
         const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z]).{6,}$/; // Requires at least one letter, one number,
-                                                                        // and at least 6 characters
+        // and at least 6 characters
         return passwordRegex.test(password);
     };
 
@@ -75,28 +74,32 @@ export const RegisterContainer = () => {
         let valid = true;
 
         if (!firstName.trim() || !lastName.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
-            setErrorMessage('All fields are required.');
+            dispatch(setMessage('All fields are required.', 'error'));
             valid = false;
         } else if (!isEmailValid(email)) {
-            setErrorMessage('Please enter a valid email address.');
+            dispatch(setMessage('Please enter a valid email address.', 'error'));
             valid = false;
         } else if (!isPasswordComplex(password)) {
-            setErrorMessage('Password must be at least 6 characters long and contain at least one letter and one number.');
+            dispatch(setMessage(
+                'Password must be at least 6 characters long and contain at least one letter and one number.',
+                'error'));
             valid = false;
         } else if (!isPasswordMatch(password, confirmPassword)) {
-            setErrorMessage('Passwords do not match.');
+            dispatch(setMessage('Passwords do not match.', 'error'));
             valid = false;
         } else {
-            setErrorMessage('');
+            dispatch(setMessage(''));
         }
 
         if (valid) {
             dispatch(register({email, firstName, lastName, password}))
-                // .then(() => navigate('/login'))
                 .then(() =>
-                    setErrorMessage(
-                        'Registration was successfully,please check your email for the confirmation link.'))
+                    dispatch(setMessage(
+                        'Registration was successful, please check your email for the confirmation link.',
+                        'success'
+                    )))
                 .catch((error) => {
+                    alert(error)
                 });
         }
     };
@@ -110,7 +113,6 @@ export const RegisterContainer = () => {
             passwordRef={passwordRef}
             confirmPasswordRef={confirmPasswordRef}
             handleRegister={handleRegister}
-            errorMessage={errorMessage}
         />
     );
 };

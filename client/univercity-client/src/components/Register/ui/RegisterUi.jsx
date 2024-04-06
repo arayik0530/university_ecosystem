@@ -1,9 +1,16 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
-import Button  from '@mui/material/Button';
-import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
 
-export const RegisterUi = ({ classes, firstNameRef, lastNameRef, emailRef, passwordRef, confirmPasswordRef, handleRegister, errorMessage }) => {
+export const RegisterUi = ({
+                               classes,
+                               firstNameRef,
+                               lastNameRef,
+                               emailRef,
+                               passwordRef,
+                               confirmPasswordRef,
+                               handleRegister,
+                           }) => {
     return (
         <div>
             <form className={classes.root} noValidate autoComplete="off" onSubmit={handleRegister}>
@@ -44,13 +51,6 @@ export const RegisterUi = ({ classes, firstNameRef, lastNameRef, emailRef, passw
                 />
                 <Button type="submit" className={classes.LogInButton}>Register</Button>
             </form>
-            {errorMessage && (
-                <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
-                    <Alert severity="error">
-                        {errorMessage}
-                    </Alert>
-                </div>
-            )}
         </div>
     );
 };
