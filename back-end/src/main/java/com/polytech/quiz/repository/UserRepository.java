@@ -21,7 +21,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
             "OR user.lastName like ?1% or user.lastName like ?2%")
     Page<UserEntity> searchByName(String firstName, String lastName, Pageable pageable);
 
-    Optional<UserEntity> findByEmail(String email);
+    Optional<UserEntity> findByEmailIgnoreCase(String email);
 
     @Query("FROM UserEntity u WHERE :role MEMBER OF u.roles")
     List<UserEntity> findAllLiteByRole(@Param("role") UserRole role);

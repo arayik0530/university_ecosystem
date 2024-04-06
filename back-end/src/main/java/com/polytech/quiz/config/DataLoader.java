@@ -24,7 +24,7 @@ public class DataLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         String email = "admin@admin.com";
 
-        Optional<UserEntity> temp = userRepository.findByEmail(email);
+        Optional<UserEntity> temp = userRepository.findByEmailIgnoreCase(email);
         if(!temp.isPresent()) {
 
             UserEntity admin = new UserEntity();

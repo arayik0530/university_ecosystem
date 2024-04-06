@@ -3,6 +3,7 @@ import {API} from '../../../API/index';
 import {SET_USER_TYPE, USER_LOGIN_SUCCESS, USER_LOGOUT_SUCCESS} from "../actionTypes/userActionTypes";
 import {ADMIN, USER} from "../../constants/globalConstants";
 import {setMessage} from '../message/messageActions';
+import {useNavigate} from "react-router-dom";
 
 export const userLoginSuccess = (token) => ({
     type: USER_LOGIN_SUCCESS,
@@ -23,7 +24,7 @@ export const getCurrentUser = () => (dispatch) => {
             dispatch(setUserType(data.data.roles[0].includes(ADMIN) ? ADMIN : USER))
         })
         .catch(e => {
-        });//TODO handle navigate if to login if not logged in
+        });
 }
 
 const setToken = (token) => ({type: adminConstants.SET_TOKEN, payload: token});
@@ -33,11 +34,12 @@ export const setAdmin = (admin) => ({type: adminConstants.SET_ADMIN, payload: ad
 export const login = (credentials) => (dispatch) => {
     API.post('auth/login', credentials)
         .then(({data}) => {
-            localStorage.setItem('token', data);
+            dispatch(userLoginSuccess(data))
         })
         .then(res => {
             dispatch(getCurrentUser());
-        });
+        })
+        .catch((e) => {});
 }
 
 export const register = (credentials) => (dispatch) => {

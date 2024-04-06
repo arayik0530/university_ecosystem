@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserInfoDto findByEmail(String email) {
-        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User with email: '" + email + "' does not exist."));
+        UserEntity userEntity = userRepository.findByEmailIgnoreCase(email).orElseThrow(() -> new UserNotFoundException("User with email: '" + email + "' does not exist."));
         return UserInfoDto.mapFromEntity(userEntity);
     }
 
@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updatePassword(PasswordChangingDto passwordChangingDto) {
 
-        UserEntity userEntity = userRepository.findByEmail(passwordChangingDto.getEmail())
+        UserEntity userEntity = userRepository.findByEmailIgnoreCase(passwordChangingDto.getEmail())
                 .orElseThrow(() -> new UserNotFoundException(passwordChangingDto.getEmail()));
         if (passwordEncoder.matches(passwordChangingDto.getOldPassword(),userEntity.getPassword())) {
             userEntity.setPassword(passwordEncoder.encode(passwordChangingDto.getNewPassword()));
@@ -126,7 +126,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserInfoDto register(UserRegistrationDto registrationDto) {
-        Optional<UserEntity> byEmail = userRepository.findByEmail(registrationDto.getEmail());
+        Optional<UserEntity> byEmail = userRepository.findByEmailIgnoreCase(registrationDto.getEmail());
         if (byEmail.isPresent()) {
             throw new UserAlreadyExistsException(registrationDto.getEmail());
         }
@@ -151,7 +151,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public String generateToken(String email) {
-        UserEntity userEntity = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
+        UserEntity userEntity = userRepository.findByEmailIgnoreCase(email).orElseThrow(() -> new UserNotFoundException(email));
 
         ConfirmationTokenEntity confirmationToken = new ConfirmationTokenEntity();
         confirmationToken.setUser(userEntity);
@@ -213,7 +213,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean existsEmail(String email, Long userId) {
-        Optional<UserEntity> byEmail = userRepository.findByEmail(email);
+        Optional<UserEntity> byEmail = userRepository.findByEmailIgnoreCase(email);
         if(byEmail.isPresent()){
             UserEntity userEntity = byEmail.get();
             if(!userEntity.getId().equals(userId)){

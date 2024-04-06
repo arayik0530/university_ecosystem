@@ -109,7 +109,7 @@ public class AuthControllerImpl implements AuthController {
     public String login(@RequestBody LoginRequestDto loginRequestDto, HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
         String email = loginRequestDto.getEmail();
         UserInfoDto userInfoDto = userService.findByEmail(email);
-        UserEntity userEntity = userRepository.findByEmail(email)
+        UserEntity userEntity = userRepository.findByEmailIgnoreCase(email)
                 .orElseThrow(() -> new UserNotFoundException("User " + email + "does not exist."));
         if (!userEntity.getActive()) {
             throw new InactiveUserException(email);

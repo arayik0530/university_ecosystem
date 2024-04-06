@@ -22,7 +22,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) {
-        Optional<UserEntity> optionalUserEntity = userRepository.findByEmail(email);
+        Optional<UserEntity> optionalUserEntity = userRepository.findByEmailIgnoreCase(email);
 
         if (optionalUserEntity.isPresent()) {
             UserEntity userEntity = optionalUserEntity.get();

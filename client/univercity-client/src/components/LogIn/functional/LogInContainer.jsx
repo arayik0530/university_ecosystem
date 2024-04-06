@@ -1,9 +1,10 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {LogInUi} from '../ui/LogInUi';
 import {useNavigate} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
-import {login, userLoginSuccess} from '../../../redux/actions/user/userActions';
+import {useDispatch, useSelector} from 'react-redux';
+import {login} from '../../../redux/actions/user/userActions';
 import {makeStyles} from "tss-react/mui";
+import {getExistingTopics} from "../../../redux/actions/topic/topicActions";
 
 const useStyles = makeStyles()({
     root: {
@@ -36,7 +37,15 @@ const useStyles = makeStyles()({
 export const LogInContainer = () => {
     const {classes} = useStyles();
 
+    const loginSuccess = useSelector((state) => state.user.isLoggedIn);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if(loginSuccess){
+            navigate('/');
+        }
+    }, [loginSuccess]);
+
     const dispatch = useDispatch();
 
     const emailRef = useRef(null);
@@ -76,10 +85,7 @@ export const LogInContainer = () => {
         }
 
         if (valid) {
-            dispatch(login({email, password}))
-                .then(() => navigate('/'))
-                .then(() => dispatch(userLoginSuccess(localStorage.getItem('token'))))
-                .catch((error) => {});
+            dispatch(login({email, password}));
         }
     };
     return (

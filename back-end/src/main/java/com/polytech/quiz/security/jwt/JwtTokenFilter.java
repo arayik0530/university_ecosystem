@@ -48,7 +48,7 @@ public class JwtTokenFilter extends GenericFilterBean {
 
     private boolean isUserActive(String token) {
         String email = jwtTokenProvider.getUsername(token);
-        UserEntity userEntity = userRepository.findByEmail(email)
+        UserEntity userEntity = userRepository.findByEmailIgnoreCase(email)
                 .orElseThrow(() -> new UserNotFoundException(email));
         return userEntity.getActive();
     }
