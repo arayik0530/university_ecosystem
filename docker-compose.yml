@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  university-ecosystem:
+    build: .
+    ports:
+      - "8090:8090"
+      - "3000:3000"
+    depends_on:
+      - postgres-db
+
+  postgres-db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: quiz_app
+      POSTGRES_USER: arayik
+      POSTGRES_PASSWORD: 123456

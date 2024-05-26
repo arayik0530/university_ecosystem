@@ -17,6 +17,7 @@ client/*.ntvs*
 client/*.njsproj
 client/*.sln
 client/*.sw?
+client/univercity-client/.idea/
 
 # Ignore WebStorm configuration files
 client/.idea/
@@ -62,3 +63,6 @@ back-end/.classpath
 
 # Ignore Maven Eclipse files
 back-end/.settings/
+
+#docker build log
+build.log
