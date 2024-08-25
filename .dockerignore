@@ -1,8 +1,0 @@
-# Ignore build artifacts and IDE files from the back-end
-back-end/target
-back-end/.idea
-
-# Ignore node_modules and IDE files from the front-end
-client/univercity-client/node_modules
-client/univercity-client/.idea
-

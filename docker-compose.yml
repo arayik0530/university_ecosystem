@@ -1,23 +1,17 @@
 version: '3.3'
-
 services:
   back_end:
-    image: maven:3.8.4-openjdk-11
-    working_dir: /app
-    volumes:
-      - ./back-end:/app
+    build: ./back-end/
     ports:
       - "8090:8090"
     depends_on:
-      - postgres-db
+      - postgres-db-service
     environment:
       POSTGRES_USER: arayik
       POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: quiz_app
-    command: >
-      /bin/sh -c "mvn clean compile package && java -jar target/univercity_ecosystem-1.0.jar"
+      POSTGRES_DB: quiz_app 
 
-  postgres-db:
+  postgres-db-service:
     image: postgres:latest
     ports:
       - "5433:5432"
@@ -29,14 +23,9 @@ services:
       - postgres-data:/var/lib/postgresql/data
 
   react_app:
-    image: node:14
-    working_dir: /app
-    volumes:
-      - ./client/univercity-client:/app
+    build: ./client/univercity-client/
     ports:
       - "3000:3000"
-    command: /bin/sh -c "npm install && npm install -g serve && npm run build && serve -s build"
 
 volumes:
   postgres-data:
-
